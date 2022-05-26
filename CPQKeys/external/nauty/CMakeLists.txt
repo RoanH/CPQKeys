@@ -11,6 +11,7 @@ if(NOT JNI_FOUND)
 endif()
 
 add_library(nauty SHARED
+	"./src/nautil.c"
 	"./src/naugraph.c"
 	"./src/naurng.c"
 	"./src/nausparse.c"
