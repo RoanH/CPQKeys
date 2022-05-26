@@ -1,0 +1,29 @@
+plugins{
+	id 'java-library'
+	id 'eclipse'
+	id 'application'
+	id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+sourceSets{
+	main{
+		java{
+			srcDirs = ['src']
+		}
+		resources{
+			srcDirs = ['src']
+		}
+	}
+}
+
+eclipse.classpath.downloadJavadoc = true
+compileJava.options.encoding = 'UTF-8'
+sourceCompatibility = 1.8
+
+javadoc{
+	options.memberLevel = JavadocMemberLevel.PRIVATE
+}
+
+application{
+	mainClassName = 'dev.roanh.cpqkeys.Main'
+}
