@@ -17,7 +17,7 @@ add_library(nauty SHARED
     "./src/naututil.c"
     "./src/nauty.c"
     "./src/schreier.c"
-#    "./main.c"
+    "./dev_roanh_cpqkeys_algo_Nauty.c"
 )
 
 set_target_properties(nauty PROPERTIES
