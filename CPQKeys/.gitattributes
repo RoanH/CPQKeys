@@ -4,3 +4,7 @@
 # These are explicitly windows files and should use crlf
 *.bat           text eol=crlf
 
+./bindings/nauty/src/* linguist-vendored
+./bindings/nauty/n*.h linguist-vendored
+./bindings/nauty/s*.h linguist-vendored
+./bindings/traces/*
