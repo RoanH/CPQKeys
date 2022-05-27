@@ -34,14 +34,14 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* en
 	graph.nv = len;
 
 	graph.nde = 0;
-	for(int i = 0; i < len){
-		graph.nde += (*env)->GetArrayLength(env, (jintArray)env->GetObjectArrayElement(adj, i));
+	for(int i = 0; i < len; i++){
+		graph.nde += (*env)->GetArrayLength(env, (jintArray)(*env)->GetObjectArrayElement(adj, i));
 	}
 
 	SG_ALLOC(graph, len, graph.nde, "malloc");
 	int offset = 0;
 	for(int i = 0; i < len; i++){
-		jintArray row = (jintArray)env->GetObjectArrayElement(adj, i);
+		jintArray row = (jintArray)(*env)->GetObjectArrayElement(adj, i);
 		jsize rlen = (*env)->GetArrayLength(env, row);
 		jint* elem = (*env)->GetIntArrayElements(env, row, 0);
 
