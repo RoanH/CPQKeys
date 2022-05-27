@@ -21,7 +21,7 @@ void canon(sparsegraph* graph){
 
 	//compute canonical form and labelling
 	SG_DECL(canon);
-	sparsenauty(&graph, labels, ptn, orbits, &options, &stats, &canon);
+	sparsenauty(graph, labels, ptn, orbits, &options, &stats, &canon);
 
 	//TODO return some representation of canon
 }
@@ -35,13 +35,13 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* en
 
 	graph.nde = 0;
 	for(int i = 0; i < len; i++){
-		graph.nde += (*env)->GetArrayLength(env, (jintArray)(*env)->GetObjectArrayElement(adj, i));
+		graph.nde += (*env)->GetArrayLength(env, (jintArray)((*env)->GetObjectArrayElement(env, adj, i)));
 	}
 
 	SG_ALLOC(graph, len, graph.nde, "malloc");
 	int offset = 0;
 	for(int i = 0; i < len; i++){
-		jintArray row = (jintArray)(*env)->GetObjectArrayElement(adj, i);
+		jintArray row = (jintArray)((*env)->GetObjectArrayElement(env, adj, i));
 		jsize rlen = (*env)->GetArrayLength(env, row);
 		jint* elem = (*env)->GetIntArrayElements(env, row, 0);
 
