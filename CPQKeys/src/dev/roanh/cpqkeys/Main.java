@@ -12,5 +12,7 @@ public class Main{
 		System.load(Paths.get("./native/libnauty.so").toAbsolutePath().toString());
 		
 		System.out.println("test: " + Nauty.test(10));
+		
+		Nauty.test();
 	}
 }

@@ -15,6 +15,14 @@ extern "C" {
 JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_test
   (JNIEnv *, jclass, jint);
 
+/*
+ * Class:     dev_roanh_cpqkeys_algo_Nauty
+ * Method:    computeCanon
+ * Signature: ([[I)V
+ */
+JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon
+  (JNIEnv *, jclass, jobjectArray);
+
 #ifdef __cplusplus
 }
 #endif
