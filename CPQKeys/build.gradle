@@ -2,7 +2,7 @@ plugins{
 	id 'java-library'
 	id 'eclipse'
 	id 'application'
-	id 'com.github.johnrengelman.shadow' version '5.1.0'
+	id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 sourceSets{
@@ -22,6 +22,14 @@ sourceCompatibility = 1.8
 
 javadoc{
 	options.memberLevel = JavadocMemberLevel.PRIVATE
+}
+
+repositories{
+	mavenCentral()
+}
+
+dependencies{
+	//implementation 'dev.roanh.gmark:gmark:1.0'
 }
 
 application{
