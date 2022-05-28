@@ -24,6 +24,11 @@ void canon(sparsegraph* graph){
 	sparsenauty(graph, labels, ptn, orbits, &options, &stats, &canon);
 
 	//TODO return some representation of canon
+	printf("canon:");
+	for(int i = 0; i < n; i++){
+		printf(" %d", labels[i]);
+	}
+	printf("\n");
 }
 
 JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj){
@@ -32,6 +37,8 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* en
 	jsize len = (*env)->GetArrayLength(env, adj);
 	nauty_check(WORDSIZE, SETWORDSNEEDED(len), len, NAUTYVERSIONID);
 	graph.nv = len;
+
+	printf("len: %d\n", len);
 
 	graph.nde = 0;
 	for(int i = 0; i < len; i++){
