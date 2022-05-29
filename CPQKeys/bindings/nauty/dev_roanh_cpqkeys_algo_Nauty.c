@@ -2,6 +2,7 @@
 #include "nausparse.h"
 
 JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_test(JNIEnv* env, jclass obj, jint num){
+	printf("test\n");
 	return 2 * num;
 }
 
