@@ -11,8 +11,8 @@ public class Nauty{
 	
 	public static void test(){
 		int[][] graph = new int[][]{
-			{2},
-			{1, 2}
+			{1},
+			{0, 1}
 		};
 		
 		computeCanon(graph);

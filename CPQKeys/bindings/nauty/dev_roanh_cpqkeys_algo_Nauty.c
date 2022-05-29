@@ -2,7 +2,6 @@
 #include "nausparse.h"
 
 JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_test(JNIEnv* env, jclass obj, jint num){
-	printf("test\n");
 	return 2 * num;
 }
 
@@ -46,6 +45,8 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* en
 		graph.nde += (*env)->GetArrayLength(env, (jintArray)((*env)->GetObjectArrayElement(env, adj, i)));
 	}
 
+	printf("nde: %d\n", graph.nde);
+
 	SG_ALLOC(graph, len, graph.nde, "malloc");
 	int offset = 0;
 	for(int i = 0; i < len; i++){
@@ -56,8 +57,11 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* en
 		graph.v[i] = offset;
 		graph.d[i] = rlen;
 
+		printf("for row %d at offset %d with len %d\n", i, offset, rlen);
+
 		for(int j = 0; j < rlen; j++){
 			graph.e[offset] = elem[j];
+			printf("add edge to %d\n", graph.e[offset]);
 			offset++;
 		}
 
