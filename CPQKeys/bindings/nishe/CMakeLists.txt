@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(nauty C)
+project(nishe CXX)
 
 set(CMAKE_INSTALL_LIBDIR "${PROJECT_SOURCE_DIR}/../../native")
 set(CMAKE_FIND_LIBRARY_PREFIXES "lib" "")
@@ -10,24 +10,19 @@ if(NOT JNI_FOUND)
 	message(FATAL_ERROR "Could not determine Java include path. Please set your JAVA_HOME environment variable to the location of the desired JDK.")
 endif()
 
-add_library(nauty SHARED
-	"./src/nautil.c"
-	"./src/naugraph.c"
-	"./src/naurng.c"
-	"./src/nausparse.c"
-	"./src/naututil.c"
-	"./src/nauty.c"
-	"./src/schreier.c"
-	"./dev_roanh_cpqkeys_algo_Nauty.c"
+add_library(nishe SHARED
+	"./src/DirectedGraph.cc"
+	"./src/PartitionNest.cc"
+	"./main.cpp"
 )
 
-set_target_properties(nauty PROPERTIES
-	PROPERTY C_STANDARD 11
-	PROPERTY C_STANDARD_REQUIRED ON
+set_target_properties(nishe PROPERTIES
+	PROPERTY CMAKE_CXX_STANDARD 11
+	PROPERTY CMAKE_CXX_STANDARD_REQUIRED ON
 	OUTPUT_NAME ${CMAKE_PROJECT_NAME}
 )
 
-target_include_directories(nauty
+target_include_directories(nishe
 	PUBLIC
 		$<BUILD_INTERFACE:${JNI_INCLUDE_DIRS}>
 
@@ -35,4 +30,4 @@ target_include_directories(nauty
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-install(TARGETS nauty RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS nishe RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR})

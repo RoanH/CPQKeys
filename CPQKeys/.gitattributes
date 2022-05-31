@@ -8,3 +8,5 @@ bindings/nauty/src/** linguist-vendored
 bindings/nauty/include/n*.h linguist-vendored
 bindings/nauty/include/s*.h linguist-vendored
 bindings/traces/** linguist-vendored
+bindings/nishe/include/nishe/** linguist-vendored
+bindings/nishe/src/** linguist-vendored
