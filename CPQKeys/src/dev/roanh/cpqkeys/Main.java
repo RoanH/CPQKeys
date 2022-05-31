@@ -18,7 +18,8 @@ public class Main{
 			e.printStackTrace();
 		}
 		
-		Nauty.test();
+		//Nauty.test();
+		Nishe.test();
 
 		System.out.println("test");
 	}

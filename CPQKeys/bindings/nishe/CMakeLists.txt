@@ -13,7 +13,7 @@ endif()
 add_library(nishe SHARED
 	"./src/DirectedGraph.cc"
 	"./src/PartitionNest.cc"
-	"./main.cpp"
+	"./dev_roanh_cpqkeys_algo_Nishe.cpp"
 )
 
 set_target_properties(nishe PROPERTIES
