@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import dev.roanh.cpqkeys.algo.Nauty;
+import dev.roanh.cpqkeys.algo.Nishe;
 
 public class Main{
 
@@ -29,7 +30,11 @@ public class Main{
 		}
 		
 		if(20 != Nauty.test(10)){
-			throw new UnsatisfiedLinkError("Validation failed");
+			throw new UnsatisfiedLinkError("Validation failed (nauty)");
+		}
+		
+		if(20 != Nishe.test(10)){
+			throw new UnsatisfiedLinkError("Validation failed (nishe)");
 		}
 	}
 }
