@@ -19,9 +19,9 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEnv* en
 
 	jint* colorData = env->GetIntArrayElements(colors, 0);
 	for(int i = 0; i < len; i++){
+		std::cout << "pi: " << pi << std::endl;
 		if(colorData[i] < 0){
 			pi.enqueue_new_index(-colorData[i] - 1);
-			pi.advance_level();
 			pi.commit_pending_indices();
 		}else{
 			pi.enqueue_new_index(colorData[i] - 1);
@@ -44,7 +44,7 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEnv* en
 	}
 
 	//verify
-	std::cout << "pi: " << pi << std::endl;
+	std::cout << "final pi: " << pi << std::endl;
 
 }
 
