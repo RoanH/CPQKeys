@@ -15,18 +15,21 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEnv* en
 	PartitionNest pi;
 
 	jsize len = env->GetArrayLength(adj);
-	pi.unit(len);//TODO maybe not required
+	pi.unit(len);
 
 	jint* colorData = env->GetIntArrayElements(colors, 0);
 	for(int i = 0; i < len; i++){
 		std::cout << "pi: " << pi << std::endl;
 		if(colorData[i] < 0){
-			pi.enqueue_new_index(-colorData[i] - 1);
-			pi.commit_pending_indices();
+			pi.elements()[i](-colorData[i] - 1);
+			if(i != 0){
+				pi.enqueue_new_index(i);
+			}
 		}else{
-			pi.enqueue_new_index(colorData[i] - 1);
+			pi.elements()[i](colorData[i] - 1);
 		}
 	}
+	pi.commit_pending_indices();
 	env->ReleaseIntArrayElements(colors, colorData, 0);
 
 	//construct graph
