@@ -54,9 +54,6 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEnv* en
 	Refiner<DirectedGraph> refiner;
 
 	refiner.refine(graph, &pi, &trace);
-
-	std::cout << "trace: " << trace << std::endl;
-
 }
 
 int main(int argc, char** argv){
