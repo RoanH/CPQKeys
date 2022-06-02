@@ -23,10 +23,20 @@ public class Nishe{
 		//individual levels need to be sorted, +1 it all so negation can be used to denote range ends
 		int[] colors = new int[]{-1, 3, -2, 4, 5, -6};
 		
-		computeCanon(graph, colors);
+		int[] times = computeCanon(graph, colors);
+		
+		System.out.println("prep time: " + times[0]);
+		System.out.println("canon time: " + times[1]);
 	}
 	
+	
+	/**
+	 * 
+	 * @param num
+	 * @return
+	 */
 	public static native int test(int num);
 	
-	private static native void computeCanon(int[][] adj, int[] colors);
+	//prep time, canon time
+	private static native int[] computeCanon(int[][] adj, int[] colors);
 }

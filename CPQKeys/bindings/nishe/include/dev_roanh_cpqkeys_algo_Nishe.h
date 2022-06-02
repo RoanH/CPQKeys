@@ -18,9 +18,9 @@ JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_test
 /*
  * Class:     dev_roanh_cpqkeys_algo_Nishe
  * Method:    computeCanon
- * Signature: ([[I[I)V
+ * Signature: ([[I[I)[I
  */
-JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon
+JNIEXPORT jintArray JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon
   (JNIEnv *, jclass, jobjectArray, jintArray);
 
 #ifdef __cplusplus
