@@ -3,6 +3,7 @@
 #include <nishe/Refiner-inl.h>
 #include <nishe/DirectedGraph.h>
 #include <sstream>
+#include <chrono>
 
 using namespace nishe;
 using namespace std::chrono;
