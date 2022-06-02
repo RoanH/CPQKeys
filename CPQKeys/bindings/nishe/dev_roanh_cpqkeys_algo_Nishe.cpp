@@ -76,8 +76,8 @@ JNIEXPORT jintArray JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEn
 	jintArray result = env->NewIntArray(2);
 
 	jint data[2];
-	data[0] = duration<milliseconds>(mid_time - start_time).count();
-	data[1] = duration<milliseconds>(end_time - mid_time).count();
+	data[0] = duration<double, std::milli>(mid_time - start_time).count();
+	data[1] = duration<double, std::milli>(end_time - mid_time).count();
 	env->SetIntArrayRegion(result, 0, 2, data);
 
 	return result;
