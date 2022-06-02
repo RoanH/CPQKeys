@@ -2,7 +2,6 @@
 #include <nishe/PartitionNest.h>
 #include <nishe/Refiner-inl.h>
 #include <nishe/DirectedGraph.h>
-#include <sstream>
 #include <chrono>
 
 using namespace nishe;
@@ -21,7 +20,24 @@ JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_test(JNIEnv* env, jclas
 }
 
 /**
- * Computes the canonical trace value for the given graph with the given vertex coloring
+ * Computes the canonical trace value and new partition nest for the
+ * given graph with the given vertex coloring. Returns the time in
+ * milliseconds required for computations.
+ * @param env JNI environment.
+ * @param obj Calling class.
+ * @param adj The input graph in adjacency list format, n arrays with
+ *        each the indices of the neighbors of the n-th vertex.
+ * @param colors An array defining the color of each vertex, the array
+ *        is expected to contain the indices of the vertices with the
+ *        same color in the following format. The index used to refer
+ *        to a vertex is always one higher than the actual index in the
+ *        adjacency list. A negative index indicates the start of a new
+ *        color group with all following vertices being of the same color.
+ *        Vertices within each color group are expected to be in sorted
+ *        ascending order.
+ * @return An array with two elements, first the time in milliseconds it
+ *         took to construct the partition nest and graph and second the
+ *         time in milliseconds it took to compute the refinement trace.
  */
 JNIEXPORT jintArray JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
 	steady_clock::time_point start_time = steady_clock::now();
@@ -60,7 +76,6 @@ JNIEXPORT jintArray JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEn
 		env->ReleaseIntArrayElements(row, elem, 0);
 	}
 
-	std::cout << "in pi: " << pi << std::endl;
 	steady_clock::time_point mid_time = steady_clock::now();
 
 	//refine graph
@@ -70,7 +85,6 @@ JNIEXPORT jintArray JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEn
 	refiner.refine(graph, &pi, &trace);
 
 	steady_clock::time_point end_time = steady_clock::now();
-	std::cout << "out pi: " << pi << std::endl;
 
 	//return times
 	jintArray result = env->NewIntArray(2);
