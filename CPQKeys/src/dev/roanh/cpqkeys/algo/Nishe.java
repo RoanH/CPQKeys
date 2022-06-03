@@ -1,14 +1,20 @@
 package dev.roanh.cpqkeys.algo;
 
-public class Nishe{
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.IntStream;
 
-	
-	
-	
-	
-	
-	
-	
+import dev.roanh.cpqkeys.GraphUtil;
+import dev.roanh.cpqkeys.VertexData;
+import dev.roanh.gmark.util.Graph;
+import dev.roanh.gmark.util.Graph.GraphEdge;
+import dev.roanh.gmark.util.Graph.GraphNode;
+
+public class Nishe{
+	//TODO may need to return runtimes as long since things go up fast if it is measured in nanos
 	
 	public static void test(){
 		int[][] graph = new int[][]{
@@ -29,6 +35,32 @@ public class Nishe{
 		System.out.println("canon time: " + times[1]);
 	}
 	
+	public static int[] computeCanon(Graph<VertexData<GraphNode<Object, Void>>, Void> graph){
+		long start = System.nanoTime();
+		Map<Object, List<Integer>> colorMap = new HashMap<Object, List<Integer>>();
+		
+		int[][] adj = new int[graph.getNodeCount()][];
+		for(GraphNode<VertexData<GraphNode<Object, Void>>, Void> node : graph.getNodes()){
+			adj[node.getData().getID()] = node.getOutEdges().stream().map(GraphEdge::getTargetNode).map(GraphNode::getData).mapToInt(VertexData::getID).toArray();
+			colorMap.computeIfAbsent(node.getData().getData().getData(), k->new ArrayList<Integer>()).add(node.getData().getID());
+		}
+		
+		colorMap.values().forEach(l->l.sort(Integer::compare));
+		
+		int[] colors = new int[adj.length];
+		int idx = 0;
+		for(List<Integer> group : colorMap.values()){
+			colors[idx++] = -group.get(0) - 1;
+			for(int i = 1; i < group.size(); i++){
+				colors[idx++] = group.get(i);
+			}
+		}
+		
+		long end = System.nanoTime();
+		
+		int[] times = computeCanon(adj, colors);
+		return new int[]{times[0], times[1], (int)(end - start)};
+	}
 	
 	/**
 	 * Simple test function that double the input integer, only
