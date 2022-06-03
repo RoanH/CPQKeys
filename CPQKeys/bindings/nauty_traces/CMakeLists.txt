@@ -18,6 +18,7 @@ add_library(nauty SHARED
 	"./src/naututil.c"
 	"./src/nauty.c"
 	"./src/schreier.c"
+	"./core.c"
 	"./dev_roanh_cpqkeys_algo_Nauty.c"
 )
 
