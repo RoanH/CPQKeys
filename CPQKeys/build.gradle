@@ -29,7 +29,7 @@ repositories{
 }
 
 dependencies{
-	//implementation 'dev.roanh.gmark:gmark:1.0'
+	implementation 'dev.roanh.gmark:gmark:1.0'
 }
 
 application{

@@ -1,13 +1,10 @@
 package dev.roanh.cpqkeys.algo;
 
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
-import dev.roanh.cpqkeys.GraphUtil;
 import dev.roanh.cpqkeys.VertexData;
 import dev.roanh.gmark.util.Graph;
 import dev.roanh.gmark.util.Graph.GraphEdge;
