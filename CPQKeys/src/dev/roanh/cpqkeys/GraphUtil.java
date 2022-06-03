@@ -11,6 +11,7 @@ import dev.roanh.gmark.util.Graph.GraphNode;
 
 public class GraphUtil{
 
+	//TODO consider moving this to gmark
 	public static final Graph<VertexData<GraphNode<Object, Void>>, Void> numberVertices(Graph<Object, Void> in){
 		Graph<VertexData<GraphNode<Object, Void>>, Void> out = new Graph<VertexData<GraphNode<Object, Void>>, Void>();
 		Map<GraphNode<Object, Void>, GraphNode<VertexData<GraphNode<Object, Void>>, Void>> nodeMap = new HashMap<GraphNode<Object, Void>, GraphNode<VertexData<GraphNode<Object, Void>>, Void>>();
