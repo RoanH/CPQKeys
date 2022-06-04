@@ -2,7 +2,7 @@
 #include "core.h"
 
 void constructSparseGraph(JNIEnv* env, jobjectArray adj, sparsegraph* graph){
-	jsize len = (*env)->GetArrayLength(env, adj);
+	jsize len = (*env)->GetArrayLength(env, *adj);
 	nauty_check(WORDSIZE, SETWORDSNEEDED(len), len, NAUTYVERSIONID);
 	graph->nv = len;
 
@@ -10,7 +10,7 @@ void constructSparseGraph(JNIEnv* env, jobjectArray adj, sparsegraph* graph){
 
 	graph->nde = 0;
 	for(int i = 0; i < len; i++){
-		graph->nde += (*env)->GetArrayLength(env, (jintArray)((*env)->GetObjectArrayElement(env, adj, i)));
+		graph->nde += (*env)->GetArrayLength(env, (jintArray)((*env)->GetObjectArrayElement(env, *adj, i)));
 	}
 
 	printf("nde: %d\n", graph->nde);
@@ -18,7 +18,7 @@ void constructSparseGraph(JNIEnv* env, jobjectArray adj, sparsegraph* graph){
 	SG_ALLOC(*graph, len, graph->nde, "malloc");
 	int offset = 0;
 	for(int i = 0; i < len; i++){
-		jintArray row = (jintArray)((*env)->GetObjectArrayElement(env, adj, i));
+		jintArray row = (jintArray)((*env)->GetObjectArrayElement(env, *adj, i));
 		jsize rlen = (*env)->GetArrayLength(env, row);
 		jint* elem = (*env)->GetIntArrayElements(env, row, 0);
 

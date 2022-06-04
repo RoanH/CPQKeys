@@ -34,9 +34,7 @@ void canon(sparsegraph* graph){
 JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj){
 	SG_DECL(graph);
 
-	printf("len: %d\n", (*env)->GetArrayLength(env, adj));
-
-	constructSparseGraph(env, obj, &graph);
+	constructSparseGraph(env, &adj, &graph);
 
 	canon(&graph);
 }
