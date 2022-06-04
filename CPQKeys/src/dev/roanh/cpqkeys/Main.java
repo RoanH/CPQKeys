@@ -20,9 +20,9 @@ public class Main{
 		
 		Nauty.test();
 		
-		System.out.println("=====================================================");
+		//System.out.println("=====================================================");
 		
-		Nishe.test();
+		//Nishe.test();
 
 		System.out.println("test");
 	}
