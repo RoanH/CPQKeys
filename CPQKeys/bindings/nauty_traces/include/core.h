@@ -5,5 +5,6 @@
 
 void constructSparseGraph(JNIEnv*, jobjectArray*, sparsegraph*);
 
+void parseColoring(JNIEnv*, int, jintArray*, int*, int*);
 
 #endif

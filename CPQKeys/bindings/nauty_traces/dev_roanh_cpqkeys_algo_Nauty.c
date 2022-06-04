@@ -5,7 +5,12 @@ JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_test(JNIEnv* env, jclas
 	return 2 * num;
 }
 
-void canon(sparsegraph* graph){
+//sparse nauty
+JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
+	SG_DECL(graph);
+
+	constructSparseGraph(env, &adj, &graph);
+
 	DYNALLSTAT(int, labels, labels_sz);
 	DYNALLSTAT(int, ptn, ptn_sz);
 	DYNALLSTAT(int, orbits, orbits_sz);
@@ -19,6 +24,8 @@ void canon(sparsegraph* graph){
 	DYNALLOC1(int, ptn, ptn_sz, n, "malloc");
 	DYNALLOC1(int, orbits, orbits_sz, n, "malloc");
 
+	parseColoring(env, n, &colors, labels, ptn);
+
 	//compute canonical form and labelling
 	SG_DECL(canon);
 	sparsenauty(graph, labels, ptn, orbits, &options, &stats, &canon);
@@ -29,12 +36,4 @@ void canon(sparsegraph* graph){
 		printf(" %d", labels[i]);
 	}
 	printf("\n");
-}
-
-JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj){
-	SG_DECL(graph);
-
-	constructSparseGraph(env, &adj, &graph);
-
-	canon(&graph);
 }

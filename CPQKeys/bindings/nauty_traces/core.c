@@ -35,8 +35,18 @@ void constructSparseGraph(JNIEnv* env, jobjectArray* adj, sparsegraph* graph){
 
 		(*env)->ReleaseIntArrayElements(env, row, elem, 0);
 	}
+}
 
-
-
-
+void parseColoring(JNIEnv* env, int len, jintArray* colors, int* labels, int* ptn){
+	jint* colorData = (*env)->GetIntArrayElements(env, *colors, 0);
+	for(int i = 0; i < len; i++){
+		if(colorData[i] < 0){
+			labels[i] = -colorData[i] - 1;
+			ptn[i] = 0;
+		}else{
+			labels[i] = colorData[i] - 1;
+			ptn[i] = 1;
+		}
+	}
+	env->ReleaseIntArrayElements(colors, colorData, 0);
 }

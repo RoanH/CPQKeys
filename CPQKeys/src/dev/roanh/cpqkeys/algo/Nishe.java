@@ -23,7 +23,7 @@ public class Nishe{
 			{0, 1}
 		};
 		
-		//individual levels need to be sorted, +1 it all so negation can be used to denote range ends
+		//individual levels need to be sorted, +1 it all so negation can be used to denote range starts
 		int[] colors = new int[]{-1, 3, -2, 4, 5, -6};
 		
 		int[] times = computeCanon(graph, colors);
