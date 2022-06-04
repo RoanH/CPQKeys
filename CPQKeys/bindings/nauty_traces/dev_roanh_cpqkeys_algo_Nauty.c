@@ -19,7 +19,7 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* en
 	statsblk stats;
 	options.getcanon = TRUE;
 
-	int n = graph->nv;
+	int n = graph.nv;
 	DYNALLOC1(int, labels, labels_sz, n, "malloc");
 	DYNALLOC1(int, ptn, ptn_sz, n, "malloc");
 	DYNALLOC1(int, orbits, orbits_sz, n, "malloc");
@@ -28,7 +28,7 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* en
 
 	//compute canonical form and labelling
 	SG_DECL(canon);
-	sparsenauty(graph, labels, ptn, orbits, &options, &stats, &canon);
+	sparsenauty(&graph, labels, ptn, orbits, &options, &stats, &canon);
 
 	//TODO return some representation of canon
 	printf("canon:");
