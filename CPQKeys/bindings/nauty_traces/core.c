@@ -1,7 +1,7 @@
 #include <jni.h>
 #include "core.h"
 
-void constructSparseGraph(JNIEnv* env, jobjectArray* adj, sparsegraph* graph){
+void constructSparseGraph(JNIEnv* env, jobjectArray adj, sparsegraph* graph){
 	jsize len = (*env)->GetArrayLength(env, *adj);
 	nauty_check(WORDSIZE, SETWORDSNEEDED(len), len, NAUTYVERSIONID);
 	graph->nv = len;

@@ -36,7 +36,7 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* en
 
 	printf("len: %d\n", (*env)->GetArrayLength(env, adj));
 
-	constructSparseGraph(env, &obj, &graph);
+	constructSparseGraph(env, obj, &graph);
 
 	canon(&graph);
 }

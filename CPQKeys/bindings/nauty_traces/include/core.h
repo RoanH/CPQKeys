@@ -3,7 +3,7 @@
 
 #include "nausparse.h"
 
-void constructSparseGraph(JNIEnv*, jobjectArray*, sparsegraph*);
+void constructSparseGraph(JNIEnv*, jobjectArray, sparsegraph*);
 
 
 #endif
