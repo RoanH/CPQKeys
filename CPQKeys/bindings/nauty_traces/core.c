@@ -48,5 +48,5 @@ void parseColoring(JNIEnv* env, int len, jintArray* colors, int* labels, int* pt
 			ptn[i] = 1;
 		}
 	}
-	env->ReleaseIntArrayElements(colors, colorData, 0);
+	(*env)->ReleaseIntArrayElements(env, colors, colorData, 0);
 }
