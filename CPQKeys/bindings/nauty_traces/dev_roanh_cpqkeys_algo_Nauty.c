@@ -44,7 +44,7 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIE
 	jlong data[2];
 	data[0] = totalTime(&start, &mid);
 	data[1] = totalTime(&mid, &end);
-	(*env)->SetLongArrayRegion(result, 0, 2, data);
+	(*env)->SetLongArrayRegion(env, result, 0, 2, data);
 
 	return result;
 }
