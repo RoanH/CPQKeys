@@ -50,6 +50,6 @@ void parseColoring(JNIEnv* env, int len, jintArray* colors, int* labels, int* pt
 	(*env)->ReleaseIntArrayElements(env, *colors, colorData, 0);
 }
 
-jlong totalTime(timespec* start, timespec* end){
-	return (end->tv_sec - start->tv_sec) * 1000000000 + (end->tv_nsec - start->tv.nsec);
+jlong totalTime(struct timespec* start, struct timespec* end){
+	return (end->tv_sec - start->tv_sec) * 1000000000 + (end->tv_nsec - start->tv_nsec);
 }

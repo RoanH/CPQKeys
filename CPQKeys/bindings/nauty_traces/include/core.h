@@ -9,6 +9,6 @@ void constructSparseGraph(JNIEnv*, jobjectArray*, sparsegraph*);
 
 void parseColoring(JNIEnv*, int, jintArray*, int*, int*);
 
-jlong totalTime(timespec*, timespec*);
+jlong totalTime(struct timespec*, struct timespec*);
 
 #endif
