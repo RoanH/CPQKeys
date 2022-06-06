@@ -1,5 +1,4 @@
-#include <jni.h>
-#include "core.h"
+#include <core.h>
 
 void constructSparseGraph(JNIEnv* env, jobjectArray* adj, sparsegraph* graph){
 	jsize len = (*env)->GetArrayLength(env, *adj);
@@ -49,4 +48,8 @@ void parseColoring(JNIEnv* env, int len, jintArray* colors, int* labels, int* pt
 		}
 	}
 	(*env)->ReleaseIntArrayElements(env, *colors, colorData, 0);
+}
+
+jlong totalTime(timespec* start, timespec* end){
+	return (end->tv_sec - start->tv_sec) * 1000000000 + (end->tv_nsec - start->tv.nsec);
 }

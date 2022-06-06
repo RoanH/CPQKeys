@@ -1,12 +1,15 @@
-#include "dev_roanh_cpqkeys_algo_Nauty.h"
-#include "core.h"
+#include <dev_roanh_cpqkeys_algo_Nauty.h>
+#include <core.h>
+#include <time.h>
 
 JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_test(JNIEnv* env, jclass obj, jint num){
 	return 2 * num;
 }
 
 //sparse nauty
-JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
+JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
+	struct timespec start;
+	clock_gettime(CLOCK_MONOTONIC_RAW, &start);
 	SG_DECL(graph);
 
 	constructSparseGraph(env, &adj, &graph);
@@ -26,14 +29,23 @@ JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* en
 
 	parseColoring(env, n, &colors, labels, ptn);
 
-	//compute canonical form and labelling
+	struct timespec mid;
+	clock_gettime(CLOCK_MONOTONIC_RAW, &mid);
+
+	//compute canonical form and labeling
 	SG_DECL(canon);
 	sparsenauty(&graph, labels, ptn, orbits, &options, &stats, &canon);
 
-	//TODO return some representation of canon
-	printf("canon:");
-	for(int i = 0; i < n; i++){
-		printf(" %d", labels[i]);
-	}
-	printf("\n");
+	struct timespec end;
+	clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+
+	//return times
+	jlongArray result = (*env)->NewLongArray(env, 2);
+
+	jlong data[2];
+	data[0] = totalTime(&start, &mid);
+	data[1] = totalTime(&mid, &end);
+	(*env)->SetLongArrayRegion(result, 0, 2, data);
+
+	return result;
 }

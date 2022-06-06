@@ -32,5 +32,5 @@ public class Nauty{
 
 	public static native int test(int num);
 	
-	private static native void computeCanon(int[][] adj, int[] colors);
+	private static native long[] computeCanon(int[][] adj, int[] colors);
 }
