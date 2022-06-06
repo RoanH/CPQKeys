@@ -30,3 +30,14 @@ nishe:
     paths:
       - ${PROJECTNAME}/native/*nishe.*
 
+nauty_traces:
+  stage: compile
+  script:
+    - apt-get update && apt-get -y install gcc cmake
+    - cd bindings/nauty_traces
+    - ./build.sh
+  artifacts:
+    name: "Nauty Traces Linux Library"
+    expire_in: 1 week
+    paths:
+      - ${PROJECTNAME}/native/*nauty.*
