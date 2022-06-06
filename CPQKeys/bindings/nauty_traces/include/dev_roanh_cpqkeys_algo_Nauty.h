@@ -18,9 +18,9 @@ JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_test
 /*
  * Class:     dev_roanh_cpqkeys_algo_Nauty
  * Method:    computeCanon
- * Signature: ([[I[I)V
+ * Signature: ([[I[I)[J
  */
-JNIEXPORT void JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon
+JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon
   (JNIEnv *, jclass, jobjectArray, jintArray);
 
 #ifdef __cplusplus
