@@ -27,7 +27,9 @@ public class Nauty{
 		//+1 it all so negation can be used to denote range ends
 		int[] colors = new int[]{1, -3, 2, 4, -5, -6};
 		
-		computeCanon(graph, colors);
+		long[] times = computeCanon(graph, colors);
+		System.out.println("construct time: " + times[0]);
+		System.out.println("runtime: " + times[1]);
 	}
 
 	public static native int test(int num);
