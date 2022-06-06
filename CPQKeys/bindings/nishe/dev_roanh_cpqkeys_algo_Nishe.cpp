@@ -39,7 +39,7 @@ JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_test(JNIEnv* env, jclas
  *         took to construct the partition nest and graph and second the
  *         time in milliseconds it took to compute the refinement trace.
  */
-JNIEXPORT jintArray JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
+JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
 	steady_clock::time_point start_time = steady_clock::now();
 
 	//construct pi
@@ -87,12 +87,12 @@ JNIEXPORT jintArray JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEn
 	steady_clock::time_point end_time = steady_clock::now();
 
 	//return times
-	jintArray result = env->NewIntArray(2);
+	jlongArray result = env->NewLongArray(2);
 
-	jint data[2];
+	jlong data[2];
 	data[0] = duration_cast<nanoseconds>(mid_time - start_time).count();
 	data[1] = duration_cast<nanoseconds>(end_time - mid_time).count();
-	env->SetIntArrayRegion(result, 0, 2, data);
+	env->SetLongArrayRegion(result, 0, 2, data);
 
 	return result;
 }

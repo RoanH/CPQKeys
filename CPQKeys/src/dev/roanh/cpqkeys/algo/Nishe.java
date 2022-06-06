@@ -26,13 +26,13 @@ public class Nishe{
 		//individual levels need to be sorted, +1 it all so negation can be used to denote range starts
 		int[] colors = new int[]{-1, 3, -2, 4, 5, -6};
 		
-		int[] times = computeCanon(graph, colors);
+		long[] times = computeCanon(graph, colors);
 		
 		System.out.println("prep time: " + times[0]);
 		System.out.println("canon time: " + times[1]);
 	}
 	
-	public static int[] computeCanon(Graph<VertexData<GraphNode<Object, Void>>, Void> graph){
+	public static long[] computeCanon(Graph<VertexData<GraphNode<Object, Void>>, Void> graph){
 		long start = System.nanoTime();
 		Map<Object, List<Integer>> colorMap = new HashMap<Object, List<Integer>>();
 		
@@ -55,8 +55,8 @@ public class Nishe{
 		
 		long end = System.nanoTime();
 		
-		int[] times = computeCanon(adj, colors);
-		return new int[]{times[0], times[1], (int)(end - start)};
+		long[] times = computeCanon(adj, colors);
+		return new long[]{times[0], times[1], end - start};
 	}
 	
 	/**
@@ -86,5 +86,5 @@ public class Nishe{
 	 *         took to construct the partition nest and graph and second the
 	 *         time in milliseconds it took to compute the refinement trace.
 	 */
-	private static native int[] computeCanon(int[][] adj, int[] colors);
+	private static native long[] computeCanon(int[][] adj, int[] colors);
 }
