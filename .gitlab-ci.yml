@@ -1,3 +1,5 @@
+image: openjdk:8
+
 variables:
   NAME: "${CI_PROJECT_NAME}-${CI_PIPELINE_ID}-${CI_BUILD_REF_NAME}"
   PROJECTNAME: CPQKeys
@@ -17,10 +19,9 @@ endings:
   stage: check
 
 nishe:
-  image: gcc
   stage: compile
   script:
-    - apt update && apt -y install cmake openjdk-8-jdk
+    - apt-get update && apt-get -y install gcc cmake
     - cd bindings/nishe
     - ./build.sh
   artifacts:
