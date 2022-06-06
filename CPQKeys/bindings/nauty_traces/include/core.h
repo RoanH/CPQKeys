@@ -3,7 +3,7 @@
 
 #include <jni.h>
 #include <nausparse.h>
-#include <core.h>
+#include <time.h>
 
 void constructSparseGraph(JNIEnv*, jobjectArray*, sparsegraph*);
 
