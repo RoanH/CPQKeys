@@ -23,4 +23,7 @@ nishe:
     - cd bindings/nishe
     - ./build.sh
   artifacts:
-    - ${PROJECTNAME}/native/*nishe.*
+    name: "Nishe Linux Library"
+    expire_in: 1 week
+    paths:
+      - ${PROJECTNAME}/native/*nishe.*
