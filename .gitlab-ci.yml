@@ -1,0 +1,26 @@
+variables:
+  NAME: "${CI_PROJECT_NAME}-${CI_PIPELINE_ID}-${CI_BUILD_REF_NAME}"
+  PROJECTNAME: CPQKeys
+
+before_script:
+  - chmod -R 755 ./*
+  - cd ${PROJECTNAME}
+  - ls -l
+
+stages:
+  - check
+  - compile
+
+endings:
+  allow_failure: true
+  script: curl ${SERVER}ci/lf.sh | bash
+  stage: check
+
+nishe:
+  image: gcc
+  stage: compile
+  script:
+    - cd bindings/nishe
+    - ./build.sh
+  artifacts:
+    - ${PROJECTNAME}/native/*nishe.*
