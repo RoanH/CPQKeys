@@ -21,7 +21,7 @@ endings:
 nishe:
   stage: compile
   script:
-    - apt-get update && apt-get -y install gcc cmake
+    - apt-get update && apt-get -y install gcc g++ cmake
     - cd bindings/nishe
     - ./build.sh
   artifacts:
@@ -29,3 +29,4 @@ nishe:
     expire_in: 1 week
     paths:
       - ${PROJECTNAME}/native/*nishe.*
+
