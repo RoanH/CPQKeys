@@ -25,7 +25,7 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonDense
 	DYNALLOC2(graph, input, input_sz, n, m, "malloc");
 	EMPTYGRAPH(input, m, n);
 
-	for(int i = 0; i < len; i++){
+	for(int i = 0; i < n; i++){
 		jintArray row = (jintArray)((*env)->GetObjectArrayElement(env, adj, i));
 		jsize rlen = (*env)->GetArrayLength(env, row);
 		jint* elem = (*env)->GetIntArrayElements(env, row, 0);
