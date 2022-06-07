@@ -2,7 +2,7 @@
 #include <core.h>
 
 //dense nauty
-JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonSparse(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
+JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonDense(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
 	struct timespec start;
 	clock_gettime(CLOCK_MONOTONIC_RAW, &start);
 
