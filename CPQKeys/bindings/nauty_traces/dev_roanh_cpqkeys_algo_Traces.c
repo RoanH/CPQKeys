@@ -2,10 +2,6 @@
 #include <traces.h>
 #include <core.h>
 
-JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Traces_test(JNIEnv* env, jclass obj, jint num){
-	return 2 * num;
-}
-
 JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Traces_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
 	struct timespec start;
 	clock_gettime(CLOCK_MONOTONIC_RAW, &start);

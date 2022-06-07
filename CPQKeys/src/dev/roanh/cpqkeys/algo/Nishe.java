@@ -11,7 +11,6 @@ import dev.roanh.gmark.util.Graph.GraphEdge;
 import dev.roanh.gmark.util.Graph.GraphNode;
 
 public class Nishe{
-	//TODO may need to return runtimes as long since things go up fast if it is measured in nanos
 	
 	public static void test(){
 		int[][] graph = new int[][]{
@@ -58,14 +57,6 @@ public class Nishe{
 		long[] times = computeCanon(adj, colors);
 		return new long[]{times[0], times[1], end - start};
 	}
-	
-	/**
-	 * Simple test function that double the input integer, only
-	 * used to validate that the native library linked and compiled successfully.
-	 * @param num The input number to double.
-	 * @return The input number times two.
-	 */
-	public static native int test(int num);
 	
 	/**
 	 * Computes the canonical trace value and new partition nest for the

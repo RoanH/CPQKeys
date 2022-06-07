@@ -9,14 +9,6 @@ extern "C" {
 #endif
 /*
  * Class:     dev_roanh_cpqkeys_algo_Traces
- * Method:    test
- * Signature: (I)I
- */
-JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Traces_test
-  (JNIEnv *, jclass, jint);
-
-/*
- * Class:     dev_roanh_cpqkeys_algo_Traces
  * Method:    computeCanon
  * Signature: ([[I[I)[J
  */

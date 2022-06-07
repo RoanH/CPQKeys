@@ -33,17 +33,5 @@ public class Main{
 			System.out.println("Loading native library: " + lib.getFileName());
 			System.load(lib.toAbsolutePath().toString());
 		}
-		
-		if(20 != Nauty.test(10)){
-			throw new UnsatisfiedLinkError("Validation failed (nauty)");
-		}
-		
-		if(40 != Nishe.test(20)){
-			throw new UnsatisfiedLinkError("Validation failed (nishe)");
-		}
-		
-		if(60 != Traces.test(30)){
-			throw new UnsatisfiedLinkError("Validation failed (traces)");
-		}
 	}
 }

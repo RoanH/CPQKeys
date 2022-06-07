@@ -8,18 +8,6 @@ using namespace nishe;
 using namespace std::chrono;
 
 /**
- * Simple test function that double the input integer, only
- * used to validate that the native library linked and compiled successfully.
- * @param env JNI environment.
- * @param obj Calling class.
- * @param num The input number to double.
- * @return The input number times two.
- */
-JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_test(JNIEnv* env, jclass obj, jint num){
-	return 2 * num;
-}
-
-/**
  * Computes the canonical trace value and new partition nest for the
  * given graph with the given vertex coloring. Returns the time in
  * milliseconds required for computations.

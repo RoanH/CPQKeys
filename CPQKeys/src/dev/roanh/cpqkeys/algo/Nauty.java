@@ -27,12 +27,12 @@ public class Nauty{
 		//+1 it all so negation can be used to denote range ends
 		int[] colors = new int[]{1, -3, 2, 4, -5, -6};
 		
-		long[] times = computeCanon(graph, colors);
+		long[] times = computeCanonSparse(graph, colors);
 		System.out.println("construct time: " + times[0]);
 		System.out.println("runtime: " + times[1]);
 	}
 
-	public static native int test(int num);
+	private static native long[] computeCanonSparse(int[][] adj, int[] colors);
 	
-	private static native long[] computeCanon(int[][] adj, int[] colors);
+	private static native long[] computeCanonDense(int[][] adj, int[] colors);
 }

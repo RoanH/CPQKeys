@@ -9,18 +9,18 @@ extern "C" {
 #endif
 /*
  * Class:     dev_roanh_cpqkeys_algo_Nauty
- * Method:    test
- * Signature: (I)I
+ * Method:    computeCanonSparse
+ * Signature: ([[I[I)[J
  */
-JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_test
-  (JNIEnv *, jclass, jint);
+JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonSparse
+  (JNIEnv *, jclass, jobjectArray, jintArray);
 
 /*
  * Class:     dev_roanh_cpqkeys_algo_Nauty
- * Method:    computeCanon
+ * Method:    computeCanonDense
  * Signature: ([[I[I)[J
  */
-JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon
+JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonDense
   (JNIEnv *, jclass, jobjectArray, jintArray);
 
 #ifdef __cplusplus

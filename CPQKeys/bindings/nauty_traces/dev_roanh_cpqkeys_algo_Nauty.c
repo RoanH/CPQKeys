@@ -1,12 +1,35 @@
 #include <dev_roanh_cpqkeys_algo_Nauty.h>
 #include <core.h>
 
-JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_test(JNIEnv* env, jclass obj, jint num){
-	return 2 * num;
+//dense nauty
+JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonSparse(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
+	struct timespec start;
+	clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+
+	//TODO setup
+
+	struct timespec mid;
+	clock_gettime(CLOCK_MONOTONIC_RAW, &mid);
+
+	//compute canonical form and labeling
+	//TODO
+
+	struct timespec end;
+	clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+
+	//return times
+	jlongArray result = (*env)->NewLongArray(env, 2);
+
+	jlong data[2];
+	data[0] = totalTime(&start, &mid);
+	data[1] = totalTime(&mid, &end);
+	(*env)->SetLongArrayRegion(env, result, 0, 2, data);
+
+	return result;
 }
 
 //sparse nauty
-JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
+JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonSparse(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
 	struct timespec start;
 	clock_gettime(CLOCK_MONOTONIC_RAW, &start);
 	SG_DECL(graph);
