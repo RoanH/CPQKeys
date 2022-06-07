@@ -19,7 +19,8 @@ public class Main{
 			e.printStackTrace();
 		}
 		
-		Nauty.test();
+		//Nauty.test();
+		Traces.test();
 		
 		//System.out.println("=====================================================");
 		
