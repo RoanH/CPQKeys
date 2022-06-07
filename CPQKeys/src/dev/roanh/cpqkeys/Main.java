@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 
 import dev.roanh.cpqkeys.algo.Nauty;
 import dev.roanh.cpqkeys.algo.Nishe;
+import dev.roanh.cpqkeys.algo.Traces;
 
 public class Main{
 
@@ -37,8 +38,12 @@ public class Main{
 			throw new UnsatisfiedLinkError("Validation failed (nauty)");
 		}
 		
-		if(20 != Nishe.test(10)){
+		if(40 != Nishe.test(20)){
 			throw new UnsatisfiedLinkError("Validation failed (nishe)");
+		}
+		
+		if(60 != Traces.test(30)){
+			throw new UnsatisfiedLinkError("Validation failed (traces)");
 		}
 	}
 }
