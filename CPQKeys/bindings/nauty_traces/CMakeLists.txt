@@ -10,7 +10,7 @@ if(NOT JNI_FOUND)
 	message(FATAL_ERROR "Could not determine Java include path. Please set your JAVA_HOME environment variable to the location of the desired JDK.")
 endif()
 
-add_library(nauty SHARED
+add_library(ntcore SHARED
 	"./src/nautil.c"
 	"./src/naugraph.c"
 	"./src/naurng.c"
@@ -19,13 +19,42 @@ add_library(nauty SHARED
 	"./src/nauty.c"
 	"./src/schreier.c"
 	"./core.c"
+)
+
+add_library(nauty SHARED
 	"./dev_roanh_cpqkeys_algo_Nauty.c"
+)
+
+add_library(traces SHARED
+	"./src/gtools.c"
+	"./src/traces.c"
+	"./dev_roanh_cpqkeys_algo_Traces.c"
+)
+
+set_target_properties(ntcore PROPERTIES
+	PROPERTY C_STANDARD 11
+	PROPERTY C_STANDARD_REQUIRED ON
+	OUTPUT_NAME ntcore
 )
 
 set_target_properties(nauty PROPERTIES
 	PROPERTY C_STANDARD 11
 	PROPERTY C_STANDARD_REQUIRED ON
-	OUTPUT_NAME ${CMAKE_PROJECT_NAME}
+	OUTPUT_NAME nauty
+)
+
+set_target_properties(traces PROPERTIES
+	PROPERTY C_STANDARD 11
+	PROPERTY C_STANDARD_REQUIRED ON
+	OUTPUT_NAME traces
+)
+
+target_include_directories(ntcore
+	PUBLIC
+		$<BUILD_INTERFACE:${JNI_INCLUDE_DIRS}>
+
+	PRIVATE
+		${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_include_directories(nauty
@@ -36,4 +65,17 @@ target_include_directories(nauty
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
+target_include_directories(traces
+	PUBLIC
+		$<BUILD_INTERFACE:${JNI_INCLUDE_DIRS}>
+
+	PRIVATE
+		${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(nauty ntcore)
+target_link_libraries(traces ntcore)
+
+install(TARGETS ntcore RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(TARGETS nauty RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS traces RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR})

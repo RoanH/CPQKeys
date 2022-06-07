@@ -5,6 +5,10 @@
 #include <nausparse.h>
 #include <time.h>
 
+#ifdef __CYGWIN__
+#define CLOCK_MONOTONIC_RAW CLOCK_MONOTONIC
+#endif
+
 void constructSparseGraph(JNIEnv*, jobjectArray*, sparsegraph*);
 
 void parseColoring(JNIEnv*, int, jintArray*, int*, int*);

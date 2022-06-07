@@ -1,4 +1,5 @@
 #include <dev_roanh_cpqkeys_algo_Traces.h>
+#include <traces.h>
 #include <core.h>
 
 JNIEXPORT jint JNICALL Java_dev_roanh_cpqkeys_algo_Traces_test(JNIEnv* env, jclass obj, jint num){
