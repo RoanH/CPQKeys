@@ -6,13 +6,42 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonDense
 	struct timespec start;
 	clock_gettime(CLOCK_MONOTONIC_RAW, &start);
 
-	//TODO setup
+	DYNALLSTAT(int, labels, labels_sz);
+	DYNALLSTAT(int, ptn, ptn_sz);
+	DYNALLSTAT(int, orbits, orbits_sz);
+	DYNALLSTAT(graph, input, input_sz);
+
+	static DEFAULTOPTIONS_GRAPH(options);
+	statsblk stats;
+	options.getcanon = TRUE;
+
+	int n = (*env)->GetArrayLength(env, adj);
+	int m = SETWORDSNEEDED(n);
+	nauty_check(WORDSIZE, m, n, NAUTYVERSIONID);
+
+	DYNALLOC1(int, labels, labels_sz,n, "malloc");
+	DYNALLOC1(int, ptn, ptn_sz, n, "malloc");
+	DYNALLOC1(int, orbits, orbits_sz, n, "malloc");
+	DYNALLOC2(graph, input, input_sz, n, m, "malloc");
+	EMPTYGRAPH(input, m, n);
+
+	for(int i = 0; i < len; i++){
+		jintArray row = (jintArray)((*env)->GetObjectArrayElement(env, adj, i));
+		jsize rlen = (*env)->GetArrayLength(env, row);
+		jint* elem = (*env)->GetIntArrayElements(env, row, 0);
+
+		for(int j = 0; j < rlen; j++){
+			ADDONEEDGE(input, i, elem[j], m);
+		}
+	}
 
 	struct timespec mid;
 	clock_gettime(CLOCK_MONOTONIC_RAW, &mid);
 
 	//compute canonical form and labeling
-	//TODO
+	DYNALLSTAT(graph, canon ,canon_sz);
+	DYNALLOC2(graph, canon, canon_sz, n, m, "malloc");
+	densenauty(input, labels, ptn, orbits, &options, &stats, m, n, canon);
 
 	struct timespec end;
 	clock_gettime(CLOCK_MONOTONIC_RAW, &end);
