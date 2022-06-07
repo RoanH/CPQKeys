@@ -41,3 +41,5 @@ nauty_traces:
     expire_in: 1 week
     paths:
       - ${PROJECTNAME}/native/*nauty.*
+      - ${PROJECTNAME}/native/*ntcore.*
+      - ${PROJECTNAME}/native/*traces.*
