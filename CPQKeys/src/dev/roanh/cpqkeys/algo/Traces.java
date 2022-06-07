@@ -11,5 +11,6 @@ public class Traces{
 	
 	public static native int test(int num);
 	
-	private static native void computeCanon(int[][] adj, int[] colors);
+	//NOTE: Traces REQUIRES an undirected graph so make sure to add all edges in both directions
+	private static native long[] computeCanon(int[][] adj, int[] colors);
 }
