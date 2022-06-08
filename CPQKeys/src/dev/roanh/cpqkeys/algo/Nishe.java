@@ -36,7 +36,7 @@ public class Nishe{
 			group.sort(null);
 			colors[idx++] = -group.get(0) - 1;
 			for(int i = 1; i < group.size(); i++){
-				colors[idx++] = group.get(i);
+				colors[idx++] = group.get(i) + 1;
 			}
 		}
 		
