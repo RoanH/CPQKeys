@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(nauty C)
+project(nauty_traces C)
 
 set(CMAKE_INSTALL_LIBDIR "${PROJECT_SOURCE_DIR}/../../native")
 set(CMAKE_FIND_LIBRARY_PREFIXES "lib" "")
@@ -55,6 +55,7 @@ target_include_directories(ntcore
 
 	PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/include
+		${CMAKE_CURRENT_SOURCE_DIR}/include/nauty
 )
 
 target_include_directories(nauty
@@ -63,6 +64,7 @@ target_include_directories(nauty
 
 	PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/include
+		${CMAKE_CURRENT_SOURCE_DIR}/include/nauty
 )
 
 target_include_directories(traces
@@ -71,6 +73,7 @@ target_include_directories(traces
 
 	PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/include
+		${CMAKE_CURRENT_SOURCE_DIR}/include/nauty
 )
 
 target_link_libraries(nauty ntcore)

@@ -5,9 +5,6 @@
 *.bat           text eol=crlf
 
 bindings/nauty_traces/src/** linguist-vendored
-bindings/nauty_traces/include/n*.h linguist-vendored
-bindings/nauty_traces/include/schreier.h linguist-vendored
-bindings/nauty_traces/include/gtools.h linguist-vendored
-bindings/nauty_traces/include/traces.h linguist-vendored
+bindings/nauty_traces/include/nauty/** linguist-vendored
 bindings/nishe/include/nishe/** linguist-vendored
 bindings/nishe/src/** linguist-vendored
