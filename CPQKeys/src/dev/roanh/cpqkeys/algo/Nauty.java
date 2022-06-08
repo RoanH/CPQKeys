@@ -31,6 +31,8 @@ public class Nauty{
 		System.out.println("construct time: " + times[0]);
 		System.out.println("runtime: " + times[1]);
 	}
+	
+	
 
 	private static native long[] computeCanonSparse(int[][] adj, int[] colors);
 	
