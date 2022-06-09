@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import dev.roanh.cpqkeys.algo.Bliss;
 import dev.roanh.cpqkeys.algo.Nauty;
 import dev.roanh.cpqkeys.algo.Nishe;
 import dev.roanh.cpqkeys.algo.Traces;
@@ -19,8 +20,9 @@ public class Main{
 			e.printStackTrace();
 		}
 		
-		Nauty.test();
+		//Nauty.test();
 		//Traces.test();
+		Bliss.test();
 		
 		//System.out.println("=====================================================");
 		
