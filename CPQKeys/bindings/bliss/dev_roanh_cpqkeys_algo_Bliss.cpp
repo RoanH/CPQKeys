@@ -19,7 +19,7 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Bliss_computeCanon(JNIE
 	}
 	env->ReleaseIntArrayElements(edges, elem, 0);
 
-	elem = env->getIntArrayElements(colors, 0);
+	elem = env->GetIntArrayElements(colors, 0);
 	for(int i = 0; i < size; i++){
 		graph->change_color(i, elem[i]);
 	}
