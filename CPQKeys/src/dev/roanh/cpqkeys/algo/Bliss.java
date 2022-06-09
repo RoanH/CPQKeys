@@ -27,7 +27,9 @@ public class Bliss{
 		colors[5] = 2;
 		colors[6] = 3;
 		
-		computeCanon(edges, colors);
+		long[] times = computeCanon(edges, colors);
+		System.out.println("construct time: " + times[0]);
+		System.out.println("runtime: " + times[1]);
 	}
 	
 	
