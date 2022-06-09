@@ -43,3 +43,15 @@ nauty_traces:
       - ${PROJECTNAME}/native/*nauty.*
       - ${PROJECTNAME}/native/*ntcore.*
       - ${PROJECTNAME}/native/*traces.*
+
+bliss:
+  stage: compile
+  script:
+    - apt-get update && apt-get -y install gcc g++ cmake
+    - cd bindings/bliss
+    - ./build.sh
+  artifacts:
+    name: "Bliss Linux Library"
+    expire_in: 1 week
+    paths:
+      - ${PROJECTNAME}/native/*bliss.*
