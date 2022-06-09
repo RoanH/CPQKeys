@@ -29,7 +29,7 @@ public class Nishe{
 	public static <T> long[] computeCanon(NumberedGraph<T> graph){
 		long start = System.nanoTime();
 		
-		ColoredGraph<T> cg = graph.toColoredGraph();
+		ColoredGraph cg = graph.toColoredGraph();
 		int[] colors = new int[cg.getNodeCount()];
 		int idx = 0;
 		for(List<Integer> group : cg.getColorMap()){
