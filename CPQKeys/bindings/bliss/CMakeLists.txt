@@ -16,7 +16,7 @@ add_library(bliss SHARED
 	"./src/orbit.cc"
 	"./src/partition.cc"
 	"./src/uintseqhash.cc"
-	"./dev_roanh_cpqkeys_algo_Nishe.cpp"
+	"./dev_roanh_cpqkeys_algo_Bliss.cpp"
 )
 
 set_target_properties(bliss PROPERTIES
