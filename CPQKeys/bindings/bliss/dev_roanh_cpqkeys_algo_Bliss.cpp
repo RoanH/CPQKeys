@@ -5,6 +5,21 @@
 using namespace bliss;
 using namespace std::chrono;
 
+/**
+ * Computes the canonical labeling of the given colored graph. Returns
+ * the time in milliseconds required for computations.
+ * @param env JNI environment.
+ * @param obj Calling class.
+ * @param edges The input graph as a list of edges with two consecutive
+ *        indices representing the ID of the source and target vertex
+ *        of an edge respectively.
+ * @param colors An array with as length the number of vertices in the
+ *        graph and at each index for the vertex with the same ID as the
+ *        index its color (as an integer).
+ * @return An array with two elements, first the time in nanoseconds it
+ *         took to construct the graph and second the time in nanoseconds
+ *         it took to compute the canonical form of the graph.
+ */
 JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Bliss_computeCanon(JNIEnv* env, jclass obj, jintArray edges, jintArray colors){
 	steady_clock::time_point start_time = steady_clock::now();
 

@@ -23,9 +23,9 @@ using namespace std::chrono;
  *        color group with all following vertices being of the same color.
  *        Vertices within each color group are expected to be in sorted
  *        ascending order.
- * @return An array with two elements, first the time in milliseconds it
+ * @return An array with two elements, first the time in nanoseconds it
  *         took to construct the partition nest and graph and second the
- *         time in milliseconds it took to compute the refinement trace.
+ *         time in nanoseconds it took to compute the refinement trace.
  */
 JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nishe_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
 	steady_clock::time_point start_time = steady_clock::now();
