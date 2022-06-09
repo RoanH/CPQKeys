@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import dev.roanh.gmark.util.DataProxy;
 import dev.roanh.gmark.util.Graph;
 import dev.roanh.gmark.util.Graph.GraphEdge;
 import dev.roanh.gmark.util.Graph.GraphNode;
@@ -36,21 +37,27 @@ public class GraphUtil{
 	//public static final
 
 	public static class NumberedGraph<T> extends Graph<VertexData<GraphNode<T, Void>>, Void>{
+		private static final Object DEFAULT = new Object();
 		
-		public ColoredGraph<T> toColoredGraph(){
-			Map<T, List<Integer>> colorMap = new HashMap<T, List<Integer>>();
+		public ColoredGraph toColoredGraph(){
+			Map<Object, List<Integer>> colorMap = new HashMap<Object, List<Integer>>();
 			
 			int[][] adj = new int[getNodeCount()][];
 			for(GraphNode<VertexData<GraphNode<T, Void>>, Void> node : getNodes()){
 				adj[node.getData().getID()] = node.getOutEdges().stream().map(GraphEdge::getTargetNode).map(GraphNode::getData).mapToInt(VertexData::getID).toArray();
-				colorMap.computeIfAbsent(node.getData().getData().getData(), k->new ArrayList<Integer>()).add(node.getData().getID());
+				T data = node.getData().getData().getData();
+				if(data instanceof DataProxy){
+					colorMap.computeIfAbsent(((DataProxy<?>)data).getData(), k->new ArrayList<Integer>()).add(node.getData().getID());
+				}else{
+					colorMap.computeIfAbsent(DEFAULT, k->new ArrayList<Integer>()).add(node.getData().getID());
+				}
 			}
 			
-			return new ColoredGraph<>(adj, colorMap.values());
+			return new ColoredGraph(adj, colorMap.values());
 		}
 	}
 	
-	public static class ColoredGraph<T>{
+	public static class ColoredGraph{
 		private int[][] graph;
 		//each list has the ids of same color nodes
 		private Collection<List<Integer>> colorMap;
