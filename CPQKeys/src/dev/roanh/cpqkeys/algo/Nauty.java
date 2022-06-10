@@ -51,8 +51,35 @@ public class Nauty{
 	}
 	
 	
-
+	/**
+	 * Computes the canonical form of the given coloured graph using the sparse
+	 * version of nauty. Returns the time in nanoseconds required for computations.
+	 * @param adj The input graph in adjacency list format, <code>n</code>
+	 *        arrays with each the indices of the neighbours of the <code>
+	 *        n</code>-th vertex.
+	 * @param colors The array containing raw color information data. Contains vertex
+	 *        indices in blocks of the same color with the start of a block of the same
+	 *        color being indicated by a negated value. All vertex indices are also always
+	 *        one higher than their actual index in the graph.
+	 * @return An array with two elements, first the time in nanoseconds it
+	 *         took to construct the graph and second the time in nanoseconds
+	 *         it took to compute the canonical form of the graph.
+	 */
 	private static native long[] computeCanonSparse(int[][] adj, int[] colors);
 	
+	/**
+	 * Computes the canonical form of the given coloured graph using the dense
+	 * version of nauty. Returns the time in nanoseconds required for computations.
+	 * @param adj The input graph in adjacency list format, <code>n</code>
+	 *        arrays with each the indices of the neighbours of the <code>
+	 *        n</code>-th vertex.
+	 * @param colors The array containing raw color information data. Contains vertex
+	 *        indices in blocks of the same color with the start of a block of the same
+	 *        color being indicated by a negated value. All vertex indices are also always
+	 *        one higher than their actual index in the graph.
+	 * @return An array with two elements, first the time in nanoseconds it
+	 *         took to construct the graph and second the time in nanoseconds
+	 *         it took to compute the canonical form of the graph.
+	 */
 	private static native long[] computeCanonDense(int[][] adj, int[] colors);
 }
