@@ -1,0 +1,3 @@
+[submodule "CPQKeys/bindings/scott/scott"]
+	path = CPQKeys/bindings/scott/scott
+	url = git@github.com:theplatypus/scott.git
