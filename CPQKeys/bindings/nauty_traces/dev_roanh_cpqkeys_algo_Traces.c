@@ -20,6 +20,21 @@
 #include <traces.h>
 #include <core.h>
 
+/**
+ * Computes the canonical form of the given colored graph using traces. Returns
+ * the time in nanoseconds required for computations.
+ * @param The JNI environment.
+ * @param Calling class.
+ * @param adj The input graph in adjacency list format, n arrays with
+ *        each the indices of the neighbors of the n-th vertex.
+ * @param colors The array containing raw color information data. Contains vertex
+ *        indices in blocks of the same color with the start of a block of the same
+ *        color being indicated by a negated value. All vertex indices are also always
+ *        one higher than their actual index in the graph.
+ * @return An array with two elements, first the time in nanoseconds it
+ *         took to construct the graph and second the time in nanoseconds
+ *         it took to compute the canonical form of the graph.
+ */
 JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Traces_computeCanon(JNIEnv* env, jclass obj, jobjectArray adj, jintArray colors){
 	struct timespec start;
 	clock_gettime(CLOCK_MONOTONIC_RAW, &start);
