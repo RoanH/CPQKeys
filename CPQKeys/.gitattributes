@@ -10,3 +10,5 @@ bindings/nishe/include/nishe/** linguist-vendored
 bindings/nishe/src/** linguist-vendored
 bindings/bliss/include/bliss/** linguist-vendored
 bindings/bliss/src/** linguist-vendored
+*.sh linguist-detectable
+*.bat linguist-detectable
