@@ -7,7 +7,7 @@ using namespace std::chrono;
 
 /**
  * Computes the canonical labeling of the given colored graph. Returns
- * the time in milliseconds required for computations.
+ * the time in nanoseconds required for computations.
  * @param env JNI environment.
  * @param obj Calling class.
  * @param edges The input graph as a list of edges with two consecutive

@@ -10,7 +10,7 @@ using namespace std::chrono;
 /**
  * Computes the canonical trace value and new partition nest for the
  * given graph with the given vertex coloring. Returns the time in
- * milliseconds required for computations.
+ * nanoseconds required for computations.
  * @param env JNI environment.
  * @param obj Calling class.
  * @param adj The input graph in adjacency list format, n arrays with
