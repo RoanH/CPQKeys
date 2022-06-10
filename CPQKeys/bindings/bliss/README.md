@@ -1,0 +1,2 @@
+# Bliss
+This folder contains the JNI interface to [Bliss](http://www.tcs.hut.fi/Software/bliss/) release version 0.73, released on the 1st of September 2015. Bliss is released under the [GNU Lesser General Public License v3.0](https://www.gnu.org/licenses/lgpl-3.0.en.html), an unaltered subset of files from the Bliss 0.73 release is located in the [include/bliss](include/bliss) and [src](src) folders.
