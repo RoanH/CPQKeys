@@ -4,7 +4,12 @@ sys.path.insert(0, './scott')
 import scott as st
 import fileinput
 
-
+while True:
+	line = input()
+	if line == "end":
+		break
+	
+	print("line: ", line)
 
 graph = st.structs.graph.Graph()
 n1 = st.structs.node.Node("1", "C")
@@ -30,7 +35,7 @@ graph.add_edge(e5)
 
 #print(n1)
 #print(e1)
-print(graph)
+#print(graph)
 
 print(str(st.canonize.to_cgraph(graph)))
 
