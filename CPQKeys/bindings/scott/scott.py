@@ -1,4 +1,7 @@
-import scott.scott as st
+# Slightly hacky imports to keep scott as a git submodule
+import sys
+sys.path.insert(0, './scott')
+import scott as st
 
 graph = st.structs.graph.Graph()
 n1 = st.structs.node.Node("1", "C")
