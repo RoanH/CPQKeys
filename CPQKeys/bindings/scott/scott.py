@@ -2,6 +2,9 @@
 import sys
 sys.path.insert(0, './scott')
 import scott as st
+import fileinput
+
+
 
 graph = st.structs.graph.Graph()
 n1 = st.structs.node.Node("1", "C")

@@ -22,37 +22,56 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Locale;
 
 import dev.roanh.cpqkeys.algo.Bliss;
 import dev.roanh.cpqkeys.algo.Nauty;
 import dev.roanh.cpqkeys.algo.Nishe;
+import dev.roanh.cpqkeys.algo.Scott;
 import dev.roanh.cpqkeys.algo.Traces;
 
 public class Main{
+	public static final String PYTHON_COMMAND = findPython();
 
 	public static void main(String[] args){
-		try{
-			loadNatives();
-		}catch(IOException | UnsatisfiedLinkError e){
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		//Nauty.test();
-		//Traces.test();
-		Bliss.test();
+		System.out.println(System.getProperty("user.home"));
 		
-		//System.out.println("=====================================================");
+		Scott.test();
 		
-		//Nishe.test();
+//		try{
+//			loadNatives();
+//		}catch(IOException | UnsatisfiedLinkError e){
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		//Nauty.test();
+//		//Traces.test();
+//		Bliss.test();
+//		
+//		//System.out.println("=====================================================");
+//		
+//		//Nishe.test();
 
 		System.out.println("test");
 	}
 	
-	private static void loadNatives() throws IOException, UnsatisfiedLinkError{
+	private static final void loadNatives() throws IOException, UnsatisfiedLinkError{
 		for(Path lib : Files.newDirectoryStream(Paths.get("native"))){
 			System.out.println("Loading native library: " + lib.getFileName());
 			System.load(lib.toAbsolutePath().toString());
 		}
+	}
+	
+	private static final String findPython(){
+		if(System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")){
+			Path anaconda = Paths.get(System.getProperty("user.home")).resolve("anaconda3").resolve("python.exe");
+			if(Files.exists(anaconda)){
+				return anaconda.toAbsolutePath().toString();
+			}
+		}
+
+		return "python";
 	}
 }
