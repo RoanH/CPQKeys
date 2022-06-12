@@ -44,7 +44,7 @@ public class Nishe{
 		System.out.println("canon time: " + times[1]);
 	}
 	
-	public static <T> long[] computeCanon(NumberedGraph<T> graph){
+	public static <V, E> long[] computeCanon(NumberedGraph<V, E> graph){
 		long start = System.nanoTime();
 		
 		ColoredGraph cg = graph.toColoredGraph();

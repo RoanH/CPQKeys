@@ -33,18 +33,18 @@ import dev.roanh.gmark.util.Graph.GraphNode;
 public class GraphUtil{
 
 	//TODO consider moving this to gmark
-	public static final <T> NumberedGraph<T> numberVertices(Graph<T, Void> in){
-		NumberedGraph<T> out = new NumberedGraph<T>();
-		Map<GraphNode<T, Void>, GraphNode<VertexData<GraphNode<T, Void>>, Void>> nodeMap = new HashMap<GraphNode<T, Void>, GraphNode<VertexData<GraphNode<T, Void>>, Void>>();
+	public static final <V, E> NumberedGraph<V, E> numberVertices(Graph<V, E> in){
+		NumberedGraph<V, E> out = new NumberedGraph<V, E>();
+		Map<GraphNode<V, E>, GraphNode<VertexData<GraphNode<V, E>>, E>> nodeMap = new HashMap<GraphNode<V, E>, GraphNode<VertexData<GraphNode<V, E>>, E>>();
 		
-		List<GraphNode<T, Void>> nodes = in.getNodes();
+		List<GraphNode<V, E>> nodes = in.getNodes();
 		for(int i = 0; i < nodes.size(); i++){
-			VertexData<GraphNode<T, Void>> vertex = new VertexData<GraphNode<T, Void>>(i, nodes.get(i));
+			VertexData<GraphNode<V, E>> vertex = new VertexData<GraphNode<V, E>>(i, nodes.get(i));
 			nodeMap.put(vertex.getData(), out.addUniqueNode(vertex));
 		}
 		
-		for(Entry<GraphNode<T, Void>, GraphNode<VertexData<GraphNode<T, Void>>, Void>> entry : nodeMap.entrySet()){
-			for(GraphEdge<T, Void> edge : entry.getKey().getOutEdges()){
+		for(Entry<GraphNode<V, E>, GraphNode<VertexData<GraphNode<V, E>>, E>> entry : nodeMap.entrySet()){
+			for(GraphEdge<V, E> edge : entry.getKey().getOutEdges()){
 				entry.getValue().addUniqueEdgeTo(nodeMap.get(edge.getTargetNode()));
 			}
 		}
@@ -52,18 +52,35 @@ public class GraphUtil{
 		return out;
 	}
 	
+	//technically still directed but edges need to be treated as undirected
+	public static <V, E> Graph<Object, E> toUndirectedGraph(Graph<V, E> in){
+		Graph<Object, E> out = new Graph<Object, E>();
+		
+		in.getNodes().forEach(node->out.addUniqueNode(node.getData()));
+		for(GraphEdge<V, E> edge : in.getEdges()){
+			GraphNode<Object, E> head = out.addUniqueNode(new DataProxy<String>("head"));
+			GraphNode<Object, E> tail = out.addUniqueNode(new DataProxy<String>("tail"));
+			
+			tail.addUniqueEdgeFrom(edge.getSource(), edge.getData());
+			tail.addUniqueEdgeTo(head, edge.getData());
+			head.addUniqueEdgeTo(edge.getTarget(), edge.getData());
+		}
+		
+		return out;
+	}
+	
 	//public static final
 
-	public static class NumberedGraph<T> extends Graph<VertexData<GraphNode<T, Void>>, Void>{
+	public static class NumberedGraph<V, E> extends Graph<VertexData<GraphNode<V, E>>, E>{
 		private static final Object DEFAULT = new Object();
 		
 		public ColoredGraph toColoredGraph(){
 			Map<Object, List<Integer>> colorMap = new HashMap<Object, List<Integer>>();
 			
 			int[][] adj = new int[getNodeCount()][];
-			for(GraphNode<VertexData<GraphNode<T, Void>>, Void> node : getNodes()){
+			for(GraphNode<VertexData<GraphNode<V, E>>, E> node : getNodes()){
 				adj[node.getData().getID()] = node.getOutEdges().stream().map(GraphEdge::getTargetNode).map(GraphNode::getData).mapToInt(VertexData::getID).toArray();
-				T data = node.getData().getData().getData();
+				V data = node.getData().getData().getData();
 				if(data instanceof DataProxy){
 					colorMap.computeIfAbsent(((DataProxy<?>)data).getData(), k->new ArrayList<Integer>()).add(node.getData().getID());
 				}else{
