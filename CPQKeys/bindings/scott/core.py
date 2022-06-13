@@ -32,7 +32,7 @@ def read_graph(directed = False):
 			break
 		
 		args = line.split(" ", 1)
-		node = st.structs.node.Node(args[0], args[1] if size(args) == 2 else "")
+		node = st.structs.node.Node(args[0], args[1])
 		nodes.append(node)
 		graph.add_node(node)
 	
@@ -43,6 +43,6 @@ def read_graph(directed = False):
 			break
 		
 		args = line.split(" ", 4)
-		graph.add_edge(st.structs.edge.Edge(args[0], nodes[int(args[1])]), modality = nodes[int(args[2])], args[3] if size(args) == 4 else "", directed = directed)
+		graph.add_edge(st.structs.edge.Edge(args[0], nodes[int(args[1])], nodes[int(args[2])], modality = args[3], directed = directed))
 	
 	return graph

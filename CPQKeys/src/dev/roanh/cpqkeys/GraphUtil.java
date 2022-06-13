@@ -45,7 +45,7 @@ public class GraphUtil{
 		
 		for(Entry<GraphNode<V, E>, GraphNode<VertexData<GraphNode<V, E>>, E>> entry : nodeMap.entrySet()){
 			for(GraphEdge<V, E> edge : entry.getKey().getOutEdges()){
-				entry.getValue().addUniqueEdgeTo(nodeMap.get(edge.getTargetNode()));
+				entry.getValue().addUniqueEdgeTo(nodeMap.get(edge.getTargetNode()), edge.getData());
 			}
 		}
 		

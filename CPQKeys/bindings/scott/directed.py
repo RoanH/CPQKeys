@@ -15,18 +15,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import read_graph from core
+# Slightly hacky imports to keep scott as a git submodule
+import sys
+sys.path.insert(0, './scott')
+import scott as st
+from core import read_graph
 import time
 
 start = time.time_ns()
 graph = read_graph(directed = True)
 
 mid = time.time_ns()
-
 canon = st.canonize.to_cgraph(graph)
 
-end - time.time_ns()
-
+end = time.time_ns()
 print("canonical form:", canon)
 print("setup time:", mid - start)
 print("canon time:", end - mid)
