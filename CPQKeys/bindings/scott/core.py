@@ -15,13 +15,35 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Slightly hacky imports to keep scott as a git submodule
+# Slightly hacky imports to keep Scott as a git submodule
 import sys
 sys.path.insert(0, './scott')
 import scott as st
 import fileinput
 
 def read_graph(directed = False):
+	'''
+	Reads a graph from standard input. The expected format is as follows:
+	1. First several node declarations of the form '<id> <label>' here
+	   label is allowed to be absent to indicate that the node has no
+	   label. The space between the id and label is not allowed to be
+	   omitted. All the given node ids have to be unique for the graph.
+	2. The string 'end' to indicate the end of the node declarations.
+	3. Several edge declarations of the form '<id> <source> <target> <label>'
+	   here the label is again allowed to be absent to indicate that the
+	   edge has no label. The space between target and label is not allowed
+	   to be omitted. The edge will be directed from the node with the given
+	   source id to the node with the given target id unless the graph is
+	   not directed. The given id has to be unique for the graph.
+	4. The string 'end' to indicate the end of the edge declarations.
+	
+		Parameters:
+			directed (bool): Whether the input graph should be interpreted as directed
+		
+		Returns:
+			The parsed graph as a Scott graph.
+	'''
+	
 	graph = st.structs.graph.Graph()
 
 	#read nodes
