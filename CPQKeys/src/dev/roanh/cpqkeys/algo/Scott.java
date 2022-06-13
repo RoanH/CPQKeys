@@ -38,11 +38,31 @@ import dev.roanh.gmark.util.Graph;
 import dev.roanh.gmark.util.Graph.GraphEdge;
 import dev.roanh.gmark.util.Graph.GraphNode;
 
+/**
+ * Binding for Scott.
+ * @author Roan
+ * @see <a href="https://theplatypus.github.io/scott/">Scott website</a>
+ */
 public class Scott{
+	/**
+	 * Algorithm binding for Scott that accepts directed graphs as input.
+	 */
 	public static final Algorithm DIRECTED = new Algorithm("Scott (directed)", Scott::runDirected);
+	/**
+	 * Algorithm binding for Scott that only accepts undirected graphs as input.
+	 */
 	public static final Algorithm UNDIRECTED = new Algorithm("Scott (undirected)", Scott::runUndirected);
 	
-	//only has vertex labels for former directed edges
+	/**
+	 * Runs Scott on an undirected input graph that is constructed
+	 * from the given input CPQ query graph by the undirected transform
+	 * {@link GraphUtil#toUndirectedGraph(Graph)}.
+	 * @param input The CPQ query graph to run Scott on.
+	 * @return An array of time measurements containing in the first
+	 *         index the graph transform time, in the second index the
+	 *         native setup time (graph construction) and in the third
+	 *         index the canonization time. All times are in nanoseconds.
+	 */
 	private static long[] runUndirected(Graph<Vertex, Predicate> input){
 		try{
 			long start = System.nanoTime();
@@ -82,7 +102,14 @@ public class Scott{
 		}
 	}
 	
-	//never has vertex labels
+	/**
+	 * Runs Scott on a directed input graph.
+	 * @param input The CPQ query graph to run Scott on.
+	 * @return An array of time measurements containing in the first
+	 *         index the graph transform time, in the second index the
+	 *         native setup time (graph construction) and in the third
+	 *         index the canonization time. All times are in nanoseconds.
+	 */
 	private static long[] runDirected(Graph<Vertex, Predicate> input){
 		try{
 			long start = System.nanoTime();
