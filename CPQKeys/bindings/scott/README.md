@@ -1,0 +1,2 @@
+# Scott
+This folder contains the interface to the latest version of [Scott](https://github.com/theplatypus/scott) currently available (see the submodule commit). Scott is released under the [MIT License](https://opensource.org/licenses/MIT).
