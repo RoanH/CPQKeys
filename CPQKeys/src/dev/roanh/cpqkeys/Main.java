@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import dev.roanh.cpqkeys.algo.Bliss;
@@ -30,17 +32,27 @@ import dev.roanh.cpqkeys.algo.Nishe;
 import dev.roanh.cpqkeys.algo.Scott;
 import dev.roanh.cpqkeys.algo.Traces;
 import dev.roanh.gmark.conjunct.cpq.CPQ;
+import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
 import dev.roanh.gmark.core.graph.Predicate;
+import dev.roanh.gmark.util.Graph;
 
 public class Main{
 	public static final String PYTHON_COMMAND = findPython();
+	public static final List<Algorithm> algos = Arrays.asList(
+		Scott.DIRECTED,
+		Scott.UNDIRECTED
+	);
 
 	public static void main(String[] args){
 		Predicate a = new Predicate(1, "a", 0.0D);
 		Predicate b = new Predicate(2, "b", 0.0D);
 		Predicate c = new Predicate(3, "c", 0.0D);
 		CPQ q = CPQ.intersect(CPQ.concat(CPQ.label(a), CPQ.intersect(CPQ.label(b), CPQ.id()), CPQ.label(c)), CPQ.IDENTITY);
+		Graph<Vertex, Predicate> graph = q.toQueryGraph().toGraph();
 		
+		for(Algorithm algo : algos){
+			algo.time(graph).print();
+		}
 		
 //		try{
 //			loadNatives();

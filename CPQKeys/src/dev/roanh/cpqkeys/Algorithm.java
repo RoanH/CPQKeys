@@ -22,4 +22,12 @@ public class Algorithm{
 	public String getName(){
 		return name;
 	}
+	
+	public RuntimeReport time(Graph<Vertex, Predicate> graph){
+		long start = System.nanoTime();
+		long[] times = canonize(graph);
+		long end = System.nanoTime();
+		
+		return new RuntimeReport(this, times, end - start);
+	}
 }
