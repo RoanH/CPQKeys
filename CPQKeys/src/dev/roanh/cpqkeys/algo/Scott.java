@@ -66,10 +66,10 @@ public class Scott{
 			//write edges
 			writeEdges(out, graph.getEdges());
 			out.flush();
+			long end = System.nanoTime();
 
 			//output
 			long[] times = readTimes(scott);
-			long end = System.nanoTime();
 			return new long[]{
 				end - start,
 				times[0],
@@ -100,10 +100,10 @@ public class Scott{
 			//write edges
 			writeEdges(out, graph.getEdges());
 			out.flush();
+			long end = System.nanoTime();
 			
 			//output
 			long[] times = readTimes(scott);
-			long end = System.nanoTime();
 			return new long[]{
 				end - start,
 				times[0],
