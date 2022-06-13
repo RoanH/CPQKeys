@@ -38,7 +38,7 @@ def read_graph(directed = False):
 	4. The string 'end' to indicate the end of the edge declarations.
 	
 		Parameters:
-			directed (bool): Whether the input graph should be interpreted as directed
+			directed (bool): Whether the input graph should be interpreted as directed.
 		
 		Returns:
 			The parsed graph as a Scott graph.
