@@ -174,8 +174,13 @@ public class Scott{
 			out.print(edge.getSource().getID());
 			out.print(" ");
 			out.print(edge.getTarget().getID());
-			out.print(" ");
-			out.println(edge.getData().getAlias());
+			Predicate data = edge.getData();
+			if(data == null){
+				out.println(" ");
+			}else{
+				out.print(" ");
+				out.println(data.getAlias());
+			}
 			id++;
 		}
 		out.println("end");

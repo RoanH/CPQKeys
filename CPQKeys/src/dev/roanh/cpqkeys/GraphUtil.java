@@ -53,6 +53,7 @@ public class GraphUtil{
 	}
 	
 	//technically still directed but edges need to be treated as undirected
+	//note, only leaving the label on one edge to reduce graph size increase
 	public static <V, E> Graph<Object, E> toUndirectedGraph(Graph<V, E> in){
 		Graph<Object, E> out = new Graph<Object, E>();
 		
@@ -61,16 +62,32 @@ public class GraphUtil{
 			GraphNode<Object, E> head = out.addUniqueNode(new DataProxy<String>("head"));
 			GraphNode<Object, E> tail = out.addUniqueNode(new DataProxy<String>("tail"));
 			
-			tail.addUniqueEdgeFrom(edge.getSource(), edge.getData());
+			tail.addUniqueEdgeFrom(edge.getSource());
 			tail.addUniqueEdgeTo(head, edge.getData());
-			head.addUniqueEdgeTo(edge.getTarget(), edge.getData());
+			head.addUniqueEdgeTo(edge.getTarget());
 		}
 		
 		return out;
 	}
 	
-	//public static final
-
+	public static boolean isHeadNode(GraphNode<?, ?> node){
+		Object data = node.getData();
+		if(data instanceof DataProxy){
+			return "head".equals(((DataProxy<?>)data).getData());
+		}else{
+			return false;
+		}
+	}
+	
+	public static boolean isTailNode(GraphNode<?, ?> node){
+		Object data = node.getData();
+		if(data instanceof DataProxy){
+			return "tail".equals(((DataProxy<?>)data).getData());
+		}else{
+			return false;
+		}
+	}
+	
 	public static class NumberedGraph<V, E> extends Graph<VertexData<GraphNode<V, E>>, E>{
 		private static final Object DEFAULT = new Object();
 		

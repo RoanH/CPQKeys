@@ -18,6 +18,13 @@
  */
 package dev.roanh.cpqkeys.algo;
 
+import dev.roanh.cpqkeys.GraphUtil;
+import dev.roanh.cpqkeys.GraphUtil.ColoredGraph;
+import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
+import dev.roanh.gmark.core.graph.Predicate;
+import dev.roanh.gmark.util.Graph;
+import dev.roanh.gmark.util.Util;
+
 public class Traces{
 
 	
@@ -41,6 +48,26 @@ public class Traces{
 		long[] times = computeCanon(graph, colors);
 		System.out.println("construct time: " + times[0]);
 		System.out.println("runtime: " + times[1]);
+	}
+	
+	//undirected
+	//edge labels to nodes (minimises chain length)
+	//number vertices
+	//vertex colored graph
+	private static long[] computeCanon(Graph<Vertex, Predicate> input){
+		long start = System.nanoTime();
+		ColoredGraph graph = GraphUtil.numberVertices(Util.edgeLabelsToNodes(GraphUtil.toUndirectedGraph(input))).toColoredGraph();
+
+		
+		//TODO every edge should be in both directions in the adjacency matrix for traces
+		
+		
+		int[] colors = Nauty.prepareColors(graph);
+		long end = System.nanoTime();
+		
+		
+		
+		return null;//TODO
 	}
 	
 	//NOTE: Traces REQUIRES an undirected graph so make sure to add all edges in both directions
