@@ -49,14 +49,31 @@ public class RuntimeReport{
 		return setupTime;
 	}
 	
+	/**
+	 * Gets the time spent on the side of the native implementation
+	 * preparing all the input data for the canonization step. The
+	 * major time sink for this step is reading the input graph into
+	 * proper data structures.
+	 * @return The native setup time for this algorithm run in nanoseconds.
+	 */
 	public long getNativeSetupTime(){
 		return nativeSetupTime;
 	}
 	
+	/**
+	 * Gets the time spent by the algorithm computing the
+	 * canonical representation of the input graph.
+	 * @return The total canonization time in nanoseconds.s
+	 */
 	public long getCanonizationTime(){
 		return canonTime;
 	}
 	
+	/**
+	 * Gets the total time spent running the
+	 * {@link Algorithm#time(dev.roanh.gmark.util.Graph)} method.
+	 * @return The total runtime for this algorithm in nanoseconds.
+	 */
 	public long getTotalTime(){
 		return totalTime;
 	}
