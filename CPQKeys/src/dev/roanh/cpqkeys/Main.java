@@ -41,7 +41,9 @@ public class Main{
 	public static final List<Algorithm> algos = Arrays.asList(
 		Scott.DIRECTED,
 		Scott.UNDIRECTED,
-		Nishe.INSTANCE
+		Nishe.INSTANCE,
+		Nauty.SPARSE,
+		Nauty.DENSE
 	);
 
 	public static void main(String[] args){

@@ -18,38 +18,41 @@
  */
 package dev.roanh.cpqkeys.algo;
 
+import java.util.List;
+import java.util.function.BiFunction;
+
+import dev.roanh.cpqkeys.Algorithm;
+import dev.roanh.cpqkeys.GraphUtil;
+import dev.roanh.cpqkeys.GraphUtil.ColoredGraph;
+import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
+import dev.roanh.gmark.core.graph.Predicate;
+import dev.roanh.gmark.util.Graph;
+
 public class Nauty{
+	public static final Algorithm DENSE = new Algorithm("Nauty (dense)", g->runNauty(g, Nauty::computeCanonDense));
+	public static final Algorithm SPARSE = new Algorithm("Nauty (sparse)", g->runNauty(g, Nauty::computeCanonSparse));
 	
-	
-	
-	
-	
-	
-	
-	
-	public static void test(){
-//		int[][] graph = new int[][]{
-//			{1},
-//			{0, 1}
-//		};
+	private static long[] runNauty(Graph<Vertex, Predicate> input, BiFunction<int[][], int[], long[]> version){
+		long start = System.nanoTime();
+		ColoredGraph graph = GraphUtil.numberVertices(input).toColoredGraph();
+		int[] colors = prepareColors(graph);
+		long end = System.nanoTime();
 		
-		int[][] graph = new int[][]{
-			{1},
-			{0, 1},
-			{0, 1},
-			{0, 1},
-			{0, 1},
-			{0, 1}
-		};
-		
-		//+1 it all so negation can be used to denote range ends
-		int[] colors = new int[]{1, -3, 2, 4, -5, -6};
-		
-		long[] times = computeCanonDense(graph, colors);
-		System.out.println("construct time: " + times[0]);
-		System.out.println("runtime: " + times[1]);
+		long[] times = version.apply(graph.getAdjacencyMatrix(), colors);
+		return new long[]{end - start, times[0], times[1]};
 	}
 	
+	protected static int[] prepareColors(ColoredGraph graph){
+		int[] colors = new int[graph.getNodeCount()];
+		int idx = 0;
+		for(List<Integer> group : graph.getColorMap()){
+			for(int i = 0; i < group.size() - 1; i++){
+				colors[idx++] = group.get(i) + 1;
+			}
+			colors[idx++] = -group.get(group.size() - 1) - 1;
+		}
+		return colors;
+	}
 	
 	/**
 	 * Computes the canonical form of the given coloured graph using the sparse
