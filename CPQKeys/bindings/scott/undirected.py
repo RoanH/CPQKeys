@@ -33,4 +33,4 @@ canon = st.canonize.to_cgraph(graph)
 #report times
 end = time.time_ns()
 print("setup time:", mid - start)
-print("canon time:", end - mid)
+print("canon time:", end - mid, flush = True)
