@@ -40,7 +40,8 @@ public class Main{
 	public static final String PYTHON_COMMAND = findPython();
 	public static final List<Algorithm> algos = Arrays.asList(
 		Scott.DIRECTED,
-		Scott.UNDIRECTED
+		Scott.UNDIRECTED,
+		Nishe.INSTANCE
 	);
 
 	public static void main(String[] args){

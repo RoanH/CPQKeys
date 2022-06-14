@@ -20,34 +20,20 @@ package dev.roanh.cpqkeys.algo;
 
 import java.util.List;
 
+import dev.roanh.cpqkeys.Algorithm;
+import dev.roanh.cpqkeys.GraphUtil;
 import dev.roanh.cpqkeys.GraphUtil.ColoredGraph;
-import dev.roanh.cpqkeys.GraphUtil.NumberedGraph;
+import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
+import dev.roanh.gmark.core.graph.Predicate;
+import dev.roanh.gmark.util.Graph;
 
 public class Nishe{
+	public static final Algorithm INSTANCE = new Algorithm("Nishe", Nishe::computeCanon);
 	
-	public static void test(){
-		int[][] graph = new int[][]{
-			{1},
-			{0, 1},
-			{0, 1},
-			{0, 1},
-			{0, 1},
-			{0, 1}
-		};
-		
-		//individual levels need to be sorted, +1 it all so negation can be used to denote range starts
-		int[] colors = new int[]{-1, 3, -2, 4, 5, -6};
-		
-		long[] times = computeCanon(graph, colors);
-		
-		System.out.println("prep time: " + times[0]);
-		System.out.println("canon time: " + times[1]);
-	}
-	
-	public static <V, E> long[] computeCanon(NumberedGraph<V, E> graph){
+	public static long[] computeCanon(Graph<Vertex, Predicate> input){
 		long start = System.nanoTime();
 		
-		ColoredGraph cg = graph.toColoredGraph();
+		ColoredGraph cg = GraphUtil.numberVertices(input).toColoredGraph();
 		int[] colors = new int[cg.getNodeCount()];
 		int idx = 0;
 		for(List<Integer> group : cg.getColorMap()){
@@ -61,7 +47,7 @@ public class Nishe{
 		long end = System.nanoTime();
 		
 		long[] times = computeCanon(cg.getAdjacencyMatrix(), colors);
-		return new long[]{times[0], times[1], end - start};
+		return new long[]{end - start, times[0], times[1]};
 	}
 	
 	/**
