@@ -26,14 +26,18 @@ import dev.roanh.cpqkeys.GraphUtil.ColoredGraph;
 import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
 import dev.roanh.gmark.core.graph.Predicate;
 import dev.roanh.gmark.util.Graph;
+import dev.roanh.gmark.util.Util;
 
 public class Nishe{
 	public static final Algorithm INSTANCE = new Algorithm("Nishe", Nishe::computeCanon);
 	
+	//edge labels -> nodes
+	//number vertices
+	//vertex coloured graph
 	public static long[] computeCanon(Graph<Vertex, Predicate> input){
 		long start = System.nanoTime();
 		
-		ColoredGraph cg = GraphUtil.numberVertices(input).toColoredGraph();
+		ColoredGraph cg = GraphUtil.numberVertices(Util.edgeLabelsToNodes(input)).toColoredGraph();
 		int[] colors = new int[cg.getNodeCount()];
 		int idx = 0;
 		for(List<Integer> group : cg.getColorMap()){

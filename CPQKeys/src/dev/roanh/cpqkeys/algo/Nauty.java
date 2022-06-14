@@ -27,14 +27,18 @@ import dev.roanh.cpqkeys.GraphUtil.ColoredGraph;
 import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
 import dev.roanh.gmark.core.graph.Predicate;
 import dev.roanh.gmark.util.Graph;
+import dev.roanh.gmark.util.Util;
 
 public class Nauty{
 	public static final Algorithm DENSE = new Algorithm("Nauty (dense)", g->runNauty(g, Nauty::computeCanonDense));
 	public static final Algorithm SPARSE = new Algorithm("Nauty (sparse)", g->runNauty(g, Nauty::computeCanonSparse));
 	
+	//edge labels -> nodes
+	//number vertices
+	//vertex coloured graph
 	private static long[] runNauty(Graph<Vertex, Predicate> input, BiFunction<int[][], int[], long[]> version){
 		long start = System.nanoTime();
-		ColoredGraph graph = GraphUtil.numberVertices(input).toColoredGraph();
+		ColoredGraph graph = GraphUtil.numberVertices(Util.edgeLabelsToNodes(input)).toColoredGraph();
 		int[] colors = prepareColors(graph);
 		long end = System.nanoTime();
 		
