@@ -1,10 +1,30 @@
 package dev.roanh.cpqkeys;
 
+/**
+ * Report summarising various runtimes about an algorithm
+ * @author Roan
+ * @see Algorithm
+ */
 public class RuntimeReport{
+	/**
+	 * The algorithm these runtimes were measured for.
+	 */
 	private Algorithm algo;
+	/**
+	 * Setup time for the algorithm (nanoseconds).
+	 */
 	private long setupTime;
+	/**
+	 * Native setup time for the algorithm (nanoseconds).
+	 */
 	private long nativeSetupTime;
+	/**
+	 * Canonization time for the algorithm (nanoseconds)
+	 */
 	private long canonTime;
+	/**
+	 * Raw execution time (nanoseconds).
+	 */
 	private long totalTime;
 
 	protected RuntimeReport(Algorithm algo, long[] times, long total){
@@ -15,6 +35,39 @@ public class RuntimeReport{
 		totalTime = total;
 	}
 	
+	/**
+	 * Gets the time spent Java side transforming the input
+	 * CPQ query graph into a form suitable for the algorithm.
+	 * This includes transforms that transform the input into
+	 * a form that can be passed to the algorithm. Major time
+	 * sinks for this setup include graph transforms to make
+	 * the graph undirected or without edge labels and the
+	 * transform to turn the graph into a coloured graph.
+	 * @return The setup time for this algorithm run in nanoseconds.
+	 */
+	public long getSetupTime(){
+		return setupTime;
+	}
+	
+	public long getNativeSetupTime(){
+		return nativeSetupTime;
+	}
+	
+	public long getCanonizationTime(){
+		return canonTime;
+	}
+	
+	public long getTotalTime(){
+		return totalTime;
+	}
+	
+	/**
+	 * Gets the total time spend on other tasks. In general this is
+	 * the total execution time minus the setup time, native setup
+	 * time and canonization time. Main contributors to this measurement
+	 * are JNI calls, Python startup times and general function calls.
+	 * @return The time spent on other tasks for this algorithm run in nanoseconds.
+	 */
 	public long getOtherTime(){
 		//possibly negative due to timer variance
 		return Math.max(0, totalTime - setupTime - nativeSetupTime - canonTime);
