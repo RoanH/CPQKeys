@@ -70,24 +70,6 @@ public class GraphUtil{
 		return out;
 	}
 	
-	public static boolean isHeadNode(GraphNode<?, ?> node){
-		Object data = node.getData();
-		if(data instanceof DataProxy){
-			return "head".equals(((DataProxy<?>)data).getData());
-		}else{
-			return false;
-		}
-	}
-	
-	public static boolean isTailNode(GraphNode<?, ?> node){
-		Object data = node.getData();
-		if(data instanceof DataProxy){
-			return "tail".equals(((DataProxy<?>)data).getData());
-		}else{
-			return false;
-		}
-	}
-	
 	public static class NumberedGraph<V, E> extends Graph<VertexData<GraphNode<V, E>>, E>{
 		private static final Object DEFAULT = new Object();
 		
