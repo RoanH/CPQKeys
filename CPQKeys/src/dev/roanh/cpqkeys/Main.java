@@ -43,7 +43,8 @@ public class Main{
 		Scott.UNDIRECTED,
 		Nishe.INSTANCE,
 		Nauty.SPARSE,
-		Nauty.DENSE
+		Nauty.DENSE,
+		Traces.INSTANCE
 	);
 
 	public static void main(String[] args){

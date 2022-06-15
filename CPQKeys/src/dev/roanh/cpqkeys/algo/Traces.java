@@ -18,6 +18,7 @@
  */
 package dev.roanh.cpqkeys.algo;
 
+import dev.roanh.cpqkeys.Algorithm;
 import dev.roanh.cpqkeys.GraphUtil;
 import dev.roanh.cpqkeys.GraphUtil.ColoredGraph;
 import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
@@ -26,29 +27,7 @@ import dev.roanh.gmark.util.Graph;
 import dev.roanh.gmark.util.Util;
 
 public class Traces{
-
-	
-	
-	
-	
-	
-	public static void test(){
-		int[][] graph = new int[][]{
-			{1, 2, 3, 4, 5},
-			{0, 1, 2, 3, 4, 5},
-			{0, 1},
-			{0, 1},
-			{0, 1},
-			{0, 1}
-		};
-		
-		//+1 it all so negation can be used to denote range ends
-		int[] colors = new int[]{1, -3, 2, 4, -5, -6};
-		
-		long[] times = computeCanon(graph, colors);
-		System.out.println("construct time: " + times[0]);
-		System.out.println("runtime: " + times[1]);
-	}
+	public static final Algorithm INSTANCE = new Algorithm("Traces", Traces::computeCanon);
 	
 	//undirected
 	//edge labels to nodes (minimises chain length)
@@ -88,9 +67,12 @@ public class Traces{
 		int[] colors = Nauty.prepareColors(graph);
 		long end = System.nanoTime();
 		
-		
-		
-		return null;//TODO
+		long[] times = computeCanon(adj, colors);
+		return new long[]{
+			end - start,
+			times[0],
+			times[1]
+		};
 	}
 	
 	//NOTE: Traces REQUIRES an undirected graph so make sure to add all edges in both directions

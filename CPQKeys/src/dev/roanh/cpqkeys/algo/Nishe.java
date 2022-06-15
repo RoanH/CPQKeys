@@ -51,7 +51,11 @@ public class Nishe{
 		long end = System.nanoTime();
 		
 		long[] times = computeCanon(cg.getAdjacencyMatrix(), colors);
-		return new long[]{end - start, times[0], times[1]};
+		return new long[]{
+			end - start,
+			times[0],
+			times[1]
+		};
 	}
 	
 	/**
