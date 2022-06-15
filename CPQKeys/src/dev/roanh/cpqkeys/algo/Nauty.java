@@ -29,13 +29,33 @@ import dev.roanh.gmark.core.graph.Predicate;
 import dev.roanh.gmark.util.Graph;
 import dev.roanh.gmark.util.Util;
 
+/**
+ * Binding for Nauty.
+ * @author Roan
+ * @see <a href="https://pallini.di.uniroma1.it/">Nauty website</a>
+ */
 public class Nauty{
+	/**
+	 * Algorithm binding for the dense version of nauty.
+	 */
 	public static final Algorithm DENSE = new Algorithm("Nauty (dense)", g->runNauty(g, Nauty::computeCanonDense));
+	/**
+	 * Algorithm binding for the sparse version of nauty.
+	 */
 	public static final Algorithm SPARSE = new Algorithm("Nauty (sparse)", g->runNauty(g, Nauty::computeCanonSparse));
 	
-	//edge labels -> nodes
-	//number vertices
-	//vertex coloured graph
+	/**
+	 * Returns either the dense or sparse version of nauty on the given
+	 * input CPQ query graph. The input query graph first has its edge
+	 * labels converted nodes, then has its nodes numbered and is finally
+	 * converted to a coloured graph.
+	 * @param input The input CPQ query graph.
+	 * @param version The version of nauty to run, either the dense or sparse version.
+	 * @return An array of time measurements containing in the first
+	 *         index the graph transform time, in the second index the
+	 *         native setup time (graph construction) and in the third
+	 *         index the canonization time. All times are in nanoseconds.
+	 */
 	private static long[] runNauty(Graph<Vertex, Predicate> input, BiFunction<int[][], int[], long[]> version){
 		long start = System.nanoTime();
 		ColoredGraph graph = GraphUtil.numberVertices(Util.edgeLabelsToNodes(input)).toColoredGraph();
@@ -50,6 +70,15 @@ public class Nauty{
 		};
 	}
 	
+	/**
+	 * Computes a nauty & traces compatible array of color data. The
+	 * returned array will have consecutive sections of nodes with the
+	 * same color. The node is indicated with a number one higher than
+	 * the ID of the actual it corresponds to. Negated number indicate
+	 * the end of a range of nodes with the same color.
+	 * @param graph The coloured graph to compute color data from.
+	 * @return The constructed colour data.
+	 */
 	protected static int[] prepareColors(ColoredGraph graph){
 		int[] colors = new int[graph.getNodeCount()];
 		int idx = 0;
