@@ -57,10 +57,33 @@ public class Traces{
 	private static long[] computeCanon(Graph<Vertex, Predicate> input){
 		long start = System.nanoTime();
 		ColoredGraph graph = GraphUtil.numberVertices(Util.edgeLabelsToNodes(GraphUtil.toUndirectedGraph(input))).toColoredGraph();
-
+		int[][] adj = graph.getAdjacencyMatrix();
 		
-		//TODO every edge should be in both directions in the adjacency matrix for traces
+		//in degree
+		int[] deg = new int[graph.getNodeCount()];
+		for(int[] row : adj){
+			for(int node : row){
+				deg[node]++;
+			}
+		}
 		
+		//copy data
+		int[] idx = new int[graph.getNodeCount()];
+		for(int i = 0; i < adj.length; i++){
+			int[] data = new int[adj[i].length + deg[i]];
+			System.arraycopy(adj[i], 0, data, 0, adj[i].length);
+			idx[i] = adj[i].length;
+			deg[i] = adj[i].length;
+			adj[i] = data;
+		}
+		
+		//add all edges reversed (undirected edges are represented as bidirectional edges)
+		for(int src = 0; src < adj.length; src++){
+			for(int i = 0; i < deg[src]; i++){
+				int node = adj[src][i];
+				adj[node][idx[node]++] = src;
+			}
+		}
 		
 		int[] colors = Nauty.prepareColors(graph);
 		long end = System.nanoTime();
