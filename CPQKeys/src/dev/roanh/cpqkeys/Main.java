@@ -44,10 +44,18 @@ public class Main{
 		Nishe.INSTANCE,
 		Nauty.SPARSE,
 		Nauty.DENSE,
-		Traces.INSTANCE
+		Traces.INSTANCE,
+		Bliss.INSTANCE
 	);
 
 	public static void main(String[] args){
+		try{
+			loadNatives();
+		}catch(IOException | UnsatisfiedLinkError e){
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		Predicate a = new Predicate(1, "a", 0.0D);
 		Predicate b = new Predicate(2, "b", 0.0D);
 		Predicate c = new Predicate(3, "c", 0.0D);
@@ -57,23 +65,6 @@ public class Main{
 		for(Algorithm algo : algos){
 			algo.time(graph).print();
 		}
-		
-//		try{
-//			loadNatives();
-//		}catch(IOException | UnsatisfiedLinkError e){
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		//Nauty.test();
-//		//Traces.test();
-//		Bliss.test();
-//		
-//		//System.out.println("=====================================================");
-//		
-//		//Nishe.test();
-
-		System.out.println("test");
 	}
 	
 	private static final void loadNatives() throws IOException, UnsatisfiedLinkError{

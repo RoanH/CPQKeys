@@ -18,36 +18,57 @@
  */
 package dev.roanh.cpqkeys.algo;
 
-public class Bliss{
+import java.util.HashMap;
+import java.util.Map;
 
+import dev.roanh.cpqkeys.Algorithm;
+import dev.roanh.cpqkeys.GraphUtil;
+import dev.roanh.cpqkeys.GraphUtil.NumberedGraph;
+import dev.roanh.cpqkeys.VertexData;
+import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
+import dev.roanh.gmark.core.graph.Predicate;
+import dev.roanh.gmark.util.DataProxy;
+import dev.roanh.gmark.util.Graph;
+import dev.roanh.gmark.util.Graph.GraphEdge;
+import dev.roanh.gmark.util.Graph.GraphNode;
+import dev.roanh.gmark.util.Util;
+
+public class Bliss{
+	public static final Algorithm INSTANCE = new Algorithm("Bliss", Bliss::computeCanon);
 	
-	
-	
-	
-	public static void test(){
-		int[] edges = new int[]{
-			0, 5,
-			5, 2,
-			2, 4,
-			4, 1,
-			1, 3,
-			1, 6,
-			6, 0,
-			3, 1
-		};
+	public static long[] computeCanon(Graph<Vertex, Predicate> input){
+		long start = System.nanoTime();
+		NumberedGraph<Object, Void> graph = GraphUtil.numberVertices(Util.edgeLabelsToNodes(input));
+
+		//map edges
+		int[] edges = new int[graph.getEdgeCount() * 2];
+		int idx = 0;
+		for(GraphEdge<VertexData<GraphNode<Object, Void>>, Void> edge : graph.getEdges()){
+			edges[idx * 2] = edge.getSource().getID();
+			edges[idx * 2 + 1] = edge.getTarget().getID();
+		}
 		
-		int[] colors = new int[7];
-		colors[4] = 0;
-		colors[3] = 0;
-		colors[2] = 1;
-		colors[0] = 1;
-		colors[1] = 1;
-		colors[5] = 2;
-		colors[6] = 3;
+		//map colours
+		Map<Object, Integer> colorCache = new HashMap<Object, Integer>();
+		int[] colors = new int[graph.getNodeCount()];
+		for(GraphNode<VertexData<GraphNode<Object, Void>>, Void> node : graph.getNodes()){
+			Object data = node.getData().getData().getData();
+			if(data instanceof DataProxy){
+				data = ((DataProxy<?>)data).getData();
+				colors[node.getData().getID()] = colorCache.computeIfAbsent(data, obj->colorCache.size() + 1);
+			}else{
+				colors[node.getData().getID()] = 0;
+			}
+		}
+		
+		long end = System.nanoTime();
 		
 		long[] times = computeCanon(edges, colors);
-		System.out.println("construct time: " + times[0]);
-		System.out.println("runtime: " + times[1]);
+		return new long[]{
+			end - start,
+			times[0],
+			times[1]
+		};
 	}
 	
 	/**
