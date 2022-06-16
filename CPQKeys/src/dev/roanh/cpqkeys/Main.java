@@ -38,7 +38,7 @@ import dev.roanh.gmark.util.Graph;
 
 public class Main{
 	public static final String PYTHON_COMMAND = findPython();
-	public static final List<Algorithm> algos = Arrays.asList(
+	public static final List<Algorithm> algorithms = Arrays.asList(
 		Scott.DIRECTED,
 		Scott.UNDIRECTED,
 		Nishe.INSTANCE,
@@ -56,13 +56,13 @@ public class Main{
 			e.printStackTrace();
 		}
 
-		Predicate a = new Predicate(1, "a", 0.0D);
-		Predicate b = new Predicate(2, "b", 0.0D);
-		Predicate c = new Predicate(3, "c", 0.0D);
+		Predicate a = new Predicate(1, "a");
+		Predicate b = new Predicate(2, "b");
+		Predicate c = new Predicate(3, "c");
 		CPQ q = CPQ.intersect(CPQ.concat(CPQ.label(a), CPQ.intersect(CPQ.label(b), CPQ.id()), CPQ.label(c)), CPQ.IDENTITY);
 		Graph<Vertex, Predicate> graph = q.toQueryGraph().toGraph();
 		
-		for(Algorithm algo : algos){
+		for(Algorithm algo : algorithms){
 			algo.time(graph).print();
 		}
 	}

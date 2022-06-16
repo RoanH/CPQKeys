@@ -26,13 +26,29 @@ import dev.roanh.gmark.core.graph.Predicate;
 import dev.roanh.gmark.util.Graph;
 import dev.roanh.gmark.util.Util;
 
+/**
+ * Binding for Traces.
+ * @author Roan
+ * @see <a href="https://pallini.di.uniroma1.it/">Nauty website</a>
+ */
 public class Traces{
+	/**
+	 * Algorithm binding for traces.
+	 */
 	public static final Algorithm INSTANCE = new Algorithm("Traces", Traces::computeCanon);
 	
-	//undirected
-	//edge labels to nodes (minimises chain length)
-	//number vertices
-	//vertex colored graph
+	/**
+	 * Runs Traces on the given input graph. The input graph is first
+	 * converted to an undirected graph, then has its edge labels
+	 * converted to nodes, next has its vertices numbered and is then
+	 * finally converted to a coloured graph and has all its edges
+	 * duplicated (undirected edges are represented as bidirectional edges).
+	 * @param input The input graph.
+	 * @return An array of time measurements containing in the first
+	 *         index the graph transform time, in the second index the
+	 *         native setup time (graph construction) and in the third
+	 *         index the canonization time. All times are in nanoseconds.
+	 */
 	private static long[] computeCanon(Graph<Vertex, Predicate> input){
 		long start = System.nanoTime();
 		ColoredGraph graph = GraphUtil.numberVertices(Util.edgeLabelsToNodes(GraphUtil.toUndirectedGraph(input))).toColoredGraph();
@@ -75,7 +91,6 @@ public class Traces{
 		};
 	}
 	
-	//NOTE: Traces REQUIRES an undirected graph so make sure to add all edges in both directions
 	/**
 	 * Computes the canonical form of the given coloured graph using traces. Returns
 	 * the time in nanoseconds required for computations.

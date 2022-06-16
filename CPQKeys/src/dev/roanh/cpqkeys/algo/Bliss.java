@@ -36,6 +36,7 @@ import dev.roanh.gmark.util.Util;
 /**
  * Binding for Bliss.
  * @author Roan
+ * @see <a href="http://www.tcs.hut.fi/Software/bliss/">Bliss website</a>
  */
 public class Bliss{
 	/**
@@ -45,9 +46,8 @@ public class Bliss{
 	
 	/**
 	 * Runs Bliss on the given input graph. The input graph first
-	 * has its edge labels converted nodes and then has its nodes
-	 * numbered.
-	 * to a coloured graph.
+	 * has its edge labels converted to nodes, then has its nodes
+	 * numbered and is finally converted to a coloured graph.
 	 * @param input The input graph.
 	 * @return An array of time measurements containing in the first
 	 *         index the graph transform time, in the second index the
