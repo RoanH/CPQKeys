@@ -28,12 +28,29 @@ import dev.roanh.gmark.core.graph.Predicate;
 import dev.roanh.gmark.util.Graph;
 import dev.roanh.gmark.util.Util;
 
+/**
+ * Binding for Nishe.
+ * @author Roan
+ * @see <a href="https://code.google.com/archive/p/nishe/">Nishe website</a>
+ * @see <a href="https://github.com/b0ri5/nishe-googlecode">Nishe GitHub mirror</a>
+ * @see <a href="https://stars.library.ucf.edu/etd/4004/">Nishe Thesis</a>
+ */
 public class Nishe{
+	/**
+	 * Algorithm binding for Nishe.
+	 */
 	public static final Algorithm INSTANCE = new Algorithm("Nishe", Nishe::computeCanon);
 	
-	//edge labels -> nodes
-	//number vertices
-	//vertex coloured graph
+	/**
+	 * Runs Nishe on the given input graph. The input graph first
+	 * has its edge labels converted to nodes, then has its nodes
+	 * numbered and is finally converted to a coloured graph.
+	 * @param input The input graph.
+	 * @return An array of time measurements containing in the first
+	 *         index the graph transform time, in the second index the
+	 *         native setup time (graph construction) and in the third
+	 *         index the canonization time. All times are in nanoseconds.
+	 */
 	public static long[] computeCanon(Graph<Vertex, Predicate> input){
 		long start = System.nanoTime();
 		
