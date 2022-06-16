@@ -45,11 +45,11 @@ public class Nauty{
 	public static final Algorithm SPARSE = new Algorithm("Nauty (sparse)", g->runNauty(g, Nauty::computeCanonSparse));
 	
 	/**
-	 * Returns either the dense or sparse version of nauty on the given
-	 * input CPQ query graph. The input query graph first has its edge
-	 * labels converted nodes, then has its nodes numbered and is finally
-	 * converted to a coloured graph.
-	 * @param input The input CPQ query graph.
+	 * Runs either the dense or sparse version of nauty on the given
+	 * input graph. The input graph first has its edge labels converted
+	 * to nodes, then has its nodes numbered and is finally converted
+	 * to a coloured graph.
+	 * @param input The input graph.
 	 * @param version The version of nauty to run, either the dense or sparse version.
 	 * @return An array of time measurements containing in the first
 	 *         index the graph transform time, in the second index the

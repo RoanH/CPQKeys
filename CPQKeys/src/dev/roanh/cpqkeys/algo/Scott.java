@@ -55,9 +55,9 @@ public class Scott{
 	
 	/**
 	 * Runs Scott on an undirected input graph that is constructed
-	 * from the given input CPQ query graph by the undirected transform
+	 * from the given input graph by the undirected transform
 	 * {@link GraphUtil#toUndirectedGraph(Graph)}.
-	 * @param input The CPQ query graph to run Scott on.
+	 * @param input The graph to run Scott on.
 	 * @return An array of time measurements containing in the first
 	 *         index the graph transform time, in the second index the
 	 *         native setup time (graph construction) and in the third
@@ -104,7 +104,7 @@ public class Scott{
 	
 	/**
 	 * Runs Scott on a directed input graph.
-	 * @param input The CPQ query graph to run Scott on.
+	 * @param input The graph to run Scott on.
 	 * @return An array of time measurements containing in the first
 	 *         index the graph transform time, in the second index the
 	 *         native setup time (graph construction) and in the third

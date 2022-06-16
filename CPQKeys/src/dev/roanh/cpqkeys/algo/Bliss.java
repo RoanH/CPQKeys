@@ -33,9 +33,27 @@ import dev.roanh.gmark.util.Graph.GraphEdge;
 import dev.roanh.gmark.util.Graph.GraphNode;
 import dev.roanh.gmark.util.Util;
 
+/**
+ * Binding for Bliss.
+ * @author Roan
+ */
 public class Bliss{
+	/**
+	 * Algorithm binding for bliss.
+	 */
 	public static final Algorithm INSTANCE = new Algorithm("Bliss", Bliss::computeCanon);
 	
+	/**
+	 * Runs Bliss on the given input graph. The input graph first
+	 * has its edge labels converted nodes and then has its nodes
+	 * numbered.
+	 * to a coloured graph.
+	 * @param input The input graph.
+	 * @return An array of time measurements containing in the first
+	 *         index the graph transform time, in the second index the
+	 *         native setup time (graph construction) and in the third
+	 *         index the canonization time. All times are in nanoseconds.
+	 */
 	public static long[] computeCanon(Graph<Vertex, Predicate> input){
 		long start = System.nanoTime();
 		NumberedGraph<Object, Void> graph = GraphUtil.numberVertices(Util.edgeLabelsToNodes(input));
