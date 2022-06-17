@@ -51,7 +51,7 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonDense
 	int m = SETWORDSNEEDED(n);
 	nauty_check(WORDSIZE, m, n, NAUTYVERSIONID);
 
-	DYNALLOC1(int, labels, labels_sz,n, "malloc");
+	DYNALLOC1(int, labels, labels_sz, n, "malloc");
 	DYNALLOC1(int, ptn, ptn_sz, n, "malloc");
 	DYNALLOC1(int, orbits, orbits_sz, n, "malloc");
 	DYNALLOC2(graph, input, input_sz, n, m, "malloc");
