@@ -84,7 +84,7 @@ public class Main{
 	}
 	
 	private static final void loadNatives() throws IOException, UnsatisfiedLinkError{
-		System.load(Paths.get("native").resolve("cygntcore.dll").toAbsolutePath().toString());
+		//System.load(Paths.get("native").resolve("cygntcore.dll").toAbsolutePath().toString());
 		for(Path lib : Files.newDirectoryStream(Paths.get("native"))){
 			System.out.println("Loading native library: " + lib.getFileName());
 			System.load(lib.toAbsolutePath().toString());
