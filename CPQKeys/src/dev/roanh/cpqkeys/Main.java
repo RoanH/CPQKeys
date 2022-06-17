@@ -54,7 +54,7 @@ public class Main{
 		}
 		
 		Util.setRandomSeed(1234);
-		GraphDataSet data = GraphDataSet.fromCPQ(10, 10, 10);
+		GraphDataSet data = GraphDataSet.fromCPQ(10, 50, 10);
 		data.print();
 		
 		for(Algorithm algo : algorithms){
