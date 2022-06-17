@@ -25,6 +25,11 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import dev.roanh.cpqkeys.algo.Bliss;
 import dev.roanh.cpqkeys.algo.Nauty;
@@ -34,6 +39,7 @@ import dev.roanh.cpqkeys.algo.Traces;
 import dev.roanh.gmark.util.Util;
 
 public class Main{
+	private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 	public static final String PYTHON_COMMAND = findPython();
 	public static final List<Algorithm> algorithms = Arrays.asList(
 		Scott.DIRECTED,
@@ -59,11 +65,20 @@ public class Main{
 		
 		for(Algorithm algo : algorithms){
 			try{
-				ReportSummaryStatistics stats = new ReportSummaryStatistics(algo, data);
-				stats.print();
-			}catch(Exception e){
-				System.err.println("Error running: " + algo.getName());
+				executor.submit(()->{
+					try{
+						ReportSummaryStatistics stats = new ReportSummaryStatistics(algo, data);
+						stats.print();
+					}catch(Exception e){
+						System.err.println("Error running: " + algo.getName());
+						e.printStackTrace();
+					}
+				}).get(1, TimeUnit.MINUTES);
+			}catch(InterruptedException | ExecutionException e){
+				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}catch(TimeoutException e){
+				System.err.println("Timeout running: " + algo.getName());
 			}
 		}
 	}
