@@ -22,6 +22,8 @@ set_target_properties(nishe PROPERTIES
 	OUTPUT_NAME ${CMAKE_PROJECT_NAME}
 )
 
+add_compile_options(-Wall -Wextra -pedantic)
+
 target_include_directories(nishe
 	PUBLIC
 		$<BUILD_INTERFACE:${JNI_INCLUDE_DIRS}>

@@ -42,8 +42,8 @@ public class Main{
 	private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 	public static final String PYTHON_COMMAND = findPython();
 	public static final List<Algorithm> algorithms = Arrays.asList(
-		Scott.DIRECTED,
-		Scott.UNDIRECTED,
+		//Scott.DIRECTED,
+		//Scott.UNDIRECTED,
 		Nishe.INSTANCE,
 		Nauty.SPARSE,
 		Nauty.DENSE,
@@ -60,7 +60,7 @@ public class Main{
 		}
 		
 		Util.setRandomSeed(1234);
-		GraphDataSet data = GraphDataSet.fromCPQ(5, 30, 10);
+		GraphDataSet data = GraphDataSet.fromCPQ(5, 10, 2);
 		data.print();
 		
 		for(Algorithm algo : algorithms){
@@ -84,6 +84,7 @@ public class Main{
 	}
 	
 	private static final void loadNatives() throws IOException, UnsatisfiedLinkError{
+		System.load(Paths.get("native").resolve("cygntcore.dll").toAbsolutePath().toString());
 		for(Path lib : Files.newDirectoryStream(Paths.get("native"))){
 			System.out.println("Loading native library: " + lib.getFileName());
 			System.load(lib.toAbsolutePath().toString());

@@ -49,6 +49,8 @@ set_target_properties(traces PROPERTIES
 	OUTPUT_NAME traces
 )
 
+add_compile_options(-Wall -Wextra -pedantic)
+
 target_include_directories(ntcore
 	PUBLIC
 		$<BUILD_INTERFACE:${JNI_INCLUDE_DIRS}>
