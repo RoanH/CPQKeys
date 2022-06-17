@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.LongSummaryStatistics;
 import java.util.function.Function;
 
+import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
+import dev.roanh.gmark.core.graph.Predicate;
+import dev.roanh.gmark.util.Graph;
+
 public class ReportSummaryStatistics{
 	private Algorithm algo;
 	private List<RuntimeReport> reports = new ArrayList<RuntimeReport>();
@@ -14,6 +18,12 @@ public class ReportSummaryStatistics{
 	private LongSummaryStatistics otherTime = new LongSummaryStatistics();
 	private LongSummaryStatistics totalTime = new LongSummaryStatistics();
 	
+	public ReportSummaryStatistics(Algorithm algo, GraphDataSet data){
+		for(Graph<Vertex, Predicate> graph : data){
+			addReport(algo.time(graph));
+		}
+	}
+
 	public void addReport(RuntimeReport report) throws IllegalArgumentException{
 		if(algo == null){
 			algo = report.getAlgorithm();

@@ -31,10 +31,7 @@ import dev.roanh.cpqkeys.algo.Nauty;
 import dev.roanh.cpqkeys.algo.Nishe;
 import dev.roanh.cpqkeys.algo.Scott;
 import dev.roanh.cpqkeys.algo.Traces;
-import dev.roanh.gmark.conjunct.cpq.CPQ;
-import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
-import dev.roanh.gmark.core.graph.Predicate;
-import dev.roanh.gmark.util.Graph;
+import dev.roanh.gmark.util.Util;
 
 public class Main{
 	public static final String PYTHON_COMMAND = findPython();
@@ -55,12 +52,19 @@ public class Main{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		CPQ q = CPQ.generateRandomCPQ(ruleApplications, labels)
-		Graph<Vertex, Predicate> graph = q.toQueryGraph().toGraph();
+		
+		Util.setRandomSeed(1234);
+		GraphDataSet data = GraphDataSet.fromCPQ(10, 100, 10);
+		data.print();
 		
 		for(Algorithm algo : algorithms){
-			algo.time(graph).print();
+			try{
+				ReportSummaryStatistics stats = new ReportSummaryStatistics(algo, data);
+				stats.print();
+			}catch(Exception e){
+				System.err.println("Error running: " + algo.getName());
+				e.printStackTrace();
+			}
 		}
 	}
 	
