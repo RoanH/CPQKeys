@@ -56,10 +56,7 @@ public class Main{
 			e.printStackTrace();
 		}
 
-		Predicate a = new Predicate(1, "a");
-		Predicate b = new Predicate(2, "b");
-		Predicate c = new Predicate(3, "c");
-		CPQ q = CPQ.intersect(CPQ.concat(CPQ.label(a), CPQ.intersect(CPQ.label(b), CPQ.id()), CPQ.label(c)), CPQ.IDENTITY);
+		CPQ q = CPQ.generateRandomCPQ(ruleApplications, labels)
 		Graph<Vertex, Predicate> graph = q.toQueryGraph().toGraph();
 		
 		for(Algorithm algo : algorithms){

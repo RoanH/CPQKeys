@@ -6,6 +6,7 @@ import java.util.LongSummaryStatistics;
 import java.util.function.Function;
 
 public class ReportSummaryStatistics{
+	private Algorithm algo;
 	private List<RuntimeReport> reports = new ArrayList<RuntimeReport>();
 	private LongSummaryStatistics setupTime = new LongSummaryStatistics();
 	private LongSummaryStatistics nativeSetupTime = new LongSummaryStatistics();
@@ -13,7 +14,13 @@ public class ReportSummaryStatistics{
 	private LongSummaryStatistics otherTime = new LongSummaryStatistics();
 	private LongSummaryStatistics totalTime = new LongSummaryStatistics();
 	
-	public void addReport(RuntimeReport report){
+	public void addReport(RuntimeReport report) throws IllegalArgumentException{
+		if(algo == null){
+			algo = report.getAlgorithm();
+		}else if(!algo.equals(report.getAlgorithm())){
+			throw new IllegalArgumentException("Runtime reports do not represent the same algorithm.");
+		}
+		
 		setupTime.accept(report.getSetupTime());
 		nativeSetupTime.accept(report.getNativeSetupTime());
 		canonTime.accept(report.getCanonizationTime());
@@ -30,12 +37,53 @@ public class ReportSummaryStatistics{
 		return setupTime.getAverage();
 	}
 	
+	public double getNativeSetupTimeStdDev(){
+		return stdDev(nativeSetupTime, RuntimeReport::getNativeSetupTime);
+	}
 	
+	public double getNativeSetupTimeAverage(){
+		return nativeSetupTime.getAverage();
+	}
 	
+	public double getCanonizationTimeStdDev(){
+		return stdDev(canonTime, RuntimeReport::getCanonizationTime);
+	}
 	
-	//TODO other fields and easy output
+	public double getCanonizationTimeAverage(){
+		return canonTime.getAverage();
+	}
 	
+	public double getOtherTimeStdDev(){
+		return stdDev(otherTime, RuntimeReport::getOtherTime);
+	}
 	
+	public double getOtherTimeAverage(){
+		return otherTime.getAverage();
+	}
+	
+	public double getTotalTimeStdDev(){
+		return stdDev(totalTime, RuntimeReport::getTotalTime);
+	}
+	
+	public double getTotalTimeAverage(){
+		return totalTime.getAverage();
+	}
+	
+	public void print(){
+		System.out.println("========== Runtime Report ==========");
+		System.out.println("Algorithm: " + algo.getName());
+		System.out.println("Setup: " + formatNanos(getSetupTimeAverage()) + " \u00B1 " + formatNanos(getSetupTimeStdDev()));
+		System.out.println("Setup (native): " + formatNanos(getNativeSetupTimeAverage()) + " \u00B1 " + formatNanos(getNativeSetupTimeStdDev()));
+		System.out.println("Canonization: " + formatNanos(getCanonizationTimeAverage()) + " \u00B1 " + formatNanos(getCanonizationTimeStdDev()));
+		System.out.println("Other: " + formatNanos(getOtherTimeAverage()) + " \u00B1 " + formatNanos(getOtherTimeStdDev()));
+		System.out.println("Total: " + formatNanos(getTotalTimeAverage()) + " \u00B1 " + formatNanos(getTotalTimeStdDev()));
+		System.out.println("====================================");
+	}
+	
+	private static final String formatNanos(double nanos){
+		//just round to the nearest nanosecond, that's more than precise enough
+		return RuntimeReport.formatNanos(Math.round(nanos));
+	}
 	
 	//sample stddev
 	private double stdDev(LongSummaryStatistics stats, Function<RuntimeReport, Long> field){

@@ -51,7 +51,7 @@ public class Nishe{
 	 *         native setup time (graph construction) and in the third
 	 *         index the canonization time. All times are in nanoseconds.
 	 */
-	public static long[] computeCanon(Graph<Vertex, Predicate> input){
+	private static long[] computeCanon(Graph<Vertex, Predicate> input){
 		long start = System.nanoTime();
 		
 		ColoredGraph cg = GraphUtil.numberVertices(Util.edgeLabelsToNodes(input)).toColoredGraph();

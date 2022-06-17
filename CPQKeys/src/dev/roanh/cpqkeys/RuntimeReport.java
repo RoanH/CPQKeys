@@ -90,34 +90,44 @@ public class RuntimeReport{
 		return Math.max(0, totalTime - setupTime - nativeSetupTime - canonTime);
 	}
 	
+	public Algorithm getAlgorithm(){
+		return algo;
+	}
+	
 	public void print(){
 		System.out.println("========== Runtime Report ==========");
-		System.out.println("algo: " + algo.getName());
-		System.out.println("setup: " + formatNanos(setupTime));
-		System.out.println("setup (native): " + formatNanos(nativeSetupTime));
-		System.out.println("canon: " + formatNanos(canonTime));
-		System.out.println("other: " + formatNanos(getOtherTime()));
-		System.out.println("total: " + formatNanos(totalTime));
+		System.out.println("Algorithm: " + algo.getName());
+		System.out.println("Setup: " + formatNanos(setupTime));
+		System.out.println("Setup (native): " + formatNanos(nativeSetupTime));
+		System.out.println("Canonization: " + formatNanos(canonTime));
+		System.out.println("Other: " + formatNanos(getOtherTime()));
+		System.out.println("Total: " + formatNanos(totalTime));
 		System.out.println("====================================");
 	}
 	
-	private String formatNanos(long nanos){
+	protected static final String formatNanos(long nanos){
 		StringBuilder buffer = new StringBuilder();
 		
 		buffer.append(nanos % 1_000_000);
 		buffer.append("ns");
 		nanos /= 1_000_000;
 		
-		buffer.insert(0, "ms ");
-		buffer.insert(0, nanos % 1000);
-		nanos /= 1000;
-		
-		buffer.insert(0, "s ");
-		buffer.insert(0, nanos % 60);
-		nanos /= 60;
-		
-		buffer.insert(0, "m ");
-		buffer.insert(0, nanos);
+		if(nanos > 0){
+			buffer.insert(0, "ms ");
+			buffer.insert(0, nanos % 1000);
+			nanos /= 1000;
+			
+			if(nanos > 0){
+				buffer.insert(0, "s ");
+				buffer.insert(0, nanos % 60);
+				nanos /= 60;
+				
+				if(nanos > 0){
+					buffer.insert(0, "m ");
+					buffer.insert(0, nanos);
+				}
+			}
+		}
 		
 		return buffer.toString();
 	}
