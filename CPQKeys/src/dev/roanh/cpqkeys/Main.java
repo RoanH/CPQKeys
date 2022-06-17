@@ -28,6 +28,7 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -40,11 +41,12 @@ import dev.roanh.gmark.util.Util;
 
 public class Main{
 	private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+	private static final long MAX_RUNTIME = TimeUnit.SECONDS.toNanos(10);
 	public static final String PYTHON_COMMAND = findPython();
 	public static final List<Algorithm> algorithms = Arrays.asList(
-		//Scott.DIRECTED,
-		//Scott.UNDIRECTED,
-		//Nishe.INSTANCE,
+		Scott.DIRECTED,
+		Scott.UNDIRECTED,
+		Nishe.INSTANCE,
 		Nauty.SPARSE,
 		Nauty.DENSE,
 		Traces.INSTANCE,
@@ -59,27 +61,40 @@ public class Main{
 			e.printStackTrace();
 		}
 		
-		Util.setRandomSeed(1234);
-		GraphDataSet data = GraphDataSet.fromCPQ(5, 10, 2);
-		data.print();
-		
 		for(Algorithm algo : algorithms){
+			evaluateAlgorithm(algo);
+		}
+	}
+	
+	private static final void evaluateAlgorithm(Algorithm algo){
+		Util.setRandomSeed(1234);
+		
+		Future<ReportSummaryStatistics> task;
+		for(int i = 10; true; i += 10){
+			GraphDataSet data = GraphDataSet.fromCPQ(10, i, 5);
+			data.print();
+			
+			task = executor.submit(()->new ReportSummaryStatistics(algo, data));
 			try{
-				executor.submit(()->{
-					try{
-						ReportSummaryStatistics stats = new ReportSummaryStatistics(algo, data);
-						stats.print();
-					}catch(Exception e){
-						System.err.println("Error running: " + algo.getName());
-						e.printStackTrace();
-					}
-				}).get(1, TimeUnit.MINUTES);
+				ReportSummaryStatistics stats = task.get(MAX_RUNTIME, TimeUnit.NANOSECONDS);
+				if(stats != null){
+					stats.print();
+				}
 			}catch(InterruptedException | ExecutionException e){
-				// TODO Auto-generated catch block
+				System.err.println("Error running: " + algo.getName());
 				e.printStackTrace();
+				return;
 			}catch(TimeoutException e){
-				System.err.println("Timeout running: " + algo.getName());
+				System.out.println("Timeout for " + algo.getName() + " awaiting last result...");
+				break;
 			}
+		}
+		
+		try{
+			task.get().print();
+		}catch(InterruptedException | ExecutionException e){
+			System.err.println("Error running: " + algo.getName());
+			e.printStackTrace();
 		}
 	}
 	
