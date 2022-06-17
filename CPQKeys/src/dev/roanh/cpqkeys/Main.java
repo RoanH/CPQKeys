@@ -44,7 +44,7 @@ public class Main{
 	public static final List<Algorithm> algorithms = Arrays.asList(
 		Scott.DIRECTED,
 		Scott.UNDIRECTED,
-		Nishe.INSTANCE,
+		//Nishe.INSTANCE,
 		Nauty.SPARSE,
 		Nauty.DENSE,
 		Traces.INSTANCE,
