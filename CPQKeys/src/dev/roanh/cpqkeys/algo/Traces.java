@@ -40,9 +40,9 @@ public class Traces{
 	/**
 	 * Runs Traces on the given input graph. The input graph is first
 	 * converted to an undirected graph, then has its edge labels
-	 * converted to nodes, next has its vertices numbered and is then
-	 * finally converted to a coloured graph and has all its edges
-	 * duplicated (undirected edges are represented as bidirectional edges).
+	 * converted to nodes and is then converted to a coloured graph
+	 * and has all its edges duplicated (undirected edges are represented
+	 * as bidirectional edges).
 	 * @param input The input graph.
 	 * @return An array of time measurements containing in the first
 	 *         index the graph transform time, in the second index the
@@ -51,7 +51,7 @@ public class Traces{
 	 */
 	private static long[] computeCanon(Graph<Vertex, Predicate> input){
 		long start = System.nanoTime();
-		ColoredGraph graph = GraphUtil.numberVertices(Util.edgeLabelsToNodes(GraphUtil.toUndirectedGraph(input))).toColoredGraph();
+		ColoredGraph graph = GraphUtil.toColoredGraph(Util.edgeLabelsToNodes(GraphUtil.toUndirectedGraph(input)));
 		int[][] adj = graph.getAdjacencyMatrix();
 		
 		//in degree

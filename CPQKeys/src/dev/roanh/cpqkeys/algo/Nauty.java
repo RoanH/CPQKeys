@@ -47,8 +47,7 @@ public class Nauty{
 	/**
 	 * Runs either the dense or sparse version of nauty on the given
 	 * input graph. The input graph first has its edge labels converted
-	 * to nodes, then has its nodes numbered and is finally converted
-	 * to a coloured graph.
+	 * to nodes, and is then converted to a coloured graph.
 	 * @param input The input graph.
 	 * @param version The version of nauty to run, either the dense or sparse version.
 	 * @return An array of time measurements containing in the first
@@ -58,7 +57,7 @@ public class Nauty{
 	 */
 	private static long[] runNauty(Graph<Vertex, Predicate> input, BiFunction<int[][], int[], long[]> version){
 		long start = System.nanoTime();
-		ColoredGraph graph = GraphUtil.numberVertices(Util.edgeLabelsToNodes(input)).toColoredGraph();
+		ColoredGraph graph = GraphUtil.toColoredGraph(Util.edgeLabelsToNodes(input));
 		int[] colors = prepareColors(graph);
 		long end = System.nanoTime();
 		

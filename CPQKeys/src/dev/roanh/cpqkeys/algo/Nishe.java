@@ -43,8 +43,8 @@ public class Nishe{
 	
 	/**
 	 * Runs Nishe on the given input graph. The input graph first
-	 * has its edge labels converted to nodes, then has its nodes
-	 * numbered and is finally converted to a coloured graph.
+	 * has its edge labels converted to nodes and is then converted
+	 * to a coloured graph.
 	 * @param input The input graph.
 	 * @return An array of time measurements containing in the first
 	 *         index the graph transform time, in the second index the
@@ -54,7 +54,7 @@ public class Nishe{
 	private static long[] computeCanon(Graph<Vertex, Predicate> input){
 		long start = System.nanoTime();
 		
-		ColoredGraph cg = GraphUtil.numberVertices(Util.edgeLabelsToNodes(input)).toColoredGraph();
+		ColoredGraph cg = GraphUtil.toColoredGraph(Util.edgeLabelsToNodes(input));
 		int[] colors = new int[cg.getNodeCount()];
 		int idx = 0;
 		for(List<Integer> group : cg.getColorMap()){

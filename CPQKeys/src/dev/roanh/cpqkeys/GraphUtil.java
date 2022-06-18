@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import dev.roanh.gmark.util.DataProxy;
 import dev.roanh.gmark.util.Graph;
@@ -31,26 +30,6 @@ import dev.roanh.gmark.util.Graph.GraphEdge;
 import dev.roanh.gmark.util.Graph.GraphNode;
 
 public class GraphUtil{
-
-	//TODO consider moving this to gmark
-	public static final <V, E> NumberedGraph<V, E> numberVertices(Graph<V, E> in){
-		NumberedGraph<V, E> out = new NumberedGraph<V, E>();
-		Map<GraphNode<V, E>, GraphNode<VertexData<GraphNode<V, E>>, E>> nodeMap = new HashMap<GraphNode<V, E>, GraphNode<VertexData<GraphNode<V, E>>, E>>();
-		
-		List<GraphNode<V, E>> nodes = in.getNodes();
-		for(int i = 0; i < nodes.size(); i++){
-			VertexData<GraphNode<V, E>> vertex = new VertexData<GraphNode<V, E>>(i, nodes.get(i));
-			nodeMap.put(vertex.getData(), out.addUniqueNode(vertex));
-		}
-		
-		for(Entry<GraphNode<V, E>, GraphNode<VertexData<GraphNode<V, E>>, E>> entry : nodeMap.entrySet()){
-			for(GraphEdge<V, E> edge : entry.getKey().getOutEdges()){
-				entry.getValue().addUniqueEdgeTo(nodeMap.get(edge.getTargetNode()), edge.getData());
-			}
-		}
-		
-		return out;
-	}
 	
 	//technically still directed but edges need to be treated as undirected
 	//note, only leaving the label on one edge to reduce graph size increase
@@ -70,25 +49,23 @@ public class GraphUtil{
 		return out;
 	}
 	
-	public static class NumberedGraph<V, E> extends Graph<VertexData<GraphNode<V, E>>, E>{
-		private static final Object DEFAULT = new Object();
+	private static final Object DEFAULT = new Object();
+	
+	public static <V, E> ColoredGraph  toColoredGraph(Graph<V, E> graph){
+		Map<Object, List<Integer>> colorMap = new HashMap<Object, List<Integer>>();
 		
-		public ColoredGraph toColoredGraph(){
-			Map<Object, List<Integer>> colorMap = new HashMap<Object, List<Integer>>();
-			
-			int[][] adj = new int[getNodeCount()][];
-			for(GraphNode<VertexData<GraphNode<V, E>>, E> node : getNodes()){
-				adj[node.getData().getID()] = node.getOutEdges().stream().map(GraphEdge::getTargetNode).map(GraphNode::getData).mapToInt(VertexData::getID).toArray();
-				V data = node.getData().getData().getData();
-				if(data instanceof DataProxy){
-					colorMap.computeIfAbsent(((DataProxy<?>)data).getData(), k->new ArrayList<Integer>()).add(node.getData().getID());
-				}else{
-					colorMap.computeIfAbsent(DEFAULT, k->new ArrayList<Integer>()).add(node.getData().getID());
-				}
+		int[][] adj = graph.toAdjacencyList();
+		
+		for(GraphNode<V, E> node : graph.getNodes()){
+			V data = node.getData();
+			if(data instanceof DataProxy){
+				colorMap.computeIfAbsent(((DataProxy<?>)data).getData(), k->new ArrayList<Integer>()).add(node.getID());
+			}else{
+				colorMap.computeIfAbsent(DEFAULT, k->new ArrayList<Integer>()).add(node.getID());
 			}
-			
-			return new ColoredGraph(adj, colorMap.values());
 		}
+		
+		return new ColoredGraph(adj, colorMap.values());
 	}
 	
 	public static class ColoredGraph{

@@ -22,9 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import dev.roanh.cpqkeys.Algorithm;
-import dev.roanh.cpqkeys.GraphUtil;
-import dev.roanh.cpqkeys.GraphUtil.NumberedGraph;
-import dev.roanh.cpqkeys.VertexData;
 import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
 import dev.roanh.gmark.core.graph.Predicate;
 import dev.roanh.gmark.util.DataProxy;
@@ -46,8 +43,8 @@ public class Bliss{
 	
 	/**
 	 * Runs Bliss on the given input graph. The input graph first
-	 * has its edge labels converted to nodes, then has its nodes
-	 * numbered and is finally converted to a coloured graph.
+	 * has its edge labels converted to nodes, and is then converted
+	 * to a coloured graph.
 	 * @param input The input graph.
 	 * @return An array of time measurements containing in the first
 	 *         index the graph transform time, in the second index the
@@ -56,26 +53,26 @@ public class Bliss{
 	 */
 	private static long[] computeCanon(Graph<Vertex, Predicate> input){
 		long start = System.nanoTime();
-		NumberedGraph<Object, Void> graph = GraphUtil.numberVertices(Util.edgeLabelsToNodes(input));
+		Graph<Object, Void> graph = Util.edgeLabelsToNodes(input);
 
 		//map edges
 		int[] edges = new int[graph.getEdgeCount() * 2];
 		int idx = 0;
-		for(GraphEdge<VertexData<GraphNode<Object, Void>>, Void> edge : graph.getEdges()){
-			edges[idx * 2] = edge.getSource().getID();
-			edges[idx * 2 + 1] = edge.getTarget().getID();
+		for(GraphEdge<Object, Void> edge : graph.getEdges()){
+			edges[idx * 2] = edge.getSourceNode().getID();
+			edges[idx * 2 + 1] = edge.getTargetNode().getID();
 		}
 		
 		//map colours
 		Map<Object, Integer> colorCache = new HashMap<Object, Integer>();
 		int[] colors = new int[graph.getNodeCount()];
-		for(GraphNode<VertexData<GraphNode<Object, Void>>, Void> node : graph.getNodes()){
-			Object data = node.getData().getData().getData();
+		for(GraphNode<Object, Void> node : graph.getNodes()){
+			Object data = node.getData();
 			if(data instanceof DataProxy){
 				data = ((DataProxy<?>)data).getData();
-				colors[node.getData().getID()] = colorCache.computeIfAbsent(data, obj->colorCache.size() + 1);
+				colors[node.getID()] = colorCache.computeIfAbsent(data, obj->colorCache.size() + 1);
 			}else{
-				colors[node.getData().getID()] = 0;
+				colors[node.getID()] = 0;
 			}
 		}
 		

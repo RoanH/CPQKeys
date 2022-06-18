@@ -29,9 +29,7 @@ import java.util.List;
 
 import dev.roanh.cpqkeys.Algorithm;
 import dev.roanh.cpqkeys.GraphUtil;
-import dev.roanh.cpqkeys.GraphUtil.NumberedGraph;
 import dev.roanh.cpqkeys.Main;
-import dev.roanh.cpqkeys.VertexData;
 import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
 import dev.roanh.gmark.core.graph.Predicate;
 import dev.roanh.gmark.util.Graph;
@@ -66,15 +64,15 @@ public class Scott{
 	private static long[] runUndirected(Graph<Vertex, Predicate> input){
 		try{
 			long start = System.nanoTime();
-			NumberedGraph<Object, Predicate> graph = GraphUtil.numberVertices(GraphUtil.toUndirectedGraph(input));
+			Graph<Object, Predicate> graph = GraphUtil.toUndirectedGraph(input);
 			Process scott = startSession("undirected");
 			PrintWriter out = new PrintWriter(scott.getOutputStream(), true);
 
 			//write nodes
-			for(GraphNode<VertexData<GraphNode<Object, Predicate>>, Predicate> node : graph.getNodes()){
-				out.print(node.getData().getID());
+			for(GraphNode<Object, Predicate> node : graph.getNodes()){
+				out.print(node.getID());
 				out.print(" ");
-				Object label = node.getData().getData().getData();
+				Object label = node.getData();
 				if(label instanceof Vertex){
 					out.println();
 				}else{
@@ -104,22 +102,21 @@ public class Scott{
 	
 	/**
 	 * Runs Scott on a directed input graph.
-	 * @param input The graph to run Scott on.
+	 * @param graph The graph to run Scott on.
 	 * @return An array of time measurements containing in the first
 	 *         index the graph transform time, in the second index the
 	 *         native setup time (graph construction) and in the third
 	 *         index the canonization time. All times are in nanoseconds.
 	 */
-	private static long[] runDirected(Graph<Vertex, Predicate> input){
+	private static long[] runDirected(Graph<Vertex, Predicate> graph){
 		try{
 			long start = System.nanoTime();
-			NumberedGraph<Vertex, Predicate> graph = GraphUtil.numberVertices(input);
 			Process scott = startSession("directed");
 			PrintWriter out = new PrintWriter(scott.getOutputStream(), true);
 			
 			//write notes
-			for(GraphNode<VertexData<GraphNode<Vertex, Predicate>>, Predicate> node : graph.getNodes()){
-				out.print(node.getData().getID());
+			for(GraphNode<Vertex, Predicate> node : graph.getNodes()){
+				out.print(node.getID());
 				out.println(" ");
 			}
 			out.println("end");
@@ -166,14 +163,14 @@ public class Scott{
 	 * @param out The writer to write to.
 	 * @param edges The edges to write.
 	 */
-	private static <T> void writeEdges(PrintWriter out, List<GraphEdge<VertexData<T>, Predicate>> edges){
+	private static <T> void writeEdges(PrintWriter out, List<GraphEdge<T, Predicate>> edges){
 		int id = 0;
-		for(GraphEdge<VertexData<T>, Predicate> edge : edges){
+		for(GraphEdge<T, Predicate> edge : edges){
 			out.print(id);
 			out.print(" ");
-			out.print(edge.getSource().getID());
+			out.print(edge.getSourceNode().getID());
 			out.print(" ");
-			out.print(edge.getTarget().getID());
+			out.print(edge.getTargetNode().getID());
 			Predicate data = edge.getData();
 			if(data == null){
 				out.println(" ");
