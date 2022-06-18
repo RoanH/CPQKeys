@@ -61,7 +61,7 @@ public class Nauty{
 		int[] colors = prepareColors(graph);
 		long end = System.nanoTime();
 		
-		long[] times = version.apply(graph.getAdjacencyMatrix(), colors);
+		long[] times = version.apply(graph.getAdjacencyList(), colors);
 		return new long[]{
 			end - start,
 			times[0],

@@ -52,7 +52,7 @@ public class Traces{
 	private static long[] computeCanon(Graph<Vertex, Predicate> input){
 		long start = System.nanoTime();
 		ColoredGraph graph = GraphUtil.toColoredGraph(Util.edgeLabelsToNodes(GraphUtil.toUndirectedGraph(input)));
-		int[][] adj = graph.getAdjacencyMatrix();
+		int[][] adj = graph.getAdjacencyList();
 		
 		//in degree
 		int[] deg = new int[graph.getNodeCount()];
