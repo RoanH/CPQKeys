@@ -73,7 +73,7 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonDense
 	clock_gettime(CLOCK_MONOTONIC_RAW, &mid);
 
 	//compute canonical form and labeling
-	DYNALLSTAT(graph, canon ,canon_sz);
+	DYNALLSTAT(graph, canon, canon_sz);
 	DYNALLOC2(graph, canon, canon_sz, n, m, "malloc");
 	densenauty(input, labels, ptn, orbits, &options, &stats, m, n, canon);
 
