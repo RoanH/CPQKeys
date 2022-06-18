@@ -27,6 +27,17 @@ public class RuntimeReport{
 	 */
 	private long totalTime;
 
+	/**
+	 * Constructs a new runtime report for the given algorithm
+	 * with the given runtime information.
+	 * @param algo The algorithm that was execute.
+	 * @param times An array with runtimes, the array is
+	 *        expected to contain in order the setup time
+	 *        native setup time and lastly the canonization
+	 *        time. All times are expected to be in nanoseconds.
+	 * @param total The total number of nanoseconds spent executing
+	 *        the algorithm and all associated transforms.
+	 */
 	protected RuntimeReport(Algorithm algo, long[] times, long total){
 		this.algo = algo;
 		setupTime = times[0];
@@ -90,10 +101,17 @@ public class RuntimeReport{
 		return Math.max(0, totalTime - setupTime - nativeSetupTime - canonTime);
 	}
 	
+	/**
+	 * Gets the algorithm that was executed to generate this report.
+	 * @return The algorithm for this report.
+	 */
 	public Algorithm getAlgorithm(){
 		return algo;
 	}
 	
+	/**
+	 * Prints a runtime report with all the times formatted.
+	 */
 	public void print(){
 		System.out.println("========== Runtime Report ==========");
 		System.out.println("Algorithm: " + algo.getName());
@@ -105,6 +123,13 @@ public class RuntimeReport{
 		System.out.println("====================================");
 	}
 	
+	/**
+	 * Formats the given number of nanoseconds as a string breaking
+	 * the time up into units of increasing magnitude as required.
+	 * The used splits are, nanoseconds, milliseconds, seconds and minutes.
+	 * @param nanos The nanosecond time to format.
+	 * @return A formatted string displaying the given nanosecond time.
+	 */
 	protected static final String formatNanos(long nanos){
 		StringBuilder buffer = new StringBuilder();
 		
