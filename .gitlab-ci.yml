@@ -12,6 +12,7 @@ before_script:
 stages:
   - check
   - compile
+  - javadoc
 
 endings:
   allow_failure: true
@@ -55,3 +56,9 @@ bliss:
     expire_in: 1 week
     paths:
       - ${PROJECTNAME}/native/*bliss.*
+
+verify:
+  allow_failure: true
+  script: curl ${SERVER}ci/javadoc.sh | bash
+  stage: javadoc
+  coverage: '/\([0-9]{2,3}\.[0-9]{2}%\)/'
