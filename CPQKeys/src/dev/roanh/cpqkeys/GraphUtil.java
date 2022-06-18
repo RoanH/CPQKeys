@@ -49,19 +49,18 @@ public class GraphUtil{
 		return out;
 	}
 	
-	private static final Object DEFAULT = new Object();
-	
 	public static <V, E> ColoredGraph  toColoredGraph(Graph<V, E> graph){
 		Map<Object, List<Integer>> colorMap = new HashMap<Object, List<Integer>>();
 		
 		int[][] adj = graph.toAdjacencyList();
+		final Object nolabel = new Object();
 		
 		for(GraphNode<V, E> node : graph.getNodes()){
 			V data = node.getData();
 			if(data instanceof DataProxy){
 				colorMap.computeIfAbsent(((DataProxy<?>)data).getData(), k->new ArrayList<Integer>()).add(node.getID());
 			}else{
-				colorMap.computeIfAbsent(DEFAULT, k->new ArrayList<Integer>()).add(node.getID());
+				colorMap.computeIfAbsent(nolabel, k->new ArrayList<Integer>()).add(node.getID());
 			}
 		}
 		
