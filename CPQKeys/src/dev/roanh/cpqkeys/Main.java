@@ -70,7 +70,7 @@ public class Main{
 		Util.setRandomSeed(1234);
 		
 		Future<ReportSummaryStatistics> task;
-		for(int i = 10; true; i += 10){
+		for(int i = 4; true; i *= 2){
 			GraphDataSet data = GraphDataSet.fromCPQ(10, i, 5);
 			data.print();
 			
