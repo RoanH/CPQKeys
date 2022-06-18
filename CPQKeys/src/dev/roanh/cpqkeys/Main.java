@@ -83,7 +83,7 @@ public class Main{
 					stats.print();
 				}
 			}catch(InterruptedException | ExecutionException e){
-				System.err.println("Error running: " + algo.getName());
+				System.out.println("Error running: " + algo.getName());
 				e.printStackTrace();
 				return;
 			}catch(TimeoutException e){
@@ -92,7 +92,7 @@ public class Main{
 				try{
 					task.get().print();
 				}catch(InterruptedException | ExecutionException e1){
-					System.err.println("Error running: " + algo.getName());
+					System.out.println("Error running: " + algo.getName());
 					e1.printStackTrace();
 				}
 				
@@ -104,7 +104,6 @@ public class Main{
 	}
 	
 	private static final void loadNatives() throws IOException, UnsatisfiedLinkError{
-		//System.load(Paths.get("native").resolve("cygntcore.dll").toAbsolutePath().toString());
 		for(Path lib : Files.newDirectoryStream(Paths.get("native"))){
 			System.out.println("Loading native library: " + lib.getFileName());
 			System.load(lib.toAbsolutePath().toString());
