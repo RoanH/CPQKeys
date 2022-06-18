@@ -59,6 +59,8 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonDense
 	DYNALLOC2(graph, input, input_sz, n, m, "malloc");
 	EMPTYGRAPH(input, m, n);
 
+	parseColoring(env, n, &colors, labels, ptn);
+
 	for(int i = 0; i < n; i++){
 		jintArray row = (jintArray)((*env)->GetObjectArrayElement(env, adj, i));
 		jsize rlen = (*env)->GetArrayLength(env, row);
