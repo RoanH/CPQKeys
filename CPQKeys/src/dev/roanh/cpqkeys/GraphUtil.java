@@ -51,7 +51,6 @@ public class GraphUtil{
 	
 	public static <V, E> ColoredGraph  toColoredGraph(Graph<V, E> graph){
 		Map<Object, List<Integer>> colorMap = new HashMap<Object, List<Integer>>();
-		
 		int[][] adj = graph.toAdjacencyList();
 		final Object nolabel = new Object();
 		
