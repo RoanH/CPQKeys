@@ -22,6 +22,7 @@ add_library(ntcore SHARED
 )
 
 add_library(nauty SHARED
+	"./src/nautinv.c"
 	"./dev_roanh_cpqkeys_algo_Nauty.c"
 )
 
