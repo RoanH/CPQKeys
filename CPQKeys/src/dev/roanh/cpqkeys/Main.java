@@ -64,13 +64,15 @@ public class Main{
 		for(Algorithm algo : algorithms){
 			evaluateAlgorithm(algo);
 		}
+		
+		executor.shutdown();
 	}
 	
 	private static final void evaluateAlgorithm(Algorithm algo){
 		Util.setRandomSeed(1234);
 		
-		Future<ReportSummaryStatistics> task;
-		for(int i = 4; true; i *= 2){
+		Future<ReportSummaryStatistics> task = null;
+		for(int i = 4; i <= 8196 * 2 * 2; i *= 2){
 			GraphDataSet data = GraphDataSet.fromCPQ(10, i, 5);
 			data.print();
 			
@@ -86,16 +88,19 @@ public class Main{
 				return;
 			}catch(TimeoutException e){
 				System.out.println("Timeout for " + algo.getName() + " awaiting last result...");
-				break;
+				
+				try{
+					task.get().print();
+				}catch(InterruptedException | ExecutionException e1){
+					System.err.println("Error running: " + algo.getName());
+					e1.printStackTrace();
+				}
+				
+				return;
 			}
 		}
 		
-		try{
-			task.get().print();
-		}catch(InterruptedException | ExecutionException e){
-			System.err.println("Error running: " + algo.getName());
-			e.printStackTrace();
-		}
+		System.out.println("Not generating the next dataset as this would be very expensive...");
 	}
 	
 	private static final void loadNatives() throws IOException, UnsatisfiedLinkError{
