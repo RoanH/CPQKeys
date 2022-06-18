@@ -104,7 +104,12 @@ public class Main{
 	}
 	
 	private static final void loadNatives() throws IOException, UnsatisfiedLinkError{
-		for(Path lib : Files.newDirectoryStream(Paths.get("native"))){
+		for(Path lib : Files.newDirectoryStream(Paths.get("native").resolve("lib"))){
+			System.out.println("Loading native core library: " + lib.getFileName());
+			System.load(lib.toAbsolutePath().toString());
+		}
+		
+		for(Path lib : Files.newDirectoryStream(Paths.get("native"), Files::isRegularFile)){
 			System.out.println("Loading native library: " + lib.getFileName());
 			System.load(lib.toAbsolutePath().toString());
 		}

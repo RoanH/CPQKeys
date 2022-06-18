@@ -82,6 +82,6 @@ target_include_directories(traces
 target_link_libraries(nauty ntcore)
 target_link_libraries(traces ntcore)
 
-install(TARGETS ntcore RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS ntcore RUNTIME DESTINATION "${CMAKE_INSTALL_LIBDIR}/lib")
 install(TARGETS nauty RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(TARGETS traces RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR})
