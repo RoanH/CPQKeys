@@ -43,9 +43,10 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonDense
 	DYNALLSTAT(int, orbits, orbits_sz);
 	DYNALLSTAT(graph, input, input_sz);
 
-	static DEFAULTOPTIONS_GRAPH(options);
+	static DEFAULTOPTIONS_DIGRAPH(options);
 	statsblk stats;
 	options.getcanon = TRUE;
+	options.defaultptn = FALSE;
 
 	int n = (*env)->GetArrayLength(env, adj);
 	int m = SETWORDSNEEDED(n);
@@ -115,9 +116,10 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Nauty_computeCanonSpars
 	DYNALLSTAT(int, ptn, ptn_sz);
 	DYNALLSTAT(int, orbits, orbits_sz);
 
-	static DEFAULTOPTIONS_SPARSEGRAPH(options);
+	static DEFAULTOPTIONS_SPARSEDIGRAPH(options);
 	statsblk stats;
 	options.getcanon = TRUE;
+	options.defaultptn = FALSE;
 
 	int n = graph.nv;
 	DYNALLOC1(int, labels, labels_sz, n, "malloc");

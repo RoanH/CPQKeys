@@ -49,6 +49,7 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Traces_computeCanon(JNI
 	static DEFAULTOPTIONS_TRACES(options);
 	TracesStats stats;
 	options.getcanon = TRUE;
+	options.defaultptn = FALSE;
 
 	int n = graph.nv;
 	DYNALLOC1(int, labels, labels_sz, n, "malloc");
