@@ -1,5 +1,7 @@
 package dev.roanh.cpqkeys;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.LongSummaryStatistics;
@@ -171,11 +173,24 @@ public class ReportSummaryStatistics{
 		return totalTime.getAverage();
 	}
 	
+	public List<RuntimeReport> getReports(){
+		return reports;
+	}
+	
 	/**
 	 * Prints a runtime report with all the times formatted
 	 * together with their sample standard deviation.
 	 */
 	public void print(){
+		print(System.out);
+	}
+	
+	/**
+	 * Prints a runtime report with all the times formatted
+	 * together with their sample standard deviation.
+	 * @param out The stream to write to.
+	 */
+	public void print(PrintStream out){
 		System.out.println("========== Runtime Report ==========");
 		System.out.println("Algorithm: " + algo.getName());
 		System.out.println("Setup: " + formatNanos(getSetupTimeAverage()) + " \u00B1 " + formatNanos(getSetupTimeStdDev()));
@@ -184,6 +199,16 @@ public class ReportSummaryStatistics{
 		System.out.println("Other: " + formatNanos(getOtherTimeAverage()) + " \u00B1 " + formatNanos(getOtherTimeStdDev()));
 		System.out.println("Total: " + formatNanos(getTotalTimeAverage()) + " \u00B1 " + formatNanos(getTotalTimeStdDev()));
 		System.out.println("====================================");
+	}
+	
+	public void writeData(PrintWriter writer){
+		
+		for(RuntimeReport report : reports){
+			writer.print("- ");
+		}
+		
+		writer.print(getSetupTimeAverage());
+		
 	}
 	
 	/**

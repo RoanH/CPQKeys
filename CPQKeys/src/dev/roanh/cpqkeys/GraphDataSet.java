@@ -1,5 +1,6 @@
 package dev.roanh.cpqkeys;
 
+import java.io.PrintStream;
 import java.util.IntSummaryStatistics;
 import java.util.Iterator;
 import java.util.List;
@@ -79,11 +80,20 @@ public class GraphDataSet implements Iterable<Graph<Vertex, Predicate>>{
 	 * size and average number of nodes and edges together with their standard deviation.
 	 */
 	public void print(){
-		System.out.println("========== Dataset Report ==========");
-		System.out.println("Graphs: " + data.size());
-		System.out.println("Nodes: " + getNodesAverage() + " \u00B1 " + getNodesStdDev());
-		System.out.println("Edges: " + getEdgesAverage() + " \u00B1 " + getEdgesStdDev());
-		System.out.println("====================================");
+		print(System.out);
+	}
+	
+	/**
+	 * Prints some general statistics about this data set, namely the data set
+	 * size and average number of nodes and edges together with their standard deviation.
+	 * @param out The stream to write to.
+	 */
+	public void print(PrintStream out){
+		out.println("========== Dataset Report ==========");
+		out.println("Graphs: " + data.size());
+		out.println("Nodes: " + getNodesAverage() + " \u00B1 " + getNodesStdDev());
+		out.println("Edges: " + getEdgesAverage() + " \u00B1 " + getEdgesStdDev());
+		out.println("====================================");
 	}
 	
 	@Override

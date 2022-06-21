@@ -18,13 +18,19 @@
  */
 package dev.roanh.cpqkeys;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -125,9 +131,32 @@ public class Main{
 		executor.shutdown();
 	}
 	
-	private static final void evaluateAlgorithm(Algorithm algo){
+	private static final void saveResults(Set<Entry<GraphDataSet, ReportSummaryStatistics>> results, Path file) throws IOException{
+		try(PrintStream out = new PrintStream(Files.newOutputStream(file))){
+			for(Entry<GraphDataSet, ReportSummaryStatistics> pair : results){
+				pair.getKey().print(out);
+				pair.getValue().print(out);
+				out.println("Raw report data (setup, native setup, canonization, other, total)");
+				for(RuntimeReport report : pair.getValue().getReports()){
+					report.writeData(out);
+				}
+			}
+			
+			out.println();
+
+			
+			
+			
+			
+			
+			
+		}
+	}
+	
+	private static final Set<Entry<GraphDataSet, ReportSummaryStatistics>> evaluateAlgorithm(Algorithm algo){
 		Util.setRandomSeed(SEED);
 		
+		LinkedHashMap<GraphDataSet, ReportSummaryStatistics> results = new LinkedHashMap<GraphDataSet, ReportSummaryStatistics>();
 		Future<ReportSummaryStatistics> task = null;
 		for(int i = MIN_RULES; i <= MAX_RULES; i *= RULE_GROWTH_FACTOR){
 			GraphDataSet data = GraphDataSet.fromCPQ(DATASET_SIZE, i, LABELS);
@@ -138,26 +167,30 @@ public class Main{
 				ReportSummaryStatistics stats = task.get(MAX_RUNTIME, TimeUnit.NANOSECONDS);
 				if(stats != null){
 					stats.print();
+					results.put(data, stats);
 				}
 			}catch(InterruptedException | ExecutionException e){
 				System.out.println("Error running: " + algo.getName());
 				e.printStackTrace();
-				return;
+				return results.entrySet();
 			}catch(TimeoutException e){
 				System.out.println("Timeout for " + algo.getName() + " awaiting last result...");
 				
 				try{
-					task.get().print();
+					ReportSummaryStatistics stats = task.get();
+					stats.print();
+					results.put(data, stats);
 				}catch(InterruptedException | ExecutionException e1){
 					System.out.println("Error running: " + algo.getName());
 					e1.printStackTrace();
 				}
 				
-				return;
+				return results.entrySet();
 			}
 		}
 		
 		System.out.println("Not generating the next dataset as this would be very expensive...");
+		return results.entrySet();
 	}
 	
 	/**

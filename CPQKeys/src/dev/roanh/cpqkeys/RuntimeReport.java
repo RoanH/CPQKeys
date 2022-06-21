@@ -1,5 +1,9 @@
 package dev.roanh.cpqkeys;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.util.StringJoiner;
+
 /**
  * Report summarising various runtimes about an algorithm
  * @author Roan
@@ -113,14 +117,34 @@ public class RuntimeReport{
 	 * Prints a runtime report with all the times formatted.
 	 */
 	public void print(){
-		System.out.println("========== Runtime Report ==========");
-		System.out.println("Algorithm: " + algo.getName());
-		System.out.println("Setup: " + formatNanos(setupTime));
-		System.out.println("Setup (native): " + formatNanos(nativeSetupTime));
-		System.out.println("Canonization: " + formatNanos(canonTime));
-		System.out.println("Other: " + formatNanos(getOtherTime()));
-		System.out.println("Total: " + formatNanos(totalTime));
-		System.out.println("====================================");
+		print(System.out);
+	}
+	
+	/**
+	 * Prints a runtime report with all the times formatted.
+	 * @param out The stream to write to.
+	 */
+	public void print(PrintStream out){
+		out.println("========== Runtime Report ==========");
+		out.println("Algorithm: " + algo.getName());
+		out.println("Setup: " + formatNanos(setupTime));
+		out.println("Setup (native): " + formatNanos(nativeSetupTime));
+		out.println("Canonization: " + formatNanos(canonTime));
+		out.println("Other: " + formatNanos(getOtherTime()));
+		out.println("Total: " + formatNanos(totalTime));
+		out.println("====================================");
+	}
+	
+	public void writeData(PrintStream out){
+		out.print(String.valueOf(setupTime));
+		out.print(" ");
+		out.print(String.valueOf(nativeSetupTime));
+		out.print(" ");
+		out.print(String.valueOf(canonTime));
+		out.print(" ");
+		out.print(String.valueOf(getOtherTime()));
+		out.print(" ");
+		out.println(String.valueOf(totalTime));
 	}
 	
 	/**
