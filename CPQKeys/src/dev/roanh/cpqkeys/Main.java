@@ -46,10 +46,6 @@ import dev.roanh.gmark.util.Util;
  */
 public class Main{
 	/**
-	 * Executor used to run the algorithms.
-	 */
-	private static final ExecutorService executor = Executors.newSingleThreadExecutor();
-	/**
 	 * Directory to store runtime logs in.
 	 */
 	private static final Path LOGS = Paths.get("logs");
@@ -138,8 +134,6 @@ public class Main{
 				e.printStackTrace();
 			}
 		}
-		
-		executor.shutdown();
 	}
 	
 	/**
@@ -163,40 +157,41 @@ public class Main{
 	private static final EvaluationResults evaluateAlgorithm(Algorithm algo){
 		Util.setRandomSeed(SEED);
 		
+		ExecutorService executor = Executors.newSingleThreadExecutor();
 		EvaluationResults results = new EvaluationResults();
 		Future<ReportSummaryStatistics> task = null;
-		for(int i = MIN_RULES; i <= MAX_RULES; i *= RULE_GROWTH_FACTOR){
-			GraphDataSet data = GraphDataSet.fromCPQ(DATASET_SIZE, i, LABELS);
-			data.print();
-			
-			task = executor.submit(()->new ReportSummaryStatistics(algo, data));
-			try{
+		
+		try{
+			for(int i = MIN_RULES; i <= MAX_RULES; i *= RULE_GROWTH_FACTOR){
+				GraphDataSet data = GraphDataSet.fromCPQ(DATASET_SIZE, i, LABELS);
+				data.print();
+
+				task = executor.submit(()->new ReportSummaryStatistics(algo, data));
 				ReportSummaryStatistics stats = task.get(MAX_RUNTIME, TimeUnit.NANOSECONDS);
 				if(stats != null){
 					stats.print();
 					results.addRun(data, stats);
 				}
-			}catch(InterruptedException | ExecutionException e){
-				System.out.println("Error running: " + algo.getName());
+			}
+			
+			System.out.println("Not generating the next dataset (dataset size limit reached).");
+		}catch(InterruptedException | ExecutionException e){
+			System.out.println("Exception running: " + algo.getName());
+			e.printStackTrace();
+		}catch(TimeoutException e){
+			System.out.println("Timeout for " + algo.getName() + " interrupting execution...");
+			task.cancel(true);
+		}finally{
+			executor.shutdown();
+			try{
+				//wait for interrupted threads to return from native calls
+				executor.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+			}catch(InterruptedException e){
+				//not very relevant
 				e.printStackTrace();
-				return results;
-			}catch(TimeoutException e){
-				System.out.println("Timeout for " + algo.getName() + " awaiting last result...");
-				
-				try{
-					ReportSummaryStatistics stats = task.get();
-					stats.print();
-					results.addRun(data, stats);
-				}catch(InterruptedException | ExecutionException e1){
-					System.out.println("Error running: " + algo.getName());
-					e1.printStackTrace();
-				}
-				
-				return results;
 			}
 		}
 		
-		System.out.println("Not generating the next dataset (dataset size limit reached).");
 		return results;
 	}
 	

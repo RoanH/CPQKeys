@@ -51,12 +51,17 @@ public class ReportSummaryStatistics{
 	 * algorithm on the graphs in the given data set.
 	 * @param algo The algorithm to run.
 	 * @param data The data set of run the algorithm on.
+	 * @throws InterruptedException When the current thread is interrupted.
 	 * @see Algorithm
 	 * @see GraphDataSet
 	 */
-	public ReportSummaryStatistics(Algorithm algo, GraphDataSet data){
+	public ReportSummaryStatistics(Algorithm algo, GraphDataSet data) throws InterruptedException{
 		for(Graph<Vertex, Predicate> graph : data){
 			addReport(algo.time(graph));
+			if(Thread.interrupted()){
+				System.out.println("Caught interrupt, aborting algorithm execution.");
+				throw new InterruptedException();
+			}
 		}
 	}
 
