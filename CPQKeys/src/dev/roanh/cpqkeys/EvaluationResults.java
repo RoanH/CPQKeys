@@ -25,14 +25,22 @@ import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+/**
+ * Report summarising multiple run of the same
+ * algorithm on different data sets.
+ * @author Roan
+ */
 public class EvaluationResults{
+	/**
+	 * The evaluation result on different datasets.
+	 */
 	private LinkedHashMap<GraphDataSet, ReportSummaryStatistics> results = new LinkedHashMap<GraphDataSet, ReportSummaryStatistics>();
-	private Algorithm algo;
 	
-	public EvaluationResults(Algorithm algo){
-		this.algo = algo;
-	}
-	
+	/**
+	 * Add a new result for evaluating an algorithm on a specific dataset.
+	 * @param data The dataset the algorithm was evaluated on.
+	 * @param stats The evaluation runtime statistics.
+	 */
 	public void addRun(GraphDataSet data, ReportSummaryStatistics stats){
 		results.put(data, stats);
 	}

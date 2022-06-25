@@ -162,7 +162,7 @@ public class Main{
 	private static final EvaluationResults evaluateAlgorithm(Algorithm algo){
 		Util.setRandomSeed(SEED);
 		
-		EvaluationResults results = new EvaluationResults(algo);
+		EvaluationResults results = new EvaluationResults();
 		Future<ReportSummaryStatistics> task = null;
 		for(int i = MIN_RULES; i <= MAX_RULES; i *= RULE_GROWTH_FACTOR){
 			GraphDataSet data = GraphDataSet.fromCPQ(DATASET_SIZE, i, LABELS);
