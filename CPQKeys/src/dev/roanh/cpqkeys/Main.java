@@ -18,20 +18,13 @@
  */
 package dev.roanh.cpqkeys;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -109,27 +102,27 @@ public class Main{
 	 * List of algorithms to evaluate.
 	 */
 	public static final List<Algorithm> algorithms = Arrays.asList(
-//		Scott.DIRECTED,//known to have issues with certain inputs
-		Scott.UNDIRECTED//,
-//		Nishe.INSTANCE,
-//		Nauty.SPARSE,
-//		Nauty.DENSE,
-//		Traces.INSTANCE,
-//		Bliss.INSTANCE
+		Scott.DIRECTED,//known to have issues with certain inputs
+		Scott.UNDIRECTED,
+		Nishe.INSTANCE,
+		Nauty.SPARSE,
+		Nauty.DENSE,
+		Traces.INSTANCE,
+		Bliss.INSTANCE
 	);
 
 	/**
 	 * Starts the algorithm evaluation process.
-	 * @param args No valid commandline arguments.
+	 * @param args No valid command line arguments.
 	 */
 	public static void main(String[] args){
 		//initialise native bindings
-//		try{
-//			loadNatives();
-//		}catch(IOException | UnsatisfiedLinkError e){
-//			e.printStackTrace();
-//			return;
-//		}
+		try{
+			loadNatives();
+		}catch(IOException | UnsatisfiedLinkError e){
+			e.printStackTrace();
+			return;
+		}
 		
 		//evaluate all the algorithms
 		for(Algorithm algo : algorithms){
@@ -149,6 +142,24 @@ public class Main{
 		executor.shutdown();
 	}
 	
+	/**
+	 * Evaluates the given algorithm on randomly generated CPQs. The number of
+	 * rule applications used to generate dataset CPQs will start from {@link #MIN_RULES}
+	 * and go up to at most {@link #MAX_RULES} at a rate of {@link #RULE_GROWTH_FACTOR}.
+	 * Each dataset will contain {@link #DATASET_SIZE} CPQs and at most {@link #LABELS}
+	 * labels will be used in the CPQs. Each dataset will need to be processed by the
+	 * algorithm in {@link #MAX_RUNTIME} nanoseconds. If the algorithm needs more time
+	 * it will not be given a larger dataset next effectively ending the evaluation.
+	 * The value for {@link #SEED} will be used to generate the random dataset. All
+	 * tasks will be executed on a single thread.
+	 * @param algo The algorithm to evaluate.
+	 * @return The result of the algorithm evaluation.
+	 * @see GraphDataSet
+	 * @see Algorithm
+	 * @see ReportSummaryStatistics
+	 * @see RuntimeReport
+	 * @see EvaluationResults
+	 */
 	private static final EvaluationResults evaluateAlgorithm(Algorithm algo){
 		Util.setRandomSeed(SEED);
 		
