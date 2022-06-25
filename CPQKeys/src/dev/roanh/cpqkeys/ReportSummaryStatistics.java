@@ -191,24 +191,36 @@ public class ReportSummaryStatistics{
 	 * @param out The stream to write to.
 	 */
 	public void print(PrintStream out){
-		System.out.println("========== Runtime Report ==========");
-		System.out.println("Algorithm: " + algo.getName());
-		System.out.println("Setup: " + formatNanos(getSetupTimeAverage()) + " \u00B1 " + formatNanos(getSetupTimeStdDev()));
-		System.out.println("Setup (native): " + formatNanos(getNativeSetupTimeAverage()) + " \u00B1 " + formatNanos(getNativeSetupTimeStdDev()));
-		System.out.println("Canonization: " + formatNanos(getCanonizationTimeAverage()) + " \u00B1 " + formatNanos(getCanonizationTimeStdDev()));
-		System.out.println("Other: " + formatNanos(getOtherTimeAverage()) + " \u00B1 " + formatNanos(getOtherTimeStdDev()));
-		System.out.println("Total: " + formatNanos(getTotalTimeAverage()) + " \u00B1 " + formatNanos(getTotalTimeStdDev()));
-		System.out.println("====================================");
+		out.println("========== Runtime Report ==========");
+		out.println("Algorithm: " + algo.getName());
+		out.println("Setup: " + formatNanos(getSetupTimeAverage()) + " \u00B1 " + formatNanos(getSetupTimeStdDev()));
+		out.println("Setup (native): " + formatNanos(getNativeSetupTimeAverage()) + " \u00B1 " + formatNanos(getNativeSetupTimeStdDev()));
+		out.println("Canonization: " + formatNanos(getCanonizationTimeAverage()) + " \u00B1 " + formatNanos(getCanonizationTimeStdDev()));
+		out.println("Other: " + formatNanos(getOtherTimeAverage()) + " \u00B1 " + formatNanos(getOtherTimeStdDev()));
+		out.println("Total: " + formatNanos(getTotalTimeAverage()) + " \u00B1 " + formatNanos(getTotalTimeStdDev()));
+		out.println("====================================");
 	}
 	
-	public void writeData(PrintWriter writer){
-		
-		for(RuntimeReport report : reports){
-			writer.print("- ");
-		}
-		
-		writer.print(getSetupTimeAverage());
-		
+	public void writeData(PrintStream out){
+		out.print(getSetupTimeAverage());
+		out.print(" ");
+		out.print(getNativeSetupTimeStdDev());
+		out.print(" ");
+		out.print(getNativeSetupTimeAverage());
+		out.print(" ");
+		out.print(getNativeSetupTimeStdDev());
+		out.print(" ");
+		out.print(getCanonizationTimeAverage());
+		out.print(" ");
+		out.print(getCanonizationTimeStdDev());
+		out.print(" ");
+		out.print(getOtherTimeAverage());
+		out.print(" ");
+		out.print(getOtherTimeStdDev());
+		out.print(" ");
+		out.print(getTotalTimeAverage());
+		out.print(" ");
+		out.println(getTotalTimeStdDev());
 	}
 	
 	/**

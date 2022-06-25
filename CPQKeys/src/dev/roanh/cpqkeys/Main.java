@@ -22,6 +22,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -56,6 +57,10 @@ public class Main{
 	 */
 	private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 	/**
+	 * Directory to store runtime logs in.
+	 */
+	private static final Path LOGS = Paths.get("logs");
+	/**
 	 * The maximum amount of time in nanoseconds that an algorithm is allowed
 	 * to spend evaluating a complete data set. If the algorithms needs more
 	 * time to run on a data set then it will not be given a larger data set.
@@ -80,7 +85,7 @@ public class Main{
 	 * within the set time limit.
 	 * @see GraphDataSet#fromCPQ(int, int, int)
 	 */
-	private static final int MAX_RULES = 8196 * 2 * 2;
+	private static final int MAX_RULES = 16;//8196 * 2 * 2;
 	/**
 	 * Increase in data set size after an algorithm processes a data set
 	 * within the set time limit. Expressed as the number of rule applications.
@@ -104,13 +109,13 @@ public class Main{
 	 * List of algorithms to evaluate.
 	 */
 	public static final List<Algorithm> algorithms = Arrays.asList(
-		Scott.DIRECTED,//known to have issues with certain inputs
-		Scott.UNDIRECTED,
-		Nishe.INSTANCE,
-		Nauty.SPARSE,
-		Nauty.DENSE,
-		Traces.INSTANCE,
-		Bliss.INSTANCE
+//		Scott.DIRECTED,//known to have issues with certain inputs
+		Scott.UNDIRECTED//,
+//		Nishe.INSTANCE,
+//		Nauty.SPARSE,
+//		Nauty.DENSE,
+//		Traces.INSTANCE,
+//		Bliss.INSTANCE
 	);
 
 	/**
@@ -118,45 +123,46 @@ public class Main{
 	 * @param args No valid commandline arguments.
 	 */
 	public static void main(String[] args){
+		//initialise native bindings
+//		try{
+//			loadNatives();
+//		}catch(IOException | UnsatisfiedLinkError e){
+//			e.printStackTrace();
+//			return;
+//		}
+		
+		//make sure we don't overwrite log data for previous runs
 		try{
-			loadNatives();
-		}catch(IOException | UnsatisfiedLinkError e){
-			e.printStackTrace();
+			Files.createDirectories(LOGS);
+			try(DirectoryStream<Path> dir = Files.newDirectoryStream(LOGS)){
+				if(dir.iterator().hasNext()){
+					System.out.println("Logging directory not empty, please move or delete old logs first.");
+					return;
+				}
+			}
+		}catch(IOException e1){
+			System.err.println("Exception checking log directory");
+			e1.printStackTrace();
+			return;
 		}
 		
+		//evaluate all the algorithms
 		for(Algorithm algo : algorithms){
-			evaluateAlgorithm(algo);
+			try{
+				evaluateAlgorithm(algo).save(LOGS.resolve(algo.getName() + ".log"));
+			}catch(IOException e){
+				System.err.println("Error saving run results for: " + algo.getName());
+				e.printStackTrace();
+			}
 		}
 		
 		executor.shutdown();
 	}
 	
-	private static final void saveResults(Set<Entry<GraphDataSet, ReportSummaryStatistics>> results, Path file) throws IOException{
-		try(PrintStream out = new PrintStream(Files.newOutputStream(file))){
-			for(Entry<GraphDataSet, ReportSummaryStatistics> pair : results){
-				pair.getKey().print(out);
-				pair.getValue().print(out);
-				out.println("Raw report data (setup, native setup, canonization, other, total)");
-				for(RuntimeReport report : pair.getValue().getReports()){
-					report.writeData(out);
-				}
-			}
-			
-			out.println();
-
-			
-			
-			
-			
-			
-			
-		}
-	}
-	
-	private static final Set<Entry<GraphDataSet, ReportSummaryStatistics>> evaluateAlgorithm(Algorithm algo){
+	private static final EvaluationResults evaluateAlgorithm(Algorithm algo){
 		Util.setRandomSeed(SEED);
 		
-		LinkedHashMap<GraphDataSet, ReportSummaryStatistics> results = new LinkedHashMap<GraphDataSet, ReportSummaryStatistics>();
+		EvaluationResults results = new EvaluationResults(algo);
 		Future<ReportSummaryStatistics> task = null;
 		for(int i = MIN_RULES; i <= MAX_RULES; i *= RULE_GROWTH_FACTOR){
 			GraphDataSet data = GraphDataSet.fromCPQ(DATASET_SIZE, i, LABELS);
@@ -167,30 +173,30 @@ public class Main{
 				ReportSummaryStatistics stats = task.get(MAX_RUNTIME, TimeUnit.NANOSECONDS);
 				if(stats != null){
 					stats.print();
-					results.put(data, stats);
+					results.addRun(data, stats);
 				}
 			}catch(InterruptedException | ExecutionException e){
 				System.out.println("Error running: " + algo.getName());
 				e.printStackTrace();
-				return results.entrySet();
+				return results;
 			}catch(TimeoutException e){
 				System.out.println("Timeout for " + algo.getName() + " awaiting last result...");
 				
 				try{
 					ReportSummaryStatistics stats = task.get();
 					stats.print();
-					results.put(data, stats);
+					results.addRun(data, stats);
 				}catch(InterruptedException | ExecutionException e1){
 					System.out.println("Error running: " + algo.getName());
 					e1.printStackTrace();
 				}
 				
-				return results.entrySet();
+				return results;
 			}
 		}
 		
 		System.out.println("Not generating the next dataset as this would be very expensive...");
-		return results.entrySet();
+		return results;
 	}
 	
 	/**

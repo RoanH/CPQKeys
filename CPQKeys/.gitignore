@@ -10,3 +10,4 @@ build
 native
 hs_err_pid*.log
 lib
+logs
