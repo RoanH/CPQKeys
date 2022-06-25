@@ -49,8 +49,7 @@ public class EvaluationResults{
 				out.println();
 			}
 			
-			out.println();
-			out.println("Raw data (setup, native setup, canonization, other, total)");
+			out.println("Raw data (setup avg, setup stddev, native setup avg, native setup stddev, canonization avg, canonization stddev, other avg, other stddev, total avg, total stddev)");
 			for(ReportSummaryStatistics stats : results.values()){
 				stats.writeData(out);
 			}

@@ -195,7 +195,7 @@ public class Main{
 			}
 		}
 		
-		System.out.println("Not generating the next dataset as this would be very expensive...");
+		System.out.println("Not generating the next dataset (dataset size limit reached).");
 		return results;
 	}
 	
