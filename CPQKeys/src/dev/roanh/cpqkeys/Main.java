@@ -61,11 +61,11 @@ public class Main{
 	 * data set within this time limit, then it is given a larger data set
 	 * to run on next.
 	 */
-	private static final long MAX_RUNTIME = TimeUnit.SECONDS.toNanos(10);
+	private static final long MAX_RUNTIME = TimeUnit.SECONDS.toNanos(100);
 	/**
 	 * Number of graphs in a data set.
 	 */
-	private static final int DATASET_SIZE = 10;
+	private static final int DATASET_SIZE = 100;
 	/**
 	 * Number of rule applications to use to generate the initial data set.
 	 * @see GraphDataSet#fromCPQ(int, int, int)
@@ -78,7 +78,7 @@ public class Main{
 	 * within the set time limit.
 	 * @see GraphDataSet#fromCPQ(int, int, int)
 	 */
-	private static final int MAX_RULES = 16;//8196 * 2 * 2;
+	private static final int MAX_RULES = 8196;
 	/**
 	 * Increase in data set size after an algorithm processes a data set
 	 * within the set time limit. Expressed as the number of rule applications.
@@ -89,7 +89,7 @@ public class Main{
 	 * Number of labels to use for the data set.
 	 * @see GraphDataSet#fromCPQ(int, int, int)
 	 */
-	private static final int LABELS = 5;
+	private static final int LABELS = 10;
 	/**
 	 * Random seed to use to generate data sets.
 	 */
