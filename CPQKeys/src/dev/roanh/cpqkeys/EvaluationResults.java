@@ -45,6 +45,11 @@ public class EvaluationResults{
 		results.put(data, stats);
 	}
 	
+	/**
+	 * Saves the evaluation results to the given file.
+	 * @param file The file to save to.
+	 * @throws IOException When an IOException occurs.
+	 */
 	public void save(Path file) throws IOException{
 		try(PrintStream out = new PrintStream(Files.newOutputStream(file))){
 			for(Entry<GraphDataSet, ReportSummaryStatistics> pair : results.entrySet()){

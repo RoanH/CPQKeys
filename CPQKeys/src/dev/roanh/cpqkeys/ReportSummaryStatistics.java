@@ -1,7 +1,6 @@
 package dev.roanh.cpqkeys;
 
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.LongSummaryStatistics;
@@ -173,6 +172,10 @@ public class ReportSummaryStatistics{
 		return totalTime.getAverage();
 	}
 	
+	/**
+	 * Gets the individual runtime reports that make up this summary.
+	 * @return The individual runtime reports.
+	 */
 	public List<RuntimeReport> getReports(){
 		return reports;
 	}
@@ -201,6 +204,24 @@ public class ReportSummaryStatistics{
 		out.println("====================================");
 	}
 	
+	/**
+	 * Writes the data for this summary as a single line to the given stream.
+	 * The data will be separated by spaces and the following numbers will
+	 * be written in order:
+	 * <ol>
+	 * <li>Average setup time</li>
+	 * <li>Setup time standard deviation</li>
+	 * <li>Average native setup time</li>
+	 * <li>Native setup time standard deviation</li>
+	 * <li>Average canonization time</li>
+	 * <li>Canonization time standard deviation</li>
+	 * <li>Average other time</li>
+	 * <li>Other time standard deviation</li>
+	 * <li>Average total time</li>
+	 * <li>Total time standard deviation</li>
+	 * </ol>
+	 * @param out The stream to write to.
+	 */
 	public void writeData(PrintStream out){
 		out.print(getSetupTimeAverage());
 		out.print(" ");

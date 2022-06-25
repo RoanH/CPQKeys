@@ -1,8 +1,6 @@
 package dev.roanh.cpqkeys;
 
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.util.StringJoiner;
 
 /**
  * Report summarising various runtimes about an algorithm
@@ -135,6 +133,19 @@ public class RuntimeReport{
 		out.println("====================================");
 	}
 	
+	/**
+	 * Writes the data for this report as a single line to the given stream.
+	 * The data will be separated by spaces and the following numbers will
+	 * be written in order:
+	 * <ol>
+	 * <li>Setup time</li>
+	 * <li>Native setup time</li>
+	 * <li>Canonization time</li>
+	 * <li>Other time</li>
+	 * <li>Total time</li>
+	 * </ol>
+	 * @param out The stream to write to.
+	 */
 	public void writeData(PrintStream out){
 		out.print(String.valueOf(setupTime));
 		out.print(" ");

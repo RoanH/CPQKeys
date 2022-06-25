@@ -131,25 +131,15 @@ public class Main{
 //			return;
 //		}
 		
-		//make sure we don't overwrite log data for previous runs
-		try{
-			Files.createDirectories(LOGS);
-			try(DirectoryStream<Path> dir = Files.newDirectoryStream(LOGS)){
-				if(dir.iterator().hasNext()){
-					System.out.println("Logging directory not empty, please move or delete old logs first.");
-					return;
-				}
-			}
-		}catch(IOException e1){
-			System.err.println("Exception checking log directory");
-			e1.printStackTrace();
-			return;
-		}
-		
 		//evaluate all the algorithms
 		for(Algorithm algo : algorithms){
 			try{
-				evaluateAlgorithm(algo).save(LOGS.resolve(algo.getName() + ".log"));
+				Path saveFile = LOGS.resolve(algo.getName() + ".log");
+				if(Files.notExists(saveFile)){
+					evaluateAlgorithm(algo).save(saveFile);
+				}else{
+					System.out.println("Output log file already exists for " + algo.getName() + ", skipping evaluation.");
+				}
 			}catch(IOException e){
 				System.err.println("Error saving run results for: " + algo.getName());
 				e.printStackTrace();
