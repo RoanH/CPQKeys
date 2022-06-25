@@ -29,8 +29,7 @@ repositories{
 }
 
 dependencies{
-	//implementation 'dev.roanh.gmark:gmark:1.0'
-	implementation files('lib/gMark.jar')
+	implementation 'dev.roanh.gmark:gmark:1.1'
 }
 
 application{
