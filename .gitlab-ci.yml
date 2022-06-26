@@ -103,3 +103,19 @@ compile:
     expire_in: 1 week
     paths:
       - ${PROJECTNAME}-*.jar
+
+docker:
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    GIT_SUBMODULE_STRATEGY: recursive
+  tags:
+    - docker
+  services:
+    - docker:dind
+  before_script: []
+  script:
+    - docker info
+    - docker build -t cpqkeys .
+  stage: compile
