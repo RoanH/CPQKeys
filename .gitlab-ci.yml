@@ -109,12 +109,13 @@ docker:
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-    GIT_SUBMODULE_STRATEGY: recursive
   tags:
     - docker
   services:
     - docker:dind
-  before_script: []
+  before_script:
+    - apt-get update && apt-get -y install ssh
+    - got submodule update --init --recursive
   script:
     - docker info
     - docker build -t cpqkeys .
