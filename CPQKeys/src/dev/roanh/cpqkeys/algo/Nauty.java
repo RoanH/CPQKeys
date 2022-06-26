@@ -70,7 +70,7 @@ public class Nauty{
 	}
 	
 	/**
-	 * Computes a nauty & traces compatible array of color data. The
+	 * Computes a nauty and traces compatible array of color data. The
 	 * returned array will have consecutive sections of nodes with the
 	 * same color. The node is indicated with a number one higher than
 	 * the ID of the actual it corresponds to. Negated number indicate
