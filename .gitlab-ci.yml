@@ -12,12 +12,30 @@ before_script:
 stages:
   - check
   - compile
+  - status
   - javadoc
 
 endings:
   allow_failure: true
   script: curl ${SERVER}ci/lf.sh | bash
   stage: check
+
+pending:
+  allow_failure: true
+  script: curl ${SERVER}ci/pending.sh | bash
+  stage: compile
+
+success:
+  allow_failure: true
+  script: curl ${SERVER}ci/success.sh | bash
+  when: on_success
+  stage: status
+
+failure:
+  allow_failure: true
+  script: curl ${SERVER}ci/failure.sh | bash
+  when: on_failure
+  stage: status
 
 nishe:
   stage: compile
@@ -62,3 +80,26 @@ verify:
   script: curl ${SERVER}ci/javadoc.sh | bash
   stage: javadoc
   coverage: '/\([0-9]{2,3}\.[0-9]{2}%\)/'
+
+javadoc:
+  script:
+    - mkdir ../javadoc
+    - ./gradlew -PnexusPublic=${NEXUS_PUBLIC} :javadoc
+    - mv ./build/docs/javadoc/* ../javadoc/
+  stage: javadoc
+  artifacts:
+    name: "${NAME} [Javadoc]"
+    expire_in: 1 week
+    paths:
+      - javadoc/
+
+compile:
+  script:
+    - ./gradlew -PnexusPublic=${NEXUS_PUBLIC} shadowJar
+    - mv ./build/libs/* ../
+  stage: compile
+  artifacts:
+    name: "${NAME}"
+    expire_in: 1 week
+    paths:
+      - ${PROJECTNAME}-*.jar
