@@ -115,7 +115,7 @@ docker:
     - docker:dind
   before_script:
     - apt-get update && apt-get -y install ssh
-    - got submodule update --init --recursive
+    - git submodule update --init --recursive
   script:
     - docker info
     - docker build -t cpqkeys .
