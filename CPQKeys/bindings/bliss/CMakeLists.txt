@@ -11,12 +11,12 @@ if(NOT JNI_FOUND)
 endif()
 
 add_library(bliss SHARED
+	"./src/abstractgraph.cc"
 	"./src/defs.cc"
+	"./src/digraph.cc"
 	"./src/graph.cc"
-	"./src/heap.cc"
 	"./src/orbit.cc"
 	"./src/partition.cc"
-	"./src/timer.cc"
 	"./src/uintseqhash.cc"
 	"./src/utils.cc"
 	"./dev_roanh_cpqkeys_algo_Bliss.cpp"

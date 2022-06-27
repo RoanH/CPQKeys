@@ -1,10 +1,5 @@
-#include <stdlib.h>
-#include <assert.h>
-#include "defs.hh"
-#include "orbit.hh"
-
 /*
-  Copyright (c) 2003-2015 Tommi Junttila
+  Copyright (c) 2003-2021 Tommi Junttila
   Released under the GNU Lesser General Public License version 3.
   
   This file is part of bliss.
@@ -22,41 +17,54 @@
   along with bliss.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <cassert>
+#include "defs.hh"
+#include "orbit.hh"
+
 namespace bliss {
 
 Orbit::Orbit()
 {
-  orbits = 0;
-  in_orbit = 0;
+  orbits = nullptr;
+  in_orbit = nullptr;
   nof_elements = 0;
 }
 
 
 Orbit::~Orbit()
 {
+  delete[] orbits;
+  orbits = nullptr;
+  /*
   if(orbits)
     {
       free(orbits);
       orbits = 0;
     }
+  */
+  delete[] in_orbit;
+  in_orbit = nullptr;
+  /*
   if(in_orbit)
     {
       free(in_orbit);
       in_orbit = 0;
     }
+  */
   nof_elements = 0;
+  _nof_orbits = 0;
 }
 
 
 void Orbit::init(const unsigned int n)
 {
   assert(n > 0);
-  if(orbits) free(orbits);
-  orbits = (OrbitEntry*)malloc(n * sizeof(OrbitEntry));
-  if(in_orbit) free(in_orbit);
-  in_orbit = (OrbitEntry**)malloc(n * sizeof(OrbitEntry*));
+  if(orbits) delete[] orbits;
+  orbits = new OrbitEntry[n];
+  delete[] in_orbit;
+  in_orbit = new OrbitEntry*[n];
   nof_elements = n;
-
+  
   reset();
 }
 

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <dev_roanh_cpqkeys_algo_Bliss.h>
-#include <graph.hh>
+#include <digraph.hh>
 #include <chrono>
 
 using namespace bliss;
@@ -43,7 +43,7 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Bliss_computeCanon(JNIE
 
 	//construct the graph
 	int size = env->GetArrayLength(colors);
-	Graph* graph = new Graph(size);
+	Digraph* graph = new Digraph(size);
 
 	int len = env->GetArrayLength(edges);
 	jint* elem = env->GetIntArrayElements(edges, 0);
@@ -62,7 +62,7 @@ JNIEXPORT jlongArray JNICALL Java_dev_roanh_cpqkeys_algo_Bliss_computeCanon(JNIE
 
 	//compute canonical form
 	Stats stats;
-	const unsigned int* canon = graph->canonical_form(stats, 0, (void*)0);
+	const unsigned int* canon = graph->canonical_form(stats);
 
 	steady_clock::time_point end_time = steady_clock::now();
 
