@@ -19,6 +19,6 @@ LABEL maintainer="roan@roanh.dev"
 WORKDIR /CPQKeys
 RUN apt-get update && apt-get -y install python3
 COPY --from=compile /CPQKeys/build/libs/CPQKeys-all.jar ./CPQKeys.jar
-COPY --from=compile /CPQKeys/native/* ./native/
-COPY --from=compile /CPQKeys/bindings/scott/* ./bindings/scott/
+COPY --from=compile /CPQKeys/native/ ./native/
+COPY --from=compile /CPQKeys/bindings/scott/ ./bindings/scott/
 ENTRYPOINT ["java", "-jar", "CPQKeys.jar"]
