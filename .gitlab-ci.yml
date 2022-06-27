@@ -104,19 +104,19 @@ compile:
     paths:
       - ${PROJECTNAME}-*.jar
 
-#docker:
-#  image: docker:latest
-#  variables:
-#    DOCKER_DRIVER: overlay2
-#    DOCKER_TLS_CERTDIR: ""
-#  tags:
-#    - docker
-#  services:
-#    - docker:dind
-#  before_script:
-#    - apt-get update && apt-get -y install ssh
-#    - git submodule update --init --recursive
-#  script:
-#    - docker info
-#    - docker build -t cpqkeys .
-#  stage: compile
+docker:
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  tags:
+    - docker
+  services:
+    - docker:dind
+  before_script:
+    - apk add ssh git --no-cache
+    - git submodule update --init --recursive
+  script:
+    - docker info
+    - docker build -t cpqkeys .
+  stage: compile
