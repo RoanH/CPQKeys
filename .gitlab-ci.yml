@@ -114,7 +114,8 @@ docker:
   services:
     - docker:dind
   before_script:
-    - apk add ssh git --no-cache
+    - apk update --no-cache
+    - apk add openssh git --no-cache
     - git submodule update --init --recursive
   script:
     - docker info
