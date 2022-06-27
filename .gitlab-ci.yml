@@ -114,6 +114,7 @@ docker:
     - docker
   services:
     - docker:dind
+  before_script: []
   script:
     - docker info
     - docker build -t cpqkeys .
