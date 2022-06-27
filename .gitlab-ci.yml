@@ -109,15 +109,11 @@ docker:
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-    GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no'
+    GIT_SUBMODULE_STRATEGY: "recursive"
   tags:
     - docker
   services:
     - docker:dind
-  before_script:
-    - apk update --no-cache
-    - apk add openssh git --no-cache
-    - git submodule update --init --recursive
   script:
     - docker info
     - docker build -t cpqkeys .
