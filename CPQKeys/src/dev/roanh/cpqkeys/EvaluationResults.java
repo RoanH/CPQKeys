@@ -51,6 +51,7 @@ public class EvaluationResults{
 	 * @throws IOException When an IOException occurs.
 	 */
 	public void save(Path file) throws IOException{
+		Files.createDirectories(file.getParent());
 		try(PrintStream out = new PrintStream(Files.newOutputStream(file))){
 			for(Entry<GraphDataSet, ReportSummaryStatistics> pair : results.entrySet()){
 				pair.getKey().print(out);
