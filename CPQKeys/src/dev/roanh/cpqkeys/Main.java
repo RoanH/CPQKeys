@@ -98,7 +98,7 @@ public class Main{
 	 * List of algorithms to evaluate.
 	 */
 	public static final List<Algorithm> algorithms = Arrays.asList(
-		Scott.DIRECTED,//known to have issues with certain inputs
+		//Scott.DIRECTED,//known to have issues with certain inputs
 		Scott.UNDIRECTED,
 		Nishe.INSTANCE,
 		Nauty.SPARSE,
