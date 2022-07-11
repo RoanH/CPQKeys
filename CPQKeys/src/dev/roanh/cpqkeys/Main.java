@@ -37,6 +37,9 @@ import dev.roanh.cpqkeys.algo.Nauty;
 import dev.roanh.cpqkeys.algo.Nishe;
 import dev.roanh.cpqkeys.algo.Scott;
 import dev.roanh.cpqkeys.algo.Traces;
+import dev.roanh.gmark.conjunct.cpq.QueryGraphCPQ.Vertex;
+import dev.roanh.gmark.core.graph.Predicate;
+import dev.roanh.gmark.util.Graph;
 import dev.roanh.gmark.util.Util;
 
 /**
@@ -74,7 +77,7 @@ public class Main{
 	 * within the set time limit.
 	 * @see GraphDataSet#fromCPQ(int, int, int)
 	 */
-	private static final int MAX_RULES = 8196;
+	private static final int MAX_RULES = 32784;
 	/**
 	 * Increase in data set size after an algorithm processes a data set
 	 * within the set time limit. Expressed as the number of rule applications.
@@ -98,7 +101,7 @@ public class Main{
 	 * List of algorithms to evaluate.
 	 */
 	public static final List<Algorithm> algorithms = Arrays.asList(
-		Scott.DIRECTED,//known to have issues with certain inputs
+		//Scott.DIRECTED,//known to have issues with certain inputs
 		Scott.UNDIRECTED,
 		Nishe.INSTANCE,
 		Nauty.SPARSE,
@@ -155,8 +158,12 @@ public class Main{
 	 * @see EvaluationResults
 	 */
 	private static final EvaluationResults evaluateAlgorithm(Algorithm algo){
-		Util.setRandomSeed(SEED);
+		//warmup runs
+		for(Graph<Vertex, Predicate> graph : GraphDataSet.fromCPQ(10, MIN_RULES, LABELS)){
+			algo.canonize(graph);
+		}
 		
+		Util.setRandomSeed(SEED);
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		EvaluationResults results = new EvaluationResults();
 		Future<ReportSummaryStatistics> task = null;
