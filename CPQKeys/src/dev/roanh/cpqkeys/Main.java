@@ -77,7 +77,7 @@ public class Main{
 	 * within the set time limit.
 	 * @see GraphDataSet#fromCPQ(int, int, int)
 	 */
-	private static final int MAX_RULES = 32784;
+	private static final int MAX_RULES = 16392;
 	/**
 	 * Increase in data set size after an algorithm processes a data set
 	 * within the set time limit. Expressed as the number of rule applications.
