@@ -1,9 +1,10 @@
 # CPQ Keys [![](https://img.shields.io/github/release/RoanH/CPQKeys.svg)](https://github.com/RoanH/CPQKeys/releases)
-intro + refs
-
-
-
-
+CPQ Keys is a project that aims to compare existing graph canonization algorithms on their suitability to canonize query graphs of conjunctive path queries. This repository aims to provide a framework that can be used to easily evaluate and compare various canonization algorithms. More details about the project and codebase can be found in my technical report titled [CPQ Keys: a survey of graph canonization algorithms](TODO). A list of canonization algorithms set up for evaluation in this repository is given below, information for adding your own algorithms is in [a section near the end of this readme](#adding-algorithms).
+- [Bliss](https://users.aalto.fi/~tjunttil/bliss/index.html)
+- [nauty](https://pallini.di.uniroma1.it/)
+- [nishe](https://github.com/b0ri5/nishe-googlecode)
+- [scott](https://theplatypus.github.io/scott/)
+- [Traces](https://pallini.di.uniroma1.it/)
 
 ## Getting Started
 Running the project can be done either by using docker or by compiling the project from source. Here docker is primarily provided to offer an easy way to run the project without having to worry about any dependencies. Configuring the setting used to run the evaluation should be done by changing the variables in [main class](src/dev/roanh/cpqkeys/Main.java).
@@ -28,13 +29,13 @@ docker run --rm cpqkeys
 At the moment running the project is only supported on Linux. Docker can be used to run the project on other operating systems.
 
 First it is required to install various dependencies to be able to compile and run the project. The following dependencies are required:
-- **Java 8 or higher**: required to run the framework make sure to install the JDK and not only a JRE.
+- **Java 8 or higher**: required to run the framework, make sure to install the JDK and not only a JRE.
 - **CMake**: required to compile bliss, nauty, nishe, and Traces.
-- **C++ compiler**: e.g. `g++` is required to compile nauty and Traces.
-- **C compiler**: e.g. `gcc` is required to compile bliss and nishe.
+- **Compiler for C++**: e.g. `g++` is required to compile nauty and Traces.
+- **Compiler for C**: e.g. `gcc` is required to compile bliss and nishe.
 - **Python**: python 3 is required to run scott.
 
-On a system with `apt` the following command can be used to install a dependencies:
+On a system with `apt` the following command can be used to install all dependencies:
 
 ```sh
 apt install default-jdk cmake g++ gcc python3
@@ -61,10 +62,10 @@ Adding an algorithm to be evaluated is a fairly straightforward process and esse
 ```java
 public class MyAlgorithm{
 	/**
-	 * Algorithm instance, the class could also directly implement the interface,
-	 * but this makes it easier to have multiple variants of the algorithm (e.g., see nauty).
+	 * Algorithm instance, using static instances the makes it easier
+	 to have multiple variants of the same algorithm (e.g., see nauty).
 	 */
-	public static final Algorithm INSTANCE = new Algorithm("MyAlgorithm", Bliss::computeCanon);
+	public static final Algorithm INSTANCE = new Algorithm("MyAlgorithm", MyAlgorithm::computeCanon);
 	
 	/**
 	 * Runs the algorithm on the given input graph.
