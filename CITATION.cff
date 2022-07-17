@@ -1,0 +1,58 @@
+cff-version: 1.2.0
+title: CPQ Keys
+version: 1.0
+date-released: 2022-07-17
+message: "If you use this software, please cite it using the metadata from this file."
+type: software
+authors:
+  - given-names: Roan
+    family-names: Hofland
+    email: roan@roanh.dev
+contact:
+  - given-names: Roan
+    family-names: Hofland
+    email: roan@roanh.dev
+    website: 'https://roanh.dev'
+repository-code: 'https://github.com/RoanH/CPQKeys'
+abstract: "CPQ Keys is a framework for evaluating canonization algorithms"
+license: GPL-3.0-or-later
+year-original: 2022
+references:
+  - title: "CPQ Keys: a survey of graph canonization algorithms"
+    authors:
+    - given-names: Roan
+      family-names: Hofland
+      affiliation: "Eindhoven University of Technology"
+      email: r.w.p.hofland@student.tue.nl
+    type: report
+    url: 'https://research.roanh.dev/cpqkeys/CPQ%20Keys%20v1.1.pdf'
+    date-published: 2022-07-17
+    department: "Department of Mathematics and Computer Science"
+    institution:
+      name: "Eindhoven University of Technology"
+  - title: "Conjunctive Path Query Generation for Benchmarking"
+    authors:
+    - given-names: Roan
+      family-names: Hofland
+      affiliation: "Eindhoven University of Technology"
+      email: r.w.p.hofland@student.tue.nl
+    type: report
+    url: 'https://research.roanh.dev/Conjunctive%20Path%20Query%20Generation%20for%20Benchmarking%20v2.8.pdf'
+    date-published: 2022-03-21
+    department: "Department of Mathematics and Computer Science"
+    institution:
+      name: "Eindhoven University of Technology"
+  - title: "Language-aware Indexing for Conjunctive Path Queries"
+    authors:
+    - family-names: Sasaki
+      given-names: Yuya
+      affiliation: "Osaka University"
+    - family-names: H. L. Fletcher
+      given-names: George
+      affiliation: "Eindhoven University of Technology"
+    - family-names: Onizuka
+      given-names: Makoto
+      affiliation: "Osaka University"
+    type: article
+    url: 'https://arxiv.org/abs/2003.03079'
+    year: 2022
