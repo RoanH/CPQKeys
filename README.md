@@ -62,7 +62,7 @@ Adding an algorithm to be evaluated is a fairly straightforward process and esse
 ```java
 public class MyAlgorithm{
 	/**
-	 * Algorithm instance, using static instances the makes it easier
+	 * Algorithm instance, using static instances makes it easier
 	 * to have multiple variants of the same algorithm (e.g., see nauty).
 	 */
 	public static final Algorithm INSTANCE = new Algorithm("MyAlgorithm", MyAlgorithm::computeCanon);
